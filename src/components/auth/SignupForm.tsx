@@ -1,6 +1,6 @@
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { useSignUpMutation } from "../../services/api";
+import { useSignUpMutation, useSignOutMutation } from "../../services/api";
 import { InputField } from "../common/InputField";
 
 interface SignUpCredentials {
@@ -32,6 +32,16 @@ const validationSchema = Yup.object({
 
 export const SignUpForm = () => {
   const [signUp] = useSignUpMutation();
+  const [logOut] = useSignOutMutation();
+
+  const handleLogOut = async () => {
+    try {
+      const result = await logOut("").unwrap();
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleSignUp = async (credentials: SignUpCredentials) => {
     try {
@@ -61,6 +71,12 @@ export const SignUpForm = () => {
           </button>
         </Form>
       </Formik>
+
+      <div>
+        <button className="btn-primary mt-5" onClick={handleLogOut}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 };
