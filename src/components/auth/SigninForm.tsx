@@ -27,6 +27,7 @@ export const SignInForm = () => {
     try {
       const result = await signIn(credentials).unwrap();
       console.log(result);
+      console.log(document.cookie);
     } catch (e) {
       console.log(e);
     }
