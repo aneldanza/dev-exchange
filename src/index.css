@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue text-white p-2 rounded-md text-xs;
+  }
+
+  .btn-secondary {
+    @apply text-blue p-2 rounded-md text-xs border border-blue;
+  }
+
+  .btn-warning {
+    @apply text-red p-2 rounded-md text-xs hover:border-red;
+  }
+
+  .input-field {
+    @apply border rounded-md p-2 w-full;
+  }
+
+  .error-text {
+    @apply text-red text-xs;
+  }
+}
