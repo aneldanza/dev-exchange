@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useField, ErrorMessage } from "formik";
 
 interface InputFieldProps {
@@ -8,12 +8,6 @@ interface InputFieldProps {
 
 export const InputField: React.FC<InputFieldProps> = ({ name, label }) => {
   const [field, meta] = useField(name);
-
-  useEffect(() => {
-    if (meta.touched) {
-      console.log(meta.error);
-    }
-  }, [meta.error, meta.touched]);
 
   return (
     <div>

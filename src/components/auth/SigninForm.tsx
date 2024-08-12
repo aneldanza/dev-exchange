@@ -1,4 +1,6 @@
-import { Formik, Form } from "formik";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Formik, Form, FormikState } from "formik";
 import * as Yup from "yup";
 import { useSignInMutation } from "../../services/api";
 import { InputField } from "../common/InputField";
@@ -12,29 +14,44 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  password: Yup.string().required("Password is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
 });
 
 export const SignInForm = () => {
+  const navigate = useNavigate();
   const [signIn] = useSignInMutation();
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   const initialValues: SignInCredentials = {
     email: "",
     password: "",
   };
 
-  const handleSignIn = async (credentials: SignInCredentials) => {
+  const handleSignIn = async (
+    credentials: SignInCredentials,
+    resetForm: (
+      nextState?: Partial<FormikState<SignInCredentials>> | undefined
+    ) => void
+  ) => {
     try {
       const result = await signIn(credentials).unwrap();
-      console.log(result);
-      console.log(document.cookie);
-    } catch (e) {
-      console.log(e);
+      if (result.status.code === 200) {
+        navigate("/");
+      }
+      resetForm();
+    } catch (e: any) {
+      if (e.data) {
+        if (e.data.errors) {
+          setErrorMessages([e.data.message, ...e.data.errors]);
+        } else {
+          setErrorMessages([e.data]);
+        }
+      } else {
+        setErrorMessages(["An error occured. Please try again later."]);
+      }
     }
-  };
-
-  const handleSubmit = (values: SignInCredentials) => {
-    handleSignIn(values);
   };
 
   return (
@@ -45,18 +62,34 @@ export const SignInForm = () => {
         <div className="mx-auto mb-6 p-6 border rounded-lg shadow-md text-sm bg-white">
           <Formik
             initialValues={initialValues}
-            onSubmit={handleSubmit}
+            onSubmit={(values, { resetForm }) => {
+              handleSignIn(values, resetForm);
+            }}
             validationSchema={validationSchema}
+            validateOnBlur={true}
           >
-            <Form className="flex flex-col  space-y-6 ">
-              <InputField label="Email" name="email" />
-              <InputField label="Password" name="password" />
-              <button type="submit" className="btn-primary">
-                Log in
-              </button>
-            </Form>
+            {({ isValid, dirty }) => (
+              <Form className="flex flex-col  space-y-6 ">
+                <InputField label="Email" name="email" />
+                <InputField label="Password" name="password" />
+                <button
+                  type="submit"
+                  className="btn-primary disabled:opacity-50"
+                  disabled={!(isValid && dirty)}
+                >
+                  Log in
+                </button>
+              </Form>
+            )}
           </Formik>
         </div>
+        <ul className="mt-5 space-y-2">
+          {errorMessages.map((errorMessage, i) => (
+            <li className="error-text " key={`message-${i + 1}`}>
+              {errorMessage}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
