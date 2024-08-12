@@ -35,7 +35,7 @@ const validationSchema = Yup.object({
 export const SignUpForm = () => {
   const [signUp] = useSignUpMutation();
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   const handleSignUp = async (credentials: SignUpCredentials) => {
     try {
@@ -52,9 +52,9 @@ export const SignUpForm = () => {
     } catch (e: any) {
       console.log(e);
       if (e.data && e.data.errors) {
-        setErrorMessage(e.data.errors.join(" "));
+        setErrorMessages([e.data.message, ...e.data.errors]);
       } else {
-        setErrorMessage("An error occured. Please try again later.");
+        setErrorMessages(["An error occured. Please try again later."]);
       }
     }
   };
@@ -78,7 +78,13 @@ export const SignUpForm = () => {
           </button>
         </Form>
       </Formik>
-      <div className="error-text mt-5">{errorMessage}</div>
+      <ul className="mt-5 space-y-2">
+        {errorMessages.map((errorMessage, i) => (
+          <li className="error-text " key={`message-${i + 1}`}>
+            {errorMessage}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
