@@ -1,4 +1,4 @@
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikState } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../../services/api";
@@ -37,7 +37,12 @@ export const SignUpForm = () => {
   const navigate = useNavigate();
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-  const handleSignUp = async (credentials: SignUpCredentials) => {
+  const handleSignUp = async (
+    credentials: SignUpCredentials,
+    resetForm: (
+      nextState?: Partial<FormikState<SignUpCredentials>> | undefined
+    ) => void
+  ) => {
     try {
       const result = await signUp({
         credentials: { user: credentials },
@@ -49,6 +54,7 @@ export const SignUpForm = () => {
       } else if (result.message === "Signed up but account not active yet") {
         navigate("/login");
       }
+      resetForm();
     } catch (e: any) {
       console.log(e);
       if (e.data && e.data.errors) {
@@ -65,18 +71,27 @@ export const SignUpForm = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={handleSignUp}
+        onSubmit={(values, { resetForm }) => {
+          handleSignUp(values, resetForm);
+        }}
         validationSchema={validationSchema}
+        validateOnBlur={true}
       >
-        <Form className="space-y-6">
-          <InputField name="username" label="Username" />
-          <InputField name="email" label="email" />
-          <InputField name="password" label="password" />
-          <InputField name="password_confirmation" label="confirm password" />
-          <button type="submit" className="btn-primary">
-            Sign up
-          </button>
-        </Form>
+        {({ isValid, dirty }) => (
+          <Form className="space-y-6">
+            <InputField name="username" label="Username" />
+            <InputField name="email" label="email" />
+            <InputField name="password" label="password" />
+            <InputField name="password_confirmation" label="confirm password" />
+            <button
+              type="submit"
+              className="btn-primary disabled:opacity-50"
+              disabled={!(isValid && dirty)}
+            >
+              Sign up
+            </button>
+          </Form>
+        )}
       </Formik>
       <ul className="mt-5 space-y-2">
         {errorMessages.map((errorMessage, i) => (

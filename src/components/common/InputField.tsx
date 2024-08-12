@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { useEffect } from "react";
 import { useField, ErrorMessage } from "formik";
 
 interface InputFieldProps {
@@ -7,20 +7,23 @@ interface InputFieldProps {
 }
 
 export const InputField: React.FC<InputFieldProps> = ({ name, label }) => {
-  const [field, meta, helpers] = useField(name);
+  const [field, meta] = useField(name);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    helpers.setValue(e.target.value);
-  };
+  useEffect(() => {
+    if (meta.touched) {
+      console.log(meta.error);
+    }
+  }, [meta.error, meta.touched]);
 
   return (
     <div>
       <div>{label}</div>
       <input
         id={name}
-        value={field.value}
-        onChange={handleChange}
-        className={`input-field ${meta && meta.error && "border-red"}`}
+        {...field}
+        className={`input-field ${
+          meta && meta.touched && meta.error && "border-red"
+        }`}
       />
       <ErrorMessage name={name} component="div" className="error-text" />
     </div>
