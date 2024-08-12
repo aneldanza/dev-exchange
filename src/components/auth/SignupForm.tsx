@@ -1,7 +1,9 @@
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../../services/api";
 import { InputField } from "../common/InputField";
+import { useState } from "react";
 
 interface SignUpCredentials {
   username: string;
@@ -32,14 +34,29 @@ const validationSchema = Yup.object({
 
 export const SignUpForm = () => {
   const [signUp] = useSignUpMutation();
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleSignUp = async (credentials: SignUpCredentials) => {
     try {
       const result = await signUp({
         credentials: { user: credentials },
       }).unwrap();
+
       console.log(result);
-    } catch (e) {}
+      if (result.message === "Signed up and logged in successfully") {
+        navigate("/");
+      } else if (result.message === "Signed up but account not active yet") {
+        navigate("/login");
+      }
+    } catch (e: any) {
+      console.log(e);
+      if (e.data && e.data.errors) {
+        setErrorMessage(e.data.errors.join(" "));
+      } else {
+        setErrorMessage("An error occured. Please try again later.");
+      }
+    }
   };
 
   return (
@@ -61,6 +78,7 @@ export const SignUpForm = () => {
           </button>
         </Form>
       </Formik>
+      <div className="error-text mt-5">{errorMessage}</div>
     </div>
   );
 };
