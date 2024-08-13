@@ -11,8 +11,12 @@ export const Header = () => {
       const result = await logOut("").unwrap();
       console.log(result);
       setUser(null);
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
+      if (e.status === 401) {
+        console.log(e.data.message);
+        setUser(null);
+      }
     }
   };
   return (
