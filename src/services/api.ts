@@ -38,7 +38,15 @@ export const api = createApi({
         };
       },
     }),
+    getCurrentUser: builder.query({
+      query: () => "/current_user",
+    }),
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation, useSignOutMutation } = api;
+export const {
+  useSignUpMutation,
+  useSignInMutation,
+  useSignOutMutation,
+  useGetCurrentUserQuery,
+} = api;

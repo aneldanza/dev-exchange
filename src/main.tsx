@@ -6,11 +6,14 @@ import { RouterProvider } from "react-router-dom";
 import { browserRouter } from "./services/BrowserRouter.tsx";
 
 import "./index.css";
+import { AuthProvider } from "./AuthContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={browserRouter} />
+      <AuthProvider>
+        <RouterProvider router={browserRouter} />
+      </AuthProvider>
     </Provider>
   </React.StrictMode>
 );

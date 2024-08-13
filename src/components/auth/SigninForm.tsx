@@ -4,6 +4,7 @@ import { Formik, Form, FormikState } from "formik";
 import * as Yup from "yup";
 import { useSignInMutation } from "../../services/api";
 import { InputField } from "../common/InputField";
+import { useAuth } from "../../AuthContext";
 
 interface SignInCredentials {
   email: string;
@@ -23,6 +24,7 @@ export const SignInForm = () => {
   const navigate = useNavigate();
   const [signIn] = useSignInMutation();
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const { setUser } = useAuth();
 
   const initialValues: SignInCredentials = {
     email: "",
@@ -38,6 +40,7 @@ export const SignInForm = () => {
     try {
       const result = await signIn(credentials).unwrap();
       if (result.status.code === 200) {
+        setUser(result.status.data);
         navigate("/");
       }
       resetForm();
