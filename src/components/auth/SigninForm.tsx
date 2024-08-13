@@ -39,8 +39,8 @@ export const SignInForm = () => {
   ) => {
     try {
       const result = await signIn(credentials).unwrap();
-      if (result.status.code === 200) {
-        setUser(result.status.data);
+      if (result.code === 200) {
+        setUser(result.data);
         navigate("/");
       }
       resetForm();

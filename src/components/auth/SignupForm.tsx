@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../../services/api";
 import { InputField } from "../common/InputField";
 import { useState } from "react";
+import { useAuth } from "../../AuthContext";
 
 interface SignUpCredentials {
   username: string;
@@ -36,6 +37,7 @@ export const SignUpForm = () => {
   const [signUp] = useSignUpMutation();
   const navigate = useNavigate();
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const { setUser } = useAuth();
 
   const handleSignUp = async (
     credentials: SignUpCredentials,
@@ -50,6 +52,7 @@ export const SignUpForm = () => {
 
       if (result.message === "Signed up and logged in successfully") {
         navigate("/");
+        setUser(result.data);
       } else if (result.message === "Signed up but account not active yet") {
         navigate("/login");
       }
