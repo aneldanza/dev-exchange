@@ -6,7 +6,7 @@ import { useSignInMutation } from "../../services/api";
 import { InputField } from "../common/InputField";
 import { useAuth } from "../../services/storeHooks";
 
-interface SignInCredentials {
+export interface SignInCredentials {
   email: string;
   password: string;
 }
@@ -39,7 +39,7 @@ export const SignInForm = () => {
   ) => {
     try {
       const result = await signIn(credentials).unwrap();
-      if (result.code === 200) {
+      if (result.status === 200) {
         setUser(result.data);
         navigate("/");
       }
