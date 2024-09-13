@@ -6,7 +6,7 @@ import { InputField } from "../common/InputField";
 import { useState } from "react";
 import { useAuth } from "../../services/storeHooks";
 
-interface SignUpCredentials {
+export interface SignUpCredentials {
   username: string;
   email: string;
   password: string;
@@ -47,21 +47,21 @@ export const SignUpForm = () => {
   ) => {
     try {
       const result = await signUp({
-        credentials: { user: credentials },
+        user: credentials,
       }).unwrap();
 
       if (result.message === "Signed up and logged in successfully") {
         navigate("/");
         setUser(result.data);
-      } else if (result.message === "Signed up but account not active yet") {
-        navigate("/login");
       }
       resetForm();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e);
-      if (e.data && e.data.errors) {
+      if (e.data.message && e.data.errors) {
         setErrorMessages([e.data.message, ...e.data.errors]);
+        if (e.data.message === "Account created. Please log in to activate.") {
+          navigate("/login", { state: { message: e.data.message } });
+        }
       } else {
         setErrorMessages(["An error occured. Please try again later."]);
       }
@@ -69,7 +69,7 @@ export const SignUpForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center ">
+    <div className="flex flex-col items-center justify-center ">
       <div className="w-4/5">
         <div className="font-bold text-xl text-center mb-6">
           Join DevExchange
@@ -102,14 +102,15 @@ export const SignUpForm = () => {
             </Form>
           )}
         </Formik>
+
+        <ul className="mt-5 space-y-2">
+          {errorMessages.map((errorMessage, i) => (
+            <li className="error-text" key={`message-${i + 1}`}>
+              {errorMessage}
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="mt-5 space-y-2">
-        {errorMessages.map((errorMessage, i) => (
-          <li className="error-text " key={`message-${i + 1}`}>
-            {errorMessage}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
