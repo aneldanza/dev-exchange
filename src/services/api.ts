@@ -1,4 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { SignInInfo, SignUpInfo } from "./AuthContext";
+import { SignUpCredentials } from "../components/auth/SignupForm";
+import { SignInCredentials } from "../components/auth/SigninForm";
 
 export const api = createApi({
   reducerPath: "api",
@@ -12,16 +15,16 @@ export const api = createApi({
     credentials: "include",
   }),
   endpoints: (builder) => ({
-    signUp: builder.mutation({
+    signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
       query: (payload) => {
         return {
           url: "/signup",
           method: "post",
-          body: JSON.stringify(payload.credentials),
+          body: JSON.stringify(payload),
         };
       },
     }),
-    signIn: builder.mutation<any, { email: string; password: string }>({
+    signIn: builder.mutation<SignInInfo, SignInCredentials>({
       query: (payload) => {
         return {
           url: "/login",
