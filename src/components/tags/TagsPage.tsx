@@ -1,12 +1,6 @@
 import React from "react";
 import { useGetTagsQuery } from "../../services/api";
-
-export interface Tag {
-  id: number;
-  name: string;
-  description: string | null;
-  createdAt: string;
-}
+import { TagsList } from "./TagsList";
 
 export const TagsPage: React.FC = () => {
   const {
@@ -33,13 +27,7 @@ export const TagsPage: React.FC = () => {
           knowledgeable about or wish to learn more about, contributing to
           discussions and answering related questions.
         </div>
-        <ul>
-          {tags.map((tag) => (
-            <li key={tag.id}>
-              <a href={`/tags/${tag.name}`}>{tag.name}</a>
-            </li>
-          ))}
-        </ul>
+        <TagsList tags={tags} />
       </div>
     );
   }
