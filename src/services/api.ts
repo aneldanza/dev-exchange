@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { SignInInfo, SignUpInfo } from "./AuthContext";
 import { SignUpCredentials } from "../components/auth/SignupForm";
 import { SignInCredentials } from "../components/auth/SigninForm";
+import { Tag } from "../components/tags/TagsPage";
 
 export const api = createApi({
   reducerPath: "api",
@@ -44,7 +45,7 @@ export const api = createApi({
     getCurrentUser: builder.query({
       query: () => "/current_user",
     }),
-    getTags: builder.query({
+    getTags: builder.query<Tag[], undefined>({
       query: () => "/tags",
     }),
   }),
