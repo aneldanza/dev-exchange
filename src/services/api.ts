@@ -12,7 +12,7 @@ export const api = createApi({
 
       return headers;
     },
-    credentials: "include",
+    credentials: "include", // need this for cookies to be sent
   }),
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
@@ -44,6 +44,9 @@ export const api = createApi({
     getCurrentUser: builder.query({
       query: () => "/current_user",
     }),
+    getTags: builder.query({
+      query: () => "/tags",
+    }),
   }),
 });
 
@@ -52,4 +55,5 @@ export const {
   useSignInMutation,
   useSignOutMutation,
   useGetCurrentUserQuery,
+  useGetTagsQuery,
 } = api;
