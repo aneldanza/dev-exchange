@@ -28,7 +28,13 @@ export const Header = () => {
         <div className="">Search Icon</div>
         {user ? (
           <>
-            <div>{user.username}</div>
+            <Link
+              to={`/users/${user.id}`}
+              className="font-semibold cursor-pointer"
+            >
+              {user.username}
+            </Link>
+
             <button className="btn-secondary" onClick={handleLogOut}>
               Log out
             </button>
