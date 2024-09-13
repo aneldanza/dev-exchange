@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { SignInInfo, SignUpInfo } from "./AuthContext";
 import { SignUpCredentials } from "../components/auth/SignupForm";
 import { SignInCredentials } from "../components/auth/SigninForm";
-import { Tag } from "../components/tags/TagsPage";
+import { Tag } from "../components/tags/types";
 
 export const api = createApi({
   reducerPath: "api",
