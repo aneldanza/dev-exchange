@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import { useSignOutMutation } from "../../services/api";
 import { useAuth } from "../../services/storeHooks";
 
@@ -22,7 +23,7 @@ export const Header = () => {
   };
   return (
     <div className="flex flex-row w-full items-center space-x-3 p-2 border-b-1 text-xs justify-between">
-      <div>Menu Hamburger</div>
+      <Bars3Icon className="size-6" />
       <div className="text-blue ">Logo</div>
       <nav className="flex shrink-0 space-x-2 items-center justify-between">
         <div className="">Search Icon</div>
