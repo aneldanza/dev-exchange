@@ -22,4 +22,8 @@
   .error-text {
     @apply text-red text-xs;
   }
+
+  .tag {
+    @apply border border-gray-200 rounded-md text-sm font-bold bg-gray-200 inline-flex justify-center p-1 w-auto;
+  }
 }
