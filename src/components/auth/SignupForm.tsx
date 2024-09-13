@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../../services/api";
 import { InputField } from "../common/InputField";
 import { useState } from "react";
-import { useAuth } from "../../AuthContext";
+import { useAuth } from "../../services/storeHooks";
 
 interface SignUpCredentials {
   username: string;
@@ -57,6 +57,7 @@ export const SignUpForm = () => {
         navigate("/login");
       }
       resetForm();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
       if (e.data && e.data.errors) {

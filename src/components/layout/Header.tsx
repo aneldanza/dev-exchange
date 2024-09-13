@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSignOutMutation } from "../../services/api";
-import { useAuth } from "../../AuthContext";
+import { useAuth } from "../../services/storeHooks";
 
 export const Header = () => {
   const [logOut] = useSignOutMutation();
@@ -11,6 +11,7 @@ export const Header = () => {
       const result = await logOut("").unwrap();
       console.log(result);
       setUser(null);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
       if (e.status === 401) {

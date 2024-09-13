@@ -1,12 +1,5 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  type FC,
-  useEffect,
-} from "react";
-import { useGetCurrentUserQuery } from "./services/api";
+import { createContext, useState, ReactNode, type FC, useEffect } from "react";
+import { useGetCurrentUserQuery } from "./api";
 
 interface UserInfoLimited {
   username: string;
@@ -18,15 +11,16 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-interface AuthContextProps {
+export interface AuthContextProps {
   user: UserInfoLimited | null;
   setUser: React.Dispatch<React.SetStateAction<UserInfoLimited | null>>;
 }
 
-const AuthContext = createContext<AuthContextProps>({
+export const AuthContext = createContext<AuthContextProps>({
   user: null,
   setUser: () => {},
 });
+
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserInfoLimited | null>(null);
   const { data, isError, isLoading, isSuccess, error } =
@@ -50,5 +44,3 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

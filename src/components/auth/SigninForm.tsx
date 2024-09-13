@@ -4,7 +4,7 @@ import { Formik, Form, FormikState } from "formik";
 import * as Yup from "yup";
 import { useSignInMutation } from "../../services/api";
 import { InputField } from "../common/InputField";
-import { useAuth } from "../../AuthContext";
+import { useAuth } from "../../services/storeHooks";
 
 interface SignInCredentials {
   email: string;
@@ -44,6 +44,7 @@ export const SignInForm = () => {
         navigate("/");
       }
       resetForm();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.data) {
         if (e.data.errors) {
