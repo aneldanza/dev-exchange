@@ -45,6 +45,9 @@ export const api = createApi({
     getCurrentUser: builder.query({
       query: () => "/current_user",
     }),
+    showFullUserInfo: builder.query({
+      query: (id) => "/users/" + id,
+    }),
     getTags: builder.query<Tag[], undefined>({
       query: () => "/tags",
     }),
@@ -56,5 +59,6 @@ export const {
   useSignInMutation,
   useSignOutMutation,
   useGetCurrentUserQuery,
+  useShowFullUserInfoQuery,
   useGetTagsQuery,
 } = api;
