@@ -1,4 +1,7 @@
 import moment from "moment";
+import React, { useState } from "react";
+import { ActivityTab } from "./ActivityTab";
+import { ProfileTab } from "./ProfileTab";
 import Button from "../common/Button";
 import { FullUserData } from "./types";
 import { PencilIcon, CakeIcon } from "@heroicons/react/20/solid";
@@ -8,11 +11,8 @@ interface UserProfileProps {
   data: FullUserData | any;
 }
 
-import React, { useState } from "react";
-import { ActivityTab } from "./ActivityTab";
-
 export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
-  const [activeTab, setActiveTab] = useState("Profile");
+  const [activeTab, setActiveTab] = useState("Activity");
   const { username, created_at, tags } = data;
 
   const handleTabClick = (tab: string) => {
@@ -58,7 +58,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
           Activity
         </div>
       </div>
-      {activeTab === "Profile" && <div>Profile content</div>}
+      {activeTab === "Profile" && <ProfileTab />}
       {activeTab === "Activity" && <ActivityTab tags={tags} />}
       <p>{JSON.stringify(data, null, 2)}</p>
     </div>
