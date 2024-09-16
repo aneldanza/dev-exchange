@@ -4,7 +4,7 @@ import { Header } from "./components/layout/Header";
 export default function App() {
   return (
     <>
-      <div className="font-sans ">
+      <div className="font-sans text-appBlack">
         <nav className="px-4">
           <Header />
         </nav>
