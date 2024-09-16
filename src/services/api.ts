@@ -1,4 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { SignInInfo, SignUpInfo } from "./AuthContext";
+import { SignUpCredentials } from "../components/auth/SignupForm";
+import { SignInCredentials } from "../components/auth/SigninForm";
+import { Tag } from "../components/tags/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -9,19 +13,19 @@ export const api = createApi({
 
       return headers;
     },
-    credentials: "include",
+    credentials: "include", // need this for cookies to be sent
   }),
   endpoints: (builder) => ({
-    signUp: builder.mutation({
+    signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
       query: (payload) => {
         return {
           url: "/signup",
           method: "post",
-          body: JSON.stringify(payload.credentials),
+          body: JSON.stringify(payload),
         };
       },
     }),
-    signIn: builder.mutation<any, { email: string; password: string }>({
+    signIn: builder.mutation<SignInInfo, SignInCredentials>({
       query: (payload) => {
         return {
           url: "/login",
@@ -41,6 +45,15 @@ export const api = createApi({
     getCurrentUser: builder.query({
       query: () => "/current_user",
     }),
+    showFullUserInfo: builder.query({
+      query: (id) => "/users/" + id,
+    }),
+    getAllUsers: builder.query({
+      query: () => "/users",
+    }),
+    getTags: builder.query<Tag[], undefined>({
+      query: () => "/tags",
+    }),
   }),
 });
 
@@ -49,4 +62,7 @@ export const {
   useSignInMutation,
   useSignOutMutation,
   useGetCurrentUserQuery,
+  useShowFullUserInfoQuery,
+  useGetAllUsersQuery,
+  useGetTagsQuery,
 } = api;

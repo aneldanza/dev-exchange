@@ -11,6 +11,10 @@
     @apply text-blue p-2 rounded-md text-xs border border-blue;
   }
 
+  .btn-outline {
+    @apply text-buttonGray px-2 py-1 rounded-md text-xs border border-buttonGray hover:bg-gray-50;
+  }
+
   .btn-warning {
     @apply text-red p-2 rounded-md text-xs hover:border-red;
   }
@@ -21,5 +25,25 @@
 
   .error-text {
     @apply text-red text-xs;
+  }
+
+  .tag {
+    @apply border border-gray-200 rounded-md text-sm font-bold bg-gray-200 inline-flex justify-center p-1 w-auto;
+  }
+
+  .active-tab {
+    @apply text-white bg-appOrange border-appOrange hover:bg-appOrangeDark hover:border-appOrangeDark;
+  }
+
+  .inactive-tab {
+    @apply bg-transparent border-transparent text-gray-500  hover:border-appGray-50 hover:bg-appGray-50;
+  }
+
+  .tab {
+    @apply text-xs  px-2 border rounded-full cursor-pointer;
+  }
+
+  .card {
+    @apply border border-gray-200 rounded-md p-4;
   }
 }
