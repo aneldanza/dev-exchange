@@ -40,6 +40,6 @@
   }
 
   .tab {
-    @apply text-sm  px-2 border rounded-full cursor-pointer;
+    @apply text-xs  px-2 border rounded-full cursor-pointer;
   }
 }
