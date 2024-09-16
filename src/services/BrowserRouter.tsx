@@ -4,6 +4,7 @@ import { SignUpForm } from "../components/auth/SignupForm";
 import { SignInForm } from "../components/auth/SigninForm";
 import { TagsPage } from "../components/tags/TagsPage";
 import { UserPage } from "../components/users/UserPage";
+import { AllUsersPage } from "../components/users/AllUsersPage";
 
 export const browserRouter = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ export const browserRouter = createBrowserRouter([
       { path: "/login", element: <SignInForm /> },
       { path: "users/:userId", element: <UserPage /> },
       { path: "/tags", element: <TagsPage /> },
+      { path: "users", element: <AllUsersPage /> },
     ],
   },
 ]);
