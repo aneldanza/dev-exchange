@@ -4,13 +4,15 @@ import { FullUserData } from "./types";
 import { PencilIcon, CakeIcon } from "@heroicons/react/20/solid";
 
 interface UserProfileProps {
-  data: FullUserData;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: FullUserData | any;
 }
 
 import React, { useState } from "react";
 
 export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
   const [activeTab, setActiveTab] = useState("Profile");
+  const { username, created_at } = data;
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -28,12 +30,12 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
           />
         </div>
         <div>
-          <div className="text-2xl font-semibold">{data.username}</div>
+          <div className="text-2xl font-semibold">{username}</div>
           <div className="flex gap-1 text-appGray-100">
             <CakeIcon className="w-4 self-center" />
-            <div className="text-xs">{`Member for ${moment(
-              data.created_at
-            ).fromNow(true)}.`}</div>
+            <div className="text-xs">{`Member for ${moment(created_at).fromNow(
+              true
+            )}.`}</div>
           </div>
         </div>
       </div>
