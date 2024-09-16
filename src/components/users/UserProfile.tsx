@@ -1,7 +1,7 @@
 import moment from "moment";
 import Button from "../common/Button";
 import { FullUserData } from "./types";
-import { PencilIcon } from "@heroicons/react/20/solid";
+import { PencilIcon, CakeIcon } from "@heroicons/react/20/solid";
 
 interface UserProfileProps {
   data: FullUserData;
@@ -29,23 +29,26 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
         </div>
         <div>
           <div className="text-2xl font-semibold">{data.username}</div>
-          <div className="text-xs">{`Member for ${moment(
-            data.createdAt
-          ).fromNow()}`}</div>
+          <div className="flex gap-1 text-appGray-100">
+            <CakeIcon className="w-4 self-center" />
+            <div className="text-xs">{`Member for ${moment(
+              data.created_at
+            ).fromNow(true)}.`}</div>
+          </div>
         </div>
       </div>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <div
-          className={`cursor-pointer ${
-            activeTab === "Profile" ? "font-semibold" : ""
+          className={`tab ${
+            activeTab === "Profile" ? "active-tab" : "inactive-tab"
           }`}
           onClick={() => handleTabClick("Profile")}
         >
           Profile
         </div>
         <div
-          className={`cursor-pointer ${
-            activeTab === "Activity" ? "font-semibold" : ""
+          className={`tab ${
+            activeTab === "Activity" ? "active-tab" : "inactive-tab"
           }`}
           onClick={() => handleTabClick("Activity")}
         >
