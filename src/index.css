@@ -11,6 +11,10 @@
     @apply text-blue p-2 rounded-md text-xs border border-blue;
   }
 
+  .btn-outline {
+    @apply text-buttonGray p-2 rounded-md text-xs border border-buttonGray hover:bg-gray-50;
+  }
+
   .btn-warning {
     @apply text-red p-2 rounded-md text-xs hover:border-red;
   }

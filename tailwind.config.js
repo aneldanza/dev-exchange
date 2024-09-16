@@ -9,6 +9,8 @@ export default {
       colors: {
         blue: "#1b75d0",
         red: "#9c2121",
+        appGray: "#0c0d0e",
+        buttonGray: "#3b4045",
       },
     },
   },
