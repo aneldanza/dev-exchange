@@ -1,27 +1,32 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useShowFullUserInfoQuery } from "../../services/api";
+import { withLoading } from "../hoc/withLoading";
+import { withError } from "../hoc/withError";
+import { CustomError } from "../common/CustomError";
+import { CustomLoading } from "../common/CustomLoading";
+import { UserProfile } from "./UserProfile";
+import { FullUserData } from "./types";
 
 interface UserPageProps {}
 
+// First, wrap MyComponent with withError, then pass the resulting component to withLoading
+const UserProfileWithErrorAndLoading = withLoading(
+  withError<{ data: FullUserData }>(UserProfile, CustomError),
+  CustomLoading
+);
+
 export const UserPage: React.FC<UserPageProps> = () => {
   const { userId } = useParams<{ userId: string }>();
-  const { data, error, isLoading, isSuccess } =
-    useShowFullUserInfoQuery(userId);
+  const { data, error, isLoading } = useShowFullUserInfoQuery(userId);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  } else if (error) {
-    return <div>Error: {JSON.stringify(error)}</div>;
-  } else if (isSuccess) {
-    return (
-      <div>
-        <h1>User Profile</h1>
-        <p>{JSON.stringify(data)}</p>
-        {/* Render the user profile information here */}
-      </div>
-    );
-  }
+  return (
+    <UserProfileWithErrorAndLoading
+      data={data}
+      error={error}
+      isLoading={isLoading}
+    />
+  );
 };
 
 export default UserPage;
