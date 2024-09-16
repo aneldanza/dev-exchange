@@ -9,10 +9,11 @@ interface UserProfileProps {
 }
 
 import React, { useState } from "react";
+import { ActivityTab } from "./ActivityTab";
 
 export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
   const [activeTab, setActiveTab] = useState("Profile");
-  const { username, created_at } = data;
+  const { username, created_at, tags } = data;
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -58,8 +59,8 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
         </div>
       </div>
       {activeTab === "Profile" && <div>Profile content</div>}
-      {activeTab === "Activity" && <div>Activity content</div>}
-      <p>{JSON.stringify(data)}</p>
+      {activeTab === "Activity" && <ActivityTab tags={tags} />}
+      <p>{JSON.stringify(data, null, 2)}</p>
     </div>
   );
 };

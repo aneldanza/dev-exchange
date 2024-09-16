@@ -42,4 +42,8 @@
   .tab {
     @apply text-xs  px-2 border rounded-full cursor-pointer;
   }
+
+  .card {
+    @apply border border-gray-200 rounded-md p-4;
+  }
 }
