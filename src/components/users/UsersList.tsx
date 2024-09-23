@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Avatar } from "flowbite-react";
+import Avatar from "react-avatar";
 import { UserInfoLimited } from "../../services/AuthContext";
 
 interface UsersListProps {
@@ -15,15 +15,12 @@ const UsersList: React.FC<UsersListProps> = ({ users }) => {
         {users.map((user) => (
           <li
             key={user.id}
-            className="flex gap-3"
+            className="flex gap-3 cursor-pointer"
             onClick={() => {
               navigate(`/users/${user.id}`);
             }}
           >
-            <div className="flex flex-wrap gap-2 align-middle items-center">
-              <Avatar rounded bordered className="bg-appGray-50" img="" />
-            </div>
-
+            <Avatar name={user.username} size="50px" round="7px" />
             <div className="space-y-1 font-medium text-appGray-500">
               <div>{user.username}</div>
               <div className="text-sm text-gray-500">Joined in August 2014</div>
