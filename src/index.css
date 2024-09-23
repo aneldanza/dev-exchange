@@ -46,4 +46,12 @@
   .card {
     @apply border border-gray-200 rounded-md p-4;
   }
+
+  .menu-item {
+    @apply text-buttonGray px-2 py-1 text-sm hover:bg-gray-50;
+  }
+
+  .side-menu {
+    @apply bg-white;
+  }
 }
