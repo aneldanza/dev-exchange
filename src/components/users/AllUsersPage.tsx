@@ -17,7 +17,7 @@ export const AllUsersPage: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-2xl">Users</h1>
+      <h1 className="text-2xl mb-6">Users</h1>
       <UsersListWithErrorAndLoading
         users={data}
         error={error}
