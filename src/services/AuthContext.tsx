@@ -1,11 +1,6 @@
 import { createContext, useState, ReactNode, type FC, useEffect } from "react";
 import { useGetCurrentUserQuery } from "./api";
-
-export interface UserInfoLimited {
-  username: string;
-  email: string;
-  id: number;
-}
+import { UserInfoLimited } from "../components/users/types";
 
 export interface SignInInfo {
   message: string;

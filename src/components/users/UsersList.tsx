@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
-import { UserInfoLimited } from "../../services/AuthContext";
+import moment from "moment";
+import { UserInfoLimited } from "./types";
 
 interface UsersListProps {
   users: UserInfoLimited[];
@@ -23,7 +24,9 @@ const UsersList: React.FC<UsersListProps> = ({ users }) => {
             <Avatar name={user.username} size="50px" round="7px" />
             <div className="space-y-1 font-medium text-appGray-500">
               <div>{user.username}</div>
-              <div className="text-sm text-gray-500">Joined in August 2014</div>
+              <div className="text-sm text-gray-500">
+                {`Joined in ${moment(user.created_at).format("MMMM YYYY")}`}
+              </div>
             </div>
           </li>
         ))}
