@@ -32,17 +32,19 @@ export const Header = () => {
   return (
     <div className="relative">
       <div className="flex flex-row w-full items-center space-x-3 p-2 border-b-1 text-xs justify-between">
-        {isSideBarOpen ? (
-          <XMarkIcon
-            className="size-6 cursor-pointer"
-            onClick={toggleSideBar}
-          />
-        ) : (
-          <Bars3Icon
-            className="size-6 cursor-pointer"
-            onClick={toggleSideBar}
-          />
-        )}
+        <div className="sm:max-2xl:hidden">
+          {isSideBarOpen ? (
+            <XMarkIcon
+              className="size-6 cursor-pointer"
+              onClick={toggleSideBar}
+            />
+          ) : (
+            <Bars3Icon
+              className="size-6 cursor-pointer"
+              onClick={toggleSideBar}
+            />
+          )}
+        </div>
 
         <div className="text-blue ">Logo</div>
         <nav className="flex shrink-0 space-x-2 items-center justify-between">
