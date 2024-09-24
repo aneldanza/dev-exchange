@@ -13,7 +13,7 @@ export default function App() {
           <div className="hidden min-w-40 max-w-64 grow-1 border py-6 border-appGray-100 border-t-0 sm:max-2xl:block">
             <Menu />
           </div>
-          <div className="px-4 py-6">
+          <div className="px-4 py-6 w-full">
             <Outlet />
           </div>
         </main>

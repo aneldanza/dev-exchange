@@ -7,7 +7,18 @@ export default {
         sans: ["Roboto", "sans-serif"],
       },
       colors: {
-        blue: "#1b75d0",
+        blue: {
+          50: "#f1f7ff",
+          100: "#d9e7ff",
+          200: "#a9c6ff",
+          300: "#7aa5ff",
+          400: "#4a84ff",
+          500: "#1b75d0",
+          600: "#1a68b8",
+          700: "#16589a",
+          800: "#12477b",
+          900: "#0e3760",
+        },
         red: "#9c2121",
         appGray: {
           50: "#dfe2e4",
