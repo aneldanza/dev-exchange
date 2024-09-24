@@ -11,7 +11,7 @@ const UsersList: React.FC<UsersListProps> = ({ users }) => {
   const navigate = useNavigate();
   return (
     <div>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 space-y-4">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {users.map((user) => (
           <li
             key={user.id}
