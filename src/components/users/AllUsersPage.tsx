@@ -4,16 +4,18 @@ import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
-import { UserInfoLimited } from "../../services/AuthContext";
+import { FullUserData } from "./types";
 import UsersList from "./UsersList";
 
 const UsersListWithErrorAndLoading = withLoading(
-  withError<{ users: UserInfoLimited[] }>(UsersList, CustomError),
+  withError<{ users: FullUserData[] }>(UsersList, CustomError),
   CustomLoading
 );
 
 export const AllUsersPage: React.FC = () => {
-  const { data, error, isLoading } = useGetAllUsersQuery(undefined);
+  const { data, error, isLoading } = useGetAllUsersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   return (
     <div>
