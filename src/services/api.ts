@@ -48,6 +48,12 @@ export const api = createApi({
     showFullUserInfo: builder.query({
       query: (id) => "/users/" + id,
     }),
+    deleteAccount: builder.mutation({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "delete",
+      }),
+    }),
     getAllUsers: builder.query({
       query: () => "/users",
     }),
@@ -63,6 +69,7 @@ export const {
   useSignOutMutation,
   useGetCurrentUserQuery,
   useShowFullUserInfoQuery,
+  useDeleteAccountMutation,
   useGetAllUsersQuery,
   useGetTagsQuery,
 } = api;
