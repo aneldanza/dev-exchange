@@ -9,7 +9,7 @@ export default function App() {
         <nav className="px-4 border-b-appGray-100 border">
           <Header />
         </nav>
-        <main className=" flex container h-full">
+        <main className=" flex h-full">
           <div className="hidden min-w-40 max-w-64 grow-1 border py-6 border-appGray-100 border-t-0 sm:max-2xl:block">
             <Menu />
           </div>
