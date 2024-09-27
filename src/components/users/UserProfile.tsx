@@ -2,9 +2,8 @@ import moment from "moment";
 import React, { useState } from "react";
 import { ActivityTab } from "./ActivityTab";
 import { ProfileTab } from "./ProfileTab";
-import Button from "../common/Button";
 import { FullUserData } from "./types";
-import { PencilIcon, CakeIcon } from "@heroicons/react/20/solid";
+import { CakeIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "../../services/storeHooks";
 import { SettingsTab } from "./SettingsTab";
 
@@ -25,14 +24,14 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
   return (
     <div className="flex flex-col space-y-6">
       <div className="grid">
-        <div className="justify-items-end grid">
+        {/* <div className="justify-items-end grid">
           <Button
             title="Edit Profile"
             onClick={() => {}}
             className="btn-outline"
             icon={<PencilIcon className="w-4" />}
           />
-        </div>
+        </div> */}
         <div>
           <div className="text-2xl font-semibold mb-4">{username}</div>
           <div className="flex gap-1 text-appGray-100">

@@ -12,11 +12,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
   handleOptionSelect,
 }) => {
   return (
-    <div className="relative w-full">
+    <div className="relative w-full text-sm">
       <select
         value={selectedOption!}
         onChange={(e) => handleOptionSelect(e.target.value)}
-        className="w-full card pr-10 appearance-none p-2" // Hide the default arrow
+        className="w-full card pr-10 appearance-none p-2 hover:border-appGray-300" // Hide the default arrow
       >
         {options.map((option) => (
           <option key={option} value={option}>
