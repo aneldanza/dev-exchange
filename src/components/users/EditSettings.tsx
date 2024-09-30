@@ -1,0 +1,65 @@
+import React from "react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { RichTextEditor } from "../common/RichTextField";
+
+type FormValues = {
+  about: string;
+};
+
+const validationsSchema = Yup.object().shape({
+  about: Yup.string(),
+});
+
+interface EditSettingsProps {
+  userId: number;
+  description: string;
+}
+
+const EditSettings: React.FC<EditSettingsProps> = ({ description }) => {
+  const initialValues: FormValues = {
+    about: description,
+  };
+
+  return (
+    <div className="list">
+      <div className="card">
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationsSchema}
+          onSubmit={(values) => {
+            console.log(values);
+          }}
+        >
+          {() => (
+            <Form>
+              <div>
+                <div>
+                  <RichTextEditor
+                    name="about"
+                    placeholder="Tell us about yourself"
+                    label="About me"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <button type="submit" className="btn-primary">
+                  Save
+                </button>
+
+                <button
+                  type="reset"
+                  className="btn-outline border-0 text-blue-500 py-2 hover:bg-blue-50"
+                >
+                  Cancel
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
+  );
+};
+
+export default EditSettings;
