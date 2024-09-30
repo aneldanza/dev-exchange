@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useField, ErrorMessage } from "formik";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
@@ -52,14 +52,21 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     placeholder,
   });
 
+  const initialValueSet = useRef(false);
+
   useEffect(() => {
     if (quill) {
       quill.on("text-change", () => {
-        helpers.setValue(quill.root.innerHTML);
+        if (initialValueSet.current) {
+          helpers.setValue(quill.root.innerHTML);
+        }
       });
 
       // Set initial value
-      quill.clipboard.dangerouslyPasteHTML(field.value || "");
+      if (!initialValueSet.current) {
+        quill.clipboard.dangerouslyPasteHTML(field.value || "");
+        initialValueSet.current = true;
+      }
     }
   }, [quill, field.value, helpers]);
 
