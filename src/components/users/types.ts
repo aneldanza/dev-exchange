@@ -6,6 +6,7 @@ export type FullUserData = {
   email: string;
   created_at: string;
   updated_at: string;
+  description: string;
   tags: {
     data: Tag[];
   };
