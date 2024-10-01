@@ -7,6 +7,7 @@ interface RichTextEditorProps {
   label: string;
   name: string;
   placeholder: string;
+  changeHandler: (value: string) => void;
 }
 
 const theme = "snow";
@@ -15,6 +16,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   placeholder,
   label,
   name,
+  changeHandler,
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, , helpers] = useField(name);
@@ -59,6 +61,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       quill.on("text-change", () => {
         if (initialValueSet.current) {
           helpers.setValue(quill.root.innerHTML);
+          changeHandler(quill.root.innerHTML);
         }
       });
 
@@ -68,7 +71,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
         initialValueSet.current = true;
       }
     }
-  }, [quill, field.value, helpers]);
+  }, [quill, field.value, helpers, changeHandler]);
 
   return (
     <>
