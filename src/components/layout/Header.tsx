@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useSignOutMutation } from "../../services/api";
 import { useAuth } from "../../services/storeHooks";
-import { SideBar } from "./SideBar";
+import { Menu } from "./Menu";
 
 export const Header = () => {
   const [logOut] = useSignOutMutation();
   const { user, setUser } = useAuth();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const sideBarRef = useRef<HTMLDivElement>(null);
 
   const handleLogOut = async () => {
     try {
@@ -28,6 +29,22 @@ export const Header = () => {
   const toggleSideBar = () => {
     setIsSideBarOpen(!isSideBarOpen);
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      sideBarRef.current &&
+      !sideBarRef.current.contains(event.target as Node)
+    ) {
+      setIsSideBarOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="relative container mx-auto">
@@ -75,7 +92,14 @@ export const Header = () => {
         </nav>
       </div>
 
-      {isSideBarOpen && <SideBar />}
+      {isSideBarOpen && (
+        <div
+          ref={sideBarRef}
+          className="absolute bg-white py-6 left-0 shadow-md w-64"
+        >
+          <Menu handleOptionSelect={() => setIsSideBarOpen(false)} />
+        </div>
+      )}
     </div>
   );
 };
