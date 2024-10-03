@@ -1,16 +1,16 @@
 import { createContext, useState, ReactNode, type FC, useEffect } from "react";
 import { useGetCurrentUserQuery } from "./api";
-import { UserInfoLimited } from "../components/users/types";
+import { FullUserData } from "../components/users/types";
 
 export interface SignInInfo {
   message: string;
-  data: UserInfoLimited;
+  data: FullUserData;
   status: number;
 }
 
 export interface SignUpInfo {
   message: string;
-  data: UserInfoLimited;
+  data: FullUserData;
 }
 
 interface AuthProviderProps {
@@ -18,8 +18,8 @@ interface AuthProviderProps {
 }
 
 export interface AuthContextProps {
-  user: UserInfoLimited | null;
-  setUser: React.Dispatch<React.SetStateAction<UserInfoLimited | null>>;
+  user: FullUserData | null;
+  setUser: React.Dispatch<React.SetStateAction<FullUserData | null>>;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
@@ -28,7 +28,7 @@ export const AuthContext = createContext<AuthContextProps>({
 });
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserInfoLimited | null>(null);
+  const [user, setUser] = useState<FullUserData | null>(null);
   const { data, isError, isLoading, isSuccess, error } =
     useGetCurrentUserQuery("");
 
