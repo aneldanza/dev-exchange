@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FullUserData } from "./types";
-import { Dropdown } from "../common/Dropdown";
+import { CustomDropdown } from "../common/Dropdown";
 import { Button } from "../common/Button";
 import { useDeleteAccountMutation } from "../../services/api";
 import { useAuth } from "../../services/storeHooks";
@@ -37,7 +37,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
   return (
     <div className="flex flex-col md:flex-row gap-6 ">
       <div className="flex shrink-0 w-full md:hidden">
-        <Dropdown
+        <CustomDropdown
           options={options}
           handleOptionSelect={setSelectedOption}
           selectedOption={selectedOption}
