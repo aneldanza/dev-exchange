@@ -10,6 +10,8 @@ import { FullUserData } from "./types";
 
 interface UserPageProps {}
 
+// TODO: re-fecth data when current user changes
+
 // First, wrap MyComponent with withError, then pass the resulting component to withLoading
 const UserProfileWithErrorAndLoading = withLoading(
   withError<{ data: FullUserData }>(UserProfile, CustomError),
@@ -18,7 +20,9 @@ const UserProfileWithErrorAndLoading = withLoading(
 
 export const UserPage: React.FC<UserPageProps> = () => {
   const { userId } = useParams<{ userId: string }>();
-  const { data, error, isLoading } = useShowFullUserInfoQuery(userId);
+  const { data, error, isLoading } = useShowFullUserInfoQuery(userId, {
+    refetchOnMountOrArgChange: true,
+  });
 
   return (
     <UserProfileWithErrorAndLoading

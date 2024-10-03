@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import typography from "@tailwindcss/typography";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -7,8 +9,30 @@ export default {
         sans: ["Roboto", "sans-serif"],
       },
       colors: {
-        blue: "#1b75d0",
-        red: "#9c2121",
+        blue: {
+          50: "#f1f7ff",
+          100: "#d9e7ff",
+          200: "#a9c6ff",
+          300: "#7aa5ff",
+          400: "#4a84ff",
+          500: "#1b75d0",
+          600: "#1a68b8",
+          700: "#16589a",
+          800: "#12477b",
+          900: "#0e3760",
+        },
+        red: {
+          50: "#ffebee",
+          100: "#ffcdd2",
+          200: "#ef9a9a",
+          300: "#e57373",
+          400: "#ef5350",
+          500: "#f44336",
+          600: "#e53935",
+          700: "#d32f2f",
+          800: "#c62828",
+          900: "#b71c1c",
+        },
         appGray: {
           50: "#dfe2e4",
           100: "#9ca4aa",
@@ -29,5 +53,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
