@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DOMPurify from "dompurify";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
@@ -52,7 +53,11 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
                     label="About me"
                     changeHandler={(value) => setAbout(value)}
                   />
-                  <div dangerouslySetInnerHTML={{ __html: about }} />
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(about),
+                    }}
+                  />
                 </div>
               </div>
               <div className="flex flex-col gap-4">
