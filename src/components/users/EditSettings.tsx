@@ -53,11 +53,13 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
                     label="About me"
                     changeHandler={(value) => setAbout(value)}
                   />
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(about),
-                    }}
-                  />
+                  <div className="prose prose-sm">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(about),
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col gap-4">

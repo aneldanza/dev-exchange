@@ -70,7 +70,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
           </div>
         )}
       </div>
-      {activeTab === "Profile" && <ProfileTab />}
+      {activeTab === "Profile" && <ProfileTab data={data} />}
       {activeTab === "Activity" && <ActivityTab tags={tags} />}
       {activeTab === "Settings" && <SettingsTab data={data} />}
     </div>
