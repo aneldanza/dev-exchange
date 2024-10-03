@@ -15,6 +15,7 @@ export const api = createApi({
     },
     credentials: "include", // need this for cookies to be sent
   }),
+  tagTypes: ["User", "Tag"],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
       query: (payload) => {
@@ -24,6 +25,7 @@ export const api = createApi({
           body: JSON.stringify(payload),
         };
       },
+      invalidatesTags: ["User"],
     }),
     signIn: builder.mutation<SignInInfo, SignInCredentials>({
       query: (payload) => {
@@ -48,11 +50,32 @@ export const api = createApi({
     showFullUserInfo: builder.query({
       query: (id) => "/users/" + id,
     }),
+    deleteAccount: builder.mutation({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["User"],
+    }),
+    updateUser: builder.mutation<
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      any,
+      { user: { id: number; description?: string } }
+    >({
+      query: (data) => ({
+        url: `/users/${data.user.id}`,
+        method: "PATCH",
+        body: { user: data.user },
+      }),
+      invalidatesTags: ["User"],
+    }),
     getAllUsers: builder.query({
       query: () => "/users",
+      providesTags: ["User"],
     }),
     getTags: builder.query<Tag[], undefined>({
       query: () => "/tags",
+      providesTags: ["Tag"],
     }),
   }),
 });
@@ -63,6 +86,8 @@ export const {
   useSignOutMutation,
   useGetCurrentUserQuery,
   useShowFullUserInfoQuery,
+  useDeleteAccountMutation,
+  useUpdateUserMutation,
   useGetAllUsersQuery,
   useGetTagsQuery,
 } = api;

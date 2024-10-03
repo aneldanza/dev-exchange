@@ -4,19 +4,19 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-blue text-white p-2 rounded-md text-xs;
+    @apply bg-blue-500 text-white p-2 rounded-md text-xs hover:bg-blue-700;
   }
 
   .btn-secondary {
-    @apply text-blue p-2 rounded-md text-xs border border-blue;
+    @apply text-blue-500 p-2 rounded-md text-xs border border-blue-500;
   }
 
   .btn-outline {
-    @apply text-buttonGray px-2 py-1 rounded-md text-xs border border-buttonGray hover:bg-gray-50;
+    @apply text-buttonGray px-2 py-1 rounded-md text-xs border border-buttonGray hover:border-appGray-600 hover:bg-gray-50;
   }
 
   .btn-warning {
-    @apply text-red p-2 rounded-md text-xs hover:border-red;
+    @apply text-red-500 p-2 rounded-md text-xs hover:border-red-500;
   }
 
   .input-field {
@@ -24,7 +24,7 @@
   }
 
   .error-text {
-    @apply text-red text-xs;
+    @apply text-red-500 text-xs;
   }
 
   .tag {
@@ -40,10 +40,18 @@
   }
 
   .tab {
-    @apply text-xs  px-2 border rounded-full cursor-pointer;
+    @apply text-xs  p-2 border rounded-full cursor-pointer;
   }
 
   .card {
     @apply border border-gray-200 rounded-md p-4;
+  }
+
+  .menu-item {
+    @apply text-buttonGray px-2 py-1 text-sm hover:bg-gray-50;
+  }
+
+  .side-menu {
+    @apply bg-white;
   }
 }

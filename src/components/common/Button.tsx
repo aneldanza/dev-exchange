@@ -7,7 +7,12 @@ type ButtonProps = {
   className?: string; // New prop for button classname
 };
 
-const Button: React.FC<ButtonProps> = ({ title, icon, onClick, className }) => {
+export const Button: React.FC<ButtonProps> = ({
+  title,
+  icon,
+  onClick,
+  className,
+}) => {
   return (
     <button
       className={`${className} flex items-center gap-1`}
