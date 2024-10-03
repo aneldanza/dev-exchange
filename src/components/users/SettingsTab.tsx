@@ -35,15 +35,15 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
   };
 
   return (
-    <div className="flex flex-col md:max-2xl:flex-row gap-4 ">
-      <div className="flex shrink-0 w-full md:max-2xl:hidden">
+    <div className="flex flex-col md:flex-row gap-6 ">
+      <div className="flex shrink-0 w-full md:hidden">
         <Dropdown
           options={options}
           handleOptionSelect={setSelectedOption}
           selectedOption={selectedOption}
         />
       </div>
-      <div className="md:max-2xl:w-1/4 min-w-auto hidden md:max-2xl:block">
+      <div className="md:w-1/4 md:max-w-40 min-w-auto hidden md:block">
         <ul className="list space-y-2 text-sm">
           {options.map((option) => (
             <li

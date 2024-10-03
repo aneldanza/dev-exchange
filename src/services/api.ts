@@ -57,6 +57,18 @@ export const api = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+    updateUser: builder.mutation<
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      any,
+      { user: { id: number; description?: string } }
+    >({
+      query: (data) => ({
+        url: `/users/${data.user.id}`,
+        method: "PATCH",
+        body: { user: data.user },
+      }),
+      invalidatesTags: ["User"],
+    }),
     getAllUsers: builder.query({
       query: () => "/users",
       providesTags: ["User"],
@@ -75,6 +87,7 @@ export const {
   useGetCurrentUserQuery,
   useShowFullUserInfoQuery,
   useDeleteAccountMutation,
+  useUpdateUserMutation,
   useGetAllUsersQuery,
   useGetTagsQuery,
 } = api;

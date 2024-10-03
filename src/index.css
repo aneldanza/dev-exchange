@@ -40,7 +40,7 @@
   }
 
   .tab {
-    @apply text-xs  px-2 border rounded-full cursor-pointer;
+    @apply text-xs  p-2 border rounded-full cursor-pointer;
   }
 
   .card {

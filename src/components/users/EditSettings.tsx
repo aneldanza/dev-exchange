@@ -1,6 +1,8 @@
-import React from "react";
+import { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+
+import { useUpdateUserMutation } from "../../services/api";
 import { RichTextEditor } from "../common/RichTextField";
 
 type FormValues = {
@@ -16,9 +18,20 @@ interface EditSettingsProps {
   description: string;
 }
 
-const EditSettings: React.FC<EditSettingsProps> = ({ description }) => {
+const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
+  const [updateUser] = useUpdateUserMutation();
+  const [about, setAbout] = useState(description);
+
   const initialValues: FormValues = {
-    about: description,
+    about: about,
+  };
+
+  const handleSubmit = async (values: FormValues) => {
+    try {
+      await updateUser({ user: { id: userId, description: values.about } });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -27,19 +40,19 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description }) => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationsSchema}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={handleSubmit}
         >
           {() => (
             <Form>
-              <div>
+              <div className="list mb-6">
                 <div>
                   <RichTextEditor
                     name="about"
                     placeholder="Tell us about yourself"
                     label="About me"
+                    changeHandler={(value) => setAbout(value)}
                   />
+                  <div dangerouslySetInnerHTML={{ __html: about }} />
                 </div>
               </div>
               <div className="flex flex-col gap-4">
