@@ -6,7 +6,7 @@ interface DropdownProps {
   handleOptionSelect: (option: string) => void;
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({
+export const CustomDropdown: React.FC<DropdownProps> = ({
   options,
   selectedOption,
   handleOptionSelect,
@@ -31,5 +31,3 @@ export const Dropdown: React.FC<DropdownProps> = ({
     </div>
   );
 };
-
-export default Dropdown;
