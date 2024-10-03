@@ -49,7 +49,7 @@ export const Header = () => {
   return (
     <div className="relative container mx-auto">
       <div className="flex flex-row w-full items-center space-x-3 p-2 border-b-1 text-xs justify-between">
-        <div className="sm:max-2xl:hidden">
+        <div className="sm:hidden">
           {isSideBarOpen ? (
             <XMarkIcon
               className="size-6 cursor-pointer"
