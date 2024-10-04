@@ -3,20 +3,24 @@
 @tailwind utilities;
 
 @layer components {
+  .btn {
+    @apply p-2 rounded-md text-xs text-center justify-center;
+  }
+
   .btn-primary {
-    @apply bg-blue-500 text-white p-2 rounded-md text-xs hover:bg-blue-700;
+    @apply bg-blue-500 text-white  hover:bg-blue-700;
   }
 
   .btn-secondary {
-    @apply text-blue-500 p-2 rounded-md text-xs border border-blue-500;
+    @apply text-blue-500  border border-blue-500;
   }
 
   .btn-outline {
-    @apply text-buttonGray px-2 py-1 rounded-md text-xs border border-buttonGray hover:border-appGray-600 hover:bg-gray-50;
+    @apply text-buttonGray px-2 py-1  border border-buttonGray hover:border-appGray-600 hover:bg-gray-50;
   }
 
   .btn-warning {
-    @apply text-red-500 p-2 rounded-md text-xs hover:border-red-500;
+    @apply text-red-500  hover:border-red-500;
   }
 
   .input-field {
@@ -53,5 +57,9 @@
 
   .side-menu {
     @apply bg-white;
+  }
+
+  .field-label {
+    @apply font-semibold text-sm;
   }
 }

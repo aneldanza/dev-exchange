@@ -75,16 +75,16 @@ export const Header = () => {
                 {user.username}
               </Link>
 
-              <button className="btn-secondary" onClick={handleLogOut}>
+              <button className="btn btn-secondary" onClick={handleLogOut}>
                 Log out
               </button>
             </>
           ) : (
             <>
-              <Link to={"/login"} className="btn-secondary">
+              <Link to={"/login"} className="btn btn-secondary">
                 Log in
               </Link>
-              <Link to={"/signup"} className="btn-primary">
+              <Link to={"/signup"} className="btn btn-primary">
                 Sign up
               </Link>
             </>
