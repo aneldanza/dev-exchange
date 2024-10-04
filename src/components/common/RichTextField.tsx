@@ -7,7 +7,7 @@ interface RichTextEditorProps {
   label: string;
   name: string;
   placeholder: string;
-  changeHandler: (value: string) => void;
+  changeHandler?: (value: string) => void;
 }
 
 const theme = "snow";
@@ -61,7 +61,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       quill.on("text-change", () => {
         if (initialValueSet.current) {
           helpers.setValue(quill.root.innerHTML);
-          changeHandler(quill.root.innerHTML);
+          changeHandler && changeHandler(quill.root.innerHTML);
         }
       });
 
@@ -76,7 +76,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   return (
     <>
       <div className="w-full mb-5">
-        <div className="font-semibold text-sm">{label}</div>
+        <div className="field-label">{label}</div>
         <div
           id={name}
           className="border rounded-b-md overflow-hidden"
