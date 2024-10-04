@@ -15,7 +15,7 @@ export const api = createApi({
     },
     credentials: "include", // need this for cookies to be sent
   }),
-  tagTypes: ["User", "Tag"],
+  tagTypes: ["User", "Tag", "Question"],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
       query: (payload) => {
@@ -77,6 +77,10 @@ export const api = createApi({
       query: () => "/tags",
       providesTags: ["Tag"],
     }),
+    getAllQuestions: builder.query({
+      query: () => "/questions",
+      providesTags: ["Question"],
+    }),
   }),
 });
 
@@ -90,4 +94,5 @@ export const {
   useUpdateUserMutation,
   useGetAllUsersQuery,
   useGetTagsQuery,
+  useGetAllQuestionsQuery,
 } = api;
