@@ -1,0 +1,11 @@
+import { Tag } from "../tags/types";
+
+export type Question = {
+  id: number;
+  title: string;
+  body: string;
+  created_at: string;
+  updated_at: string;
+  tags: Tag[];
+  user_id: number;
+};
