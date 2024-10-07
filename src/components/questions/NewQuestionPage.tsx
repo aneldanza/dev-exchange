@@ -1,11 +1,12 @@
-import React from "react";
-import { Formik, Form, ErrorMessage } from "formik";
+import React, { useState } from "react";
+import { Formik, Form, ErrorMessage, type FormikProps } from "formik";
 import * as Yup from "yup";
-import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 import { InputField } from "../common/InputField";
 import { RichTextEditor } from "../common/RichTextField";
 import Button from "../common/Button";
-import { useGetTagsQuery } from "../../services/api";
+import { useSearchTagsQuery, useCreateTagMutation } from "../../services/api";
+import { MultiValue } from "react-select";
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -17,18 +18,64 @@ const validationSchema = Yup.object({
   tags: Yup.array().min(1, "Select at least one tag"),
 });
 
+type Option = { label: string; value: number };
+
+interface FormValues {
+  title: string;
+  description: string;
+  tags: Option[];
+}
+
 const NewQuestionPage: React.FC = () => {
-  const initialValues = {
+  const initialValues: FormValues = {
     title: "",
     description: "",
     tags: [],
   };
 
-  const { data: tags } = useGetTagsQuery(undefined);
+  const [query, setQuery] = useState<string>("");
+  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+
+  const { data: suggestions = [], isLoading } = useSearchTagsQuery(query, {
+    skip: !query,
+    refetchOnMountOrArgChange: true,
+  });
+
+  const [createTag] = useCreateTagMutation();
 
   const onSubmit = (values: typeof initialValues) => {
     console.log("Form data", values);
     // Handle form submission
+  };
+
+  const handleCreateTag = async (
+    data: string,
+    props: FormikProps<FormValues>
+  ) => {
+    try {
+      const newTag = await createTag({ name: data }).unwrap();
+      props.setFieldValue("tags", [
+        ...props.values["tags"],
+        { label: newTag.name, id: newTag.id },
+      ]);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      console.log(e);
+
+      e.data && e.data.errors && props.setErrors(e.data.errors);
+    }
+  };
+
+  const loadTags = (): Option[] => {
+    return suggestions.map((tag) => ({ label: tag.name, value: tag.id }));
+  };
+
+  const handleChange = (
+    options: MultiValue<Option>,
+    props: FormikProps<FormValues>
+  ) => {
+    setSelectedOptions(options as Option[]);
+    props.setFieldValue("tags", options);
   };
 
   return (
@@ -51,17 +98,15 @@ const NewQuestionPage: React.FC = () => {
 
             <div>
               <div className="field-label">Tags</div>
-              <Select
-                options={tags?.map((tag) => ({
-                  value: tag.id,
-                  label: tag.name,
-                }))}
-                onChange={(options) =>
-                  props.setFieldValue(
-                    "tags",
-                    options.map((option) => option.value)
-                  )
-                }
+              <CreatableSelect
+                id="tags"
+                name="tags"
+                value={selectedOptions}
+                onChange={(options) => handleChange(options, props)}
+                onInputChange={(inputValue) => setQuery(inputValue)}
+                isLoading={isLoading}
+                options={loadTags()}
+                onCreateOption={(value) => handleCreateTag(value, props)}
                 isMulti
               />
               <ErrorMessage
