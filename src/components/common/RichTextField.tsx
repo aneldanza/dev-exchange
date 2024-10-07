@@ -79,7 +79,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
         <div className="field-label">{label}</div>
         <div
           id={name}
-          className="border rounded-b-md overflow-hidden"
+          className="border rounded-b-md overflow-hidden focus:border-appGray-500"
           ref={quillRef}
           style={{ height: "200px" }}
         ></div>

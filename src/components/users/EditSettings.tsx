@@ -63,13 +63,13 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
                 </div>
               </div>
               <div className="flex flex-col gap-4">
-                <button type="submit" className="btn-primary">
+                <button type="submit" className="btn btn-primary">
                   Save
                 </button>
 
                 <button
                   type="reset"
-                  className="btn-outline border-0 text-blue-500 py-2 hover:bg-blue-50"
+                  className="btn btn-outline border-0 text-blue-500 py-2 hover:bg-blue-50"
                 >
                   Cancel
                 </button>

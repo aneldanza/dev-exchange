@@ -5,6 +5,7 @@ type ButtonProps = {
   icon?: ReactNode;
   onClick: () => void;
   className?: string; // New prop for button classname
+  type?: "button" | "submit" | "reset"; // New prop for button type
 };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -12,9 +13,11 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
   onClick,
   className,
+  type,
 }) => {
   return (
     <button
+      type={type || "button"}
       className={`${className} flex items-center gap-1`}
       onClick={onClick}
     >
