@@ -77,6 +77,16 @@ export const api = createApi({
       query: () => "/tags",
       providesTags: ["Tag"],
     }),
+    searchTags: builder.query<Tag[], string>({
+      query: (q) => `tags/search?name=${q}`,
+    }),
+    createTag: builder.mutation({
+      query: (data) => ({
+        url: "/tags",
+        method: "post",
+        body: { tag: data },
+      }),
+    }),
     getAllQuestions: builder.query({
       query: () => "/questions",
       providesTags: ["Question"],
@@ -94,5 +104,7 @@ export const {
   useUpdateUserMutation,
   useGetAllUsersQuery,
   useGetTagsQuery,
+  useSearchTagsQuery,
+  useCreateTagMutation,
   useGetAllQuestionsQuery,
 } = api;
