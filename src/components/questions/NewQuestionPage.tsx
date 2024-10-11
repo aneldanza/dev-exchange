@@ -64,7 +64,11 @@ const NewQuestionPage: React.FC = () => {
       const newTag = await createTag({ name: data }).unwrap();
       props.setFieldValue("tags", [
         ...props.values["tags"],
-        { label: newTag.name, id: newTag.id },
+        { label: newTag.name, value: newTag.id },
+      ]);
+      setSelectedOptions([
+        ...props.values["tags"],
+        { label: newTag.name, value: newTag.id },
       ]);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -112,10 +116,14 @@ const NewQuestionPage: React.FC = () => {
                 name="tags"
                 value={selectedOptions}
                 onChange={(options) => handleChange(options, props)}
-                onInputChange={(inputValue) => setQuery(inputValue)}
+                onInputChange={(inputValue) =>
+                  setQuery(inputValue.toLowerCase())
+                }
                 isLoading={isLoading}
                 options={loadTags()}
-                onCreateOption={(value) => handleCreateTag(value, props)}
+                onCreateOption={(value) =>
+                  handleCreateTag(value.toLowerCase(), props)
+                }
                 isMulti
               />
               <ErrorMessage
