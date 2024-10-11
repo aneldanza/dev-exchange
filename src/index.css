@@ -62,4 +62,12 @@
   .field-label {
     @apply font-semibold text-sm;
   }
+
+  .flash {
+    @apply p-4 mb-4 min-w-14 text-sm rounded-md fixed top-0 left-1/2 transform -translate-x-1/2;
+  }
+
+  .flash-error {
+    @apply bg-red-100 border border-red-400 text-red-700;
+  }
 }
