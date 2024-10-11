@@ -99,7 +99,7 @@ const NewQuestionPage: React.FC = () => {
         onSubmit={onSubmit}
       >
         {(props) => (
-          <Form className="space-y-6">
+          <Form className="space-y-6 w-full max-w-[800px]">
             <InputField name="title" label="Title" />
 
             <RichTextEditor
