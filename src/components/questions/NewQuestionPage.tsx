@@ -34,6 +34,7 @@ const NewQuestionPage: React.FC = () => {
   };
 
   const [query, setQuery] = useState<string>("");
+  const [isFormReset, setResetForm] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
 
   const { data: suggestions = [], isLoading } = useSearchTagsQuery(query, {
@@ -43,8 +44,15 @@ const NewQuestionPage: React.FC = () => {
 
   const [createTag] = useCreateTagMutation();
 
-  const onSubmit = (values: typeof initialValues) => {
-    console.log("Form data", values);
+  const onSubmit = (
+    values: typeof initialValues,
+    { resetForm }: { resetForm: () => void }
+  ) => {
+    console.log(values);
+    resetForm();
+    setSelectedOptions([]);
+    setResetForm(true);
+
     // Handle form submission
   };
 
@@ -94,6 +102,7 @@ const NewQuestionPage: React.FC = () => {
               name="description"
               label="Description"
               placeholder="Add content of your question here..."
+              isFormReset={isFormReset}
             />
 
             <div>
@@ -127,7 +136,10 @@ const NewQuestionPage: React.FC = () => {
               <Button
                 className="btn btn-warning"
                 title="Cancel"
-                onClick={() => {}}
+                onClick={() => {
+                  props.resetForm();
+                  setSelectedOptions([]);
+                }}
                 type="reset"
               />
             </div>

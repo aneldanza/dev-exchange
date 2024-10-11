@@ -8,6 +8,7 @@ interface RichTextEditorProps {
   name: string;
   placeholder: string;
   changeHandler?: (value: string) => void;
+  isFormReset?: boolean;
 }
 
 const theme = "snow";
@@ -17,8 +18,8 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   label,
   name,
   changeHandler,
+  isFormReset,
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, , helpers] = useField(name);
   const { quillRef, quill } = useQuill({
     theme,
@@ -71,20 +72,24 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
         initialValueSet.current = true;
       }
     }
-  }, [quill, field.value, helpers, changeHandler]);
+  }, [quill, field.value, changeHandler, helpers]);
+
+  useEffect(() => {
+    if (quill && isFormReset) {
+      quill.clipboard.dangerouslyPasteHTML("");
+    }
+  }, [isFormReset, quill]);
 
   return (
-    <>
-      <div className="w-full mb-5">
-        <div className="field-label">{label}</div>
-        <div
-          id={name}
-          className="border rounded-b-md overflow-hidden focus:border-appGray-500"
-          ref={quillRef}
-          style={{ height: "200px" }}
-        ></div>
-        <ErrorMessage name={name} component="div" className="error-text" />
-      </div>
-    </>
+    <div className="w-full mb-5">
+      <div className="field-label">{label}</div>
+      <div
+        id={name}
+        className="border rounded-b-md overflow-hidden focus:border-appGray-500"
+        ref={quillRef}
+        style={{ height: "200px" }}
+      ></div>
+      <ErrorMessage name={name} component="div" className="error-text" />
+    </div>
   );
 };
