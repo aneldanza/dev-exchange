@@ -91,6 +91,16 @@ export const api = createApi({
       query: () => "/questions",
       providesTags: ["Question"],
     }),
+    createQuestion: builder.mutation({
+      query: (data) => ({
+        url: "/questions",
+        method: "post",
+        body: { question: data },
+      }),
+    }),
+    getQuestionById: builder.query({
+      query: (id) => `/questions/${id}`,
+    }),
   }),
 });
 
@@ -107,4 +117,6 @@ export const {
   useSearchTagsQuery,
   useCreateTagMutation,
   useGetAllQuestionsQuery,
+  useCreateQuestionMutation,
+  useGetQuestionByIdQuery,
 } = api;
