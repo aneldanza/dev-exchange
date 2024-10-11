@@ -18,7 +18,7 @@ const AllQuestionsPage: React.FC = () => {
   const { data, error, isLoading } = useGetAllQuestionsQuery(undefined);
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-6 pb-6 border-b">
         <h1 className="text-xl">All Questions</h1>
         <Button
           title="Ask a Question"
