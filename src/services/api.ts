@@ -3,6 +3,7 @@ import { SignInInfo, SignUpInfo } from "./AuthContext";
 import { SignUpCredentials } from "../components/auth/SignupForm";
 import { SignInCredentials } from "../components/auth/SigninForm";
 import { Tag } from "../components/tags/types";
+import { QuestionData } from "../components/questions/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -99,7 +100,7 @@ export const api = createApi({
         body: { question: data },
       }),
     }),
-    getQuestionById: builder.query({
+    getQuestionById: builder.query<QuestionData, string>({
       query: (id) => `/questions/${id}`,
     }),
   }),
