@@ -5,6 +5,7 @@ import * as Yup from "yup";
 
 import { useUpdateUserMutation } from "../../services/api";
 import { RichTextEditor } from "../common/RichTextField";
+import { FullUserData } from "./types";
 
 type FormValues = {
   about: string;
@@ -22,6 +23,7 @@ interface EditSettingsProps {
 const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
   const [updateUser] = useUpdateUserMutation();
   const [about, setAbout] = useState(description);
+  const [updatedUser, setUpdatedUser] = useState<FullUserData | null>(null);
 
   const initialValues: FormValues = {
     about: about,
@@ -29,7 +31,11 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      await updateUser({ user: { id: userId, description: values.about } });
+      const result = await updateUser({
+        user: { id: userId, description: values.about },
+      });
+      console.log(JSON.stringify(result));
+      setUpdatedUser(result.data);
     } catch (error) {
       console.error(error);
     }
@@ -78,6 +84,12 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
           )}
         </Formik>
       </div>
+
+      {updatedUser && (
+        <div className="flash flash-success">
+          <p>User updated successfully</p>
+        </div>
+      )}
     </div>
   );
 };

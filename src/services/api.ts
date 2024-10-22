@@ -15,7 +15,7 @@ export const api = createApi({
     },
     credentials: "include", // need this for cookies to be sent
   }),
-  tagTypes: ["User", "Tag", "Question"],
+  tagTypes: ["Users", "User", "Tag", "Question"],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
       query: (payload) => {
@@ -25,7 +25,7 @@ export const api = createApi({
           body: JSON.stringify(payload),
         };
       },
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User", "Users"],
     }),
     signIn: builder.mutation<SignInInfo, SignInCredentials>({
       query: (payload) => {
@@ -49,13 +49,14 @@ export const api = createApi({
     }),
     showFullUserInfo: builder.query({
       query: (id) => "/users/" + id,
+      providesTags: ["User"],
     }),
     deleteAccount: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
         method: "delete",
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User", "Users"],
     }),
     updateUser: builder.mutation<
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -71,7 +72,7 @@ export const api = createApi({
     }),
     getAllUsers: builder.query({
       query: () => "/users",
-      providesTags: ["User"],
+      providesTags: ["Users"],
     }),
     getTags: builder.query<Tag[], undefined>({
       query: () => "/tags",
