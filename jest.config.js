@@ -1,4 +1,4 @@
-module.exports = {
-  testEnvironment: 'node',
-  testMatch: ['<rootDir>/src/__tests__/**/*.test.tsx'],
+export default {
+  testEnvironment: "node",
+  testMatch: ["<rootDir>/src/__tests__/**/*.test.tsx"],
 };
