@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, ErrorMessage, type FormikProps } from "formik";
 import * as Yup from "yup";
 import CreatableSelect from "react-select/creatable";
@@ -34,6 +35,7 @@ interface FormValues {
 
 const NewQuestionPage: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const initialValues: FormValues = {
     title: "",
     body: "",
@@ -67,6 +69,8 @@ const NewQuestionPage: React.FC = () => {
       }).unwrap();
       console.log(newQuestion);
       setFormError([]);
+
+      navigate(`/questions/${newQuestion.id}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.data) {
@@ -194,11 +198,11 @@ const NewQuestionPage: React.FC = () => {
                 type="reset"
               />
             </div>
-            {formError.length && (
+            {formError.length > 0 && (
               <Flash style="flash-error">
                 <div className="list ">
                   {formError.map((error, index) => (
-                    <div key={index}>{error}</div>
+                    <div key={index}>{`error is: ${error}`}</div>
                   ))}
                 </div>
               </Flash>

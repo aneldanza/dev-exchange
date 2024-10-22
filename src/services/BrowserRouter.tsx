@@ -7,6 +7,7 @@ import { UserPage } from "../components/users/UserPage";
 import { AllUsersPage } from "../components/users/AllUsersPage";
 import AllQuestionsPage from "../components/questions/AllQuestionsPage";
 import NewQuestionPage from "../components/questions/NewQuestionPage";
+import QuestionPage from "../components/questions/QuestionPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export const browserRouter = createBrowserRouter([
@@ -21,6 +22,7 @@ export const browserRouter = createBrowserRouter([
       { path: "users/:userId", element: <UserPage /> },
       { path: "/tags", element: <TagsPage /> },
       { path: "/questions", element: <AllQuestionsPage /> },
+      { path: "/questions/:questionId", element: <QuestionPage /> },
       {
         path: "/questions/new",
         element: <ProtectedRoute element={<NewQuestionPage />} />,

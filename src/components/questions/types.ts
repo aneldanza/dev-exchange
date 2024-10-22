@@ -1,6 +1,6 @@
 import { Tag } from "../tags/types";
 
-export type Question = {
+export type QuestionData = {
   id: number;
   title: string;
   body: string;
