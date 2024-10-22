@@ -9,7 +9,7 @@ import AllQuestionsPage from "../components/questions/AllQuestionsPage";
 import NewQuestionPage from "../components/questions/NewQuestionPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 
-const browserRouter = createBrowserRouter([
+export const browserRouter = createBrowserRouter([
   {
     path: "/",
     element: <App />,
@@ -28,5 +28,3 @@ const browserRouter = createBrowserRouter([
     ],
   },
 ]);
-
-export default browserRouter;

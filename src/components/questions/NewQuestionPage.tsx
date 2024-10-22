@@ -5,15 +5,21 @@ import CreatableSelect from "react-select/creatable";
 import { InputField } from "../common/InputField";
 import { RichTextEditor } from "../common/RichTextField";
 import Button from "../common/Button";
-import { useSearchTagsQuery, useCreateTagMutation } from "../../services/api";
+import Flash from "../common/Flash";
+import {
+  useSearchTagsQuery,
+  useCreateTagMutation,
+  useCreateQuestionMutation,
+} from "../../services/api";
+import { useAuth } from "../../services/storeHooks";
 import { MultiValue } from "react-select";
 
 const validationSchema = Yup.object({
   title: Yup.string()
-    .max(50, "Title must be 50 characters or less")
+    .max(200, "Title must be 200 characters or less")
     .required("Title is required"),
-  description: Yup.string()
-    .max(500, "Description must be 500 characters or less")
+  body: Yup.string()
+    .max(2000, "Description must be 2000 characters or less")
     .required("Description is required"),
   tags: Yup.array().min(1, "Select at least one tag"),
 });
@@ -22,20 +28,22 @@ type Option = { label: string; value: number };
 
 interface FormValues {
   title: string;
-  description: string;
+  body: string;
   tags: Option[];
 }
 
 const NewQuestionPage: React.FC = () => {
+  const { user } = useAuth();
   const initialValues: FormValues = {
     title: "",
-    description: "",
+    body: "",
     tags: [],
   };
 
   const [query, setQuery] = useState<string>("");
   const [isFormReset, setResetForm] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+  const [formError, setFormError] = useState<string[]>([]);
 
   const { data: suggestions = [], isLoading } = useSearchTagsQuery(query, {
     skip: !query,
@@ -43,17 +51,51 @@ const NewQuestionPage: React.FC = () => {
   });
 
   const [createTag] = useCreateTagMutation();
+  const [createQuestion] = useCreateQuestionMutation();
+
+  const handleCreateQuestion = async (data: FormValues) => {
+    try {
+      const formattedTags = data.tags.map((option) => ({
+        name: option.label,
+        id: option.value,
+      }));
+      const newQuestion = await createQuestion({
+        user_id: user ? user.id : 0,
+        title: data.title,
+        body: data.body,
+        tags: formattedTags,
+      }).unwrap();
+      console.log(newQuestion);
+      setFormError([]);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      if (e.data) {
+        if (e.data.errors) {
+          setFormError([...e.data.errors]);
+        } else {
+          setFormError([e.data.error]);
+        }
+      } else {
+        setFormError(["An error occurred. Please try again later."]);
+      }
+    }
+  };
 
   const onSubmit = (
-    values: typeof initialValues,
-    { resetForm }: { resetForm: () => void }
+    values: FormValues,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    {
+      resetForm,
+    }: {
+      resetForm: () => void;
+    }
   ) => {
     console.log(values);
+    handleCreateQuestion(values);
+
     resetForm();
     setSelectedOptions([]);
     setResetForm(true);
-
-    // Handle form submission
   };
 
   const handleCreateTag = async (
@@ -103,7 +145,7 @@ const NewQuestionPage: React.FC = () => {
             <InputField name="title" label="Title" />
 
             <RichTextEditor
-              name="description"
+              name="body"
               label="Description"
               placeholder="Add content of your question here..."
               isFormReset={isFormReset}
@@ -147,10 +189,20 @@ const NewQuestionPage: React.FC = () => {
                 onClick={() => {
                   props.resetForm();
                   setSelectedOptions([]);
+                  setFormError([]);
                 }}
                 type="reset"
               />
             </div>
+            {formError.length && (
+              <Flash style="flash-error">
+                <div className="list ">
+                  {formError.map((error, index) => (
+                    <div key={index}>{error}</div>
+                  ))}
+                </div>
+              </Flash>
+            )}
           </Form>
         )}
       </Formik>

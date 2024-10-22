@@ -27,8 +27,8 @@ const Flash: React.FC<FlashProps> = ({
 
   return (
     <div className={`flash ${style}`}>
-      {message}
-      {children}
+      {message && message}
+      {children && children}
     </div>
   );
 };
