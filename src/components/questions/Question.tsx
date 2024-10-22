@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import { QuestionData } from "./types";
 
 interface QuestionProps {
@@ -12,7 +13,17 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
 
   return (
     <div className="question">
-      <h2 className="question-title">{question.title}</h2>
+      <div>
+        <h2 className="question-title">{question.title}</h2>
+        <div className="flex gap-4 text-xs sm:text-sm flex-wrap">
+          <div className="whitespace-nowrap">{`asked ${moment(
+            question.created_at
+          ).fromNow()}`}</div>
+          <div className="whitespace-nowrap">{`modified ${moment(
+            question.updated_at
+          ).fromNow()}`}</div>
+        </div>
+      </div>
       <div className="prose">
         <div dangerouslySetInnerHTML={{ __html: question.body }} />
       </div>
