@@ -20,7 +20,7 @@ const validationSchema = Yup.object({
     .max(200, "Title must be 200 characters or less")
     .required("Title is required"),
   body: Yup.string()
-    .max(2000, "Description must be 2000 characters or less")
+    .max(5000, "Description must be 5000 characters or less")
     .required("Description is required"),
   tags: Yup.array().min(1, "Select at least one tag"),
 });
