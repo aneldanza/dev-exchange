@@ -22,7 +22,7 @@ const QuestionPage: React.FC = () => {
 
   return (
     <div>
-      <div className="flex justify-end mb-8">
+      <div className="flex justify-end">
         <Button
           title="Ask a question"
           className="btn btn-primary"
