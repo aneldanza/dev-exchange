@@ -103,6 +103,13 @@ export const api = createApi({
     getQuestionById: builder.query<QuestionData, string>({
       query: (id) => `/questions/${id}`,
     }),
+    updateQuestion: builder.mutation({
+      query: (data) => ({
+        url: `/questions/${data.id}`,
+        method: "PATCH",
+        body: { question: data },
+      }),
+    }),
   }),
 });
 
@@ -121,4 +128,5 @@ export const {
   useGetAllQuestionsQuery,
   useCreateQuestionMutation,
   useGetQuestionByIdQuery,
+  useUpdateQuestionMutation,
 } = api;
