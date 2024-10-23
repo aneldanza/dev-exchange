@@ -12,3 +12,11 @@ export type QuestionData = {
     username: string;
   };
 };
+
+export type Option = { label: string; value: number };
+
+export type FormValues = {
+  title: string;
+  body: string;
+  tags: Option[];
+};
