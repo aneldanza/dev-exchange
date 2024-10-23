@@ -33,6 +33,7 @@ const EditQuestionPage: React.FC = () => {
       id: option.value,
     }));
     const updatedQuestion = await updateQuestion({
+      id: questionId || "",
       title: data.title,
       body: data.body,
       tags: formattedTags,
