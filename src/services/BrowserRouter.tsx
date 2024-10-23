@@ -9,6 +9,7 @@ import AllQuestionsPage from "../components/questions/AllQuestionsPage";
 import NewQuestionPage from "../components/questions/NewQuestionPage";
 import QuestionPage from "../components/questions/QuestionPage";
 import { ProtectedRoute } from "./ProtectedRoute";
+import EditQuestionPage from "../components/questions/EditQuestionPage";
 
 export const browserRouter = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const browserRouter = createBrowserRouter([
       {
         path: "/questions/new",
         element: <ProtectedRoute element={<NewQuestionPage />} />,
+      },
+      {
+        path: "/questions/:questionId/edit",
+        element: <ProtectedRoute element={<EditQuestionPage />} />,
       },
     ],
   },
