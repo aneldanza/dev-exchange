@@ -9,6 +9,7 @@ import Flash from "../common/Flash";
 import { useSearchTagsQuery, useCreateTagMutation } from "../../services/api";
 import { MultiValue } from "react-select";
 import { Option, FormValues } from "./types";
+import { Tag } from "../tags/types";
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -22,21 +23,31 @@ const validationSchema = Yup.object({
 
 interface QuestionFormProps {
   questionAction: (data: FormValues) => Promise<void>;
+  questionData?: { title: string; body: string; tags: Tag[] };
+  submitText: string;
 }
 
 export const QuestionForm: React.FC<QuestionFormProps> = ({
   questionAction,
+  questionData = { title: "", body: "", tags: [] },
+  submitText,
 }) => {
-  const initialValues: FormValues = {
-    title: "",
-    body: "",
-    tags: [],
-  };
+  const initialOptions = questionData.tags.map((tag) => ({
+    label: tag.name,
+    value: tag.id,
+  }));
 
   const [query, setQuery] = useState<string>("");
   const [isFormReset, setResetForm] = useState<boolean>(false);
-  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+  const [selectedOptions, setSelectedOptions] =
+    useState<Option[]>(initialOptions);
   const [formError, setFormError] = useState<string[]>([]);
+
+  const initialValues: FormValues = {
+    title: questionData.title,
+    body: questionData.body,
+    tags: initialOptions,
+  };
 
   const { data: suggestions = [], isLoading } = useSearchTagsQuery(query, {
     skip: !query,
@@ -75,7 +86,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     handleQuestion(values);
 
     resetForm();
-    setSelectedOptions([]);
+    setSelectedOptions(initialOptions);
     setResetForm(true);
   };
 
@@ -129,6 +140,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
               label="Description"
               placeholder="Add content of your question here..."
               isFormReset={isFormReset}
+              initialValue={questionData.body}
             />
 
             <div>
@@ -159,7 +171,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
               <Button
                 type="submit"
                 className="btn btn-primary"
-                title="Post your question"
+                title={submitText}
                 onClick={() => {}}
               />
 
@@ -168,8 +180,9 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
                 title="Cancel"
                 onClick={() => {
                   props.resetForm();
-                  setSelectedOptions([]);
+                  setSelectedOptions(initialOptions);
                   setFormError([]);
+                  setResetForm(true);
                 }}
                 type="reset"
               />
