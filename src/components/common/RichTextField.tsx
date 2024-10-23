@@ -41,6 +41,7 @@ interface RichTextEditorProps {
   placeholder: string;
   changeHandler?: (value: string) => void;
   isFormReset?: boolean;
+  initialValue?: string;
 }
 
 const theme = "snow";
@@ -56,6 +57,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   name,
   changeHandler,
   isFormReset,
+  initialValue = "",
 }) => {
   const [field, , helpers] = useField(name);
 
@@ -111,17 +113,17 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
       // Set initial value
       if (!initialValueSet.current) {
-        quill.clipboard.dangerouslyPasteHTML(field.value || "");
+        quill.clipboard.dangerouslyPasteHTML(field.value || initialValue);
         initialValueSet.current = true;
       }
     }
-  }, [quill, field.value, changeHandler, helpers]);
+  }, [quill, field.value, changeHandler, helpers, initialValue]);
 
   useEffect(() => {
     if (quill && isFormReset) {
-      quill.clipboard.dangerouslyPasteHTML("");
+      quill.clipboard.dangerouslyPasteHTML(initialValue);
     }
-  }, [isFormReset, quill]);
+  }, [isFormReset, quill, initialValue]);
 
   return (
     <div className="w-full mb-5">
