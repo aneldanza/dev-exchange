@@ -7,5 +7,8 @@ export type QuestionData = {
   created_at: string;
   updated_at: string;
   tags: Tag[];
-  user_id: number;
+  user: {
+    id: number;
+    username: string;
+  };
 };
