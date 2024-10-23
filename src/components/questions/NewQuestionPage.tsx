@@ -29,7 +29,10 @@ const NewQuestionPage: React.FC = () => {
   return (
     <div>
       <h1 className="font-bold text-xl mb-4 flex">Ask a New Question</h1>
-      <QuestionForm questionAction={handleCreateQuestion} />
+      <QuestionForm
+        questionAction={handleCreateQuestion}
+        submitText="Post your question"
+      />
     </div>
   );
 };
