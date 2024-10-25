@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import { useUpdateUserMutation } from "../../services/api";
-import { RichTextEditor } from "../common/RichTextField";
+import { QuillEditor } from "../common/QuillEditor";
 import { FullUserData } from "./types";
 
 type FormValues = {
@@ -53,7 +53,7 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
             <Form>
               <div className="list mb-6">
                 <div>
-                  <RichTextEditor
+                  <QuillEditor
                     name="about"
                     placeholder="Tell us about yourself"
                     label="About me"
