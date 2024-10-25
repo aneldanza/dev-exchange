@@ -9,7 +9,6 @@ interface QuillEditorProps {
   label: string;
   name: string;
   placeholder: string;
-  changeHandler?: (value: string) => void;
   isFormReset?: boolean;
   initialValue?: string;
 }
@@ -18,7 +17,6 @@ export const QuillEditor: FC<QuillEditorProps> = ({
   label,
   name,
   placeholder,
-  changeHandler,
   isFormReset,
 }) => {
   const editorRef = useRef<HTMLDivElement | null>(null);
@@ -49,15 +47,12 @@ export const QuillEditor: FC<QuillEditorProps> = ({
 
       // Set initial value
 
-      quillRef.current.root.innerHTML = field.value;
+      quillRef.current.clipboard.dangerouslyPasteHTML(0, initialValue);
 
       // Listen for changes and call changeHandler
       quillRef.current.on("text-change", () => {
         const value = quillRef.current?.root.innerHTML || "";
         helpers.setValue(value);
-        if (changeHandler) {
-          changeHandler(value);
-        }
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
