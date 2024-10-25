@@ -1,8 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type FC } from "react";
 import Quill from "quill";
 import hljs from "highlight.js";
 import "quill/dist/quill.snow.css"; // Quill theme
-import "highlight.js/styles/github.css"; // Highlight.js theme
+import "highlight.js/styles/atom-one-dark.css";
+import { useField, ErrorMessage } from "formik";
 
 interface QuillEditorProps {
   label: string;
@@ -17,9 +18,13 @@ export const QuillEditor: FC<QuillEditorProps> = ({
   label,
   name,
   placeholder,
+  changeHandler,
+  isFormReset,
 }) => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillRef = useRef<Quill | null>(null);
+  const [field, , helpers] = useField(name);
+  const initialValue = field.value;
 
   useEffect(() => {
     if (!quillRef.current && editorRef.current) {
@@ -30,17 +35,39 @@ export const QuillEditor: FC<QuillEditorProps> = ({
             hljs,
           },
           toolbar: [
-            ["bold", "italic", "underline", "strike"],
+            ["bold", "italic", "underline", { color: [] }],
             ["blockquote", "code-block"],
             [{ list: "ordered" }, { list: "bullet" }],
             [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            ["link", "image"],
+            ["link"],
             ["clean"],
           ],
         },
+
+        placeholder,
+      });
+
+      // Set initial value
+
+      quillRef.current.root.innerHTML = field.value;
+
+      // Listen for changes and call changeHandler
+      quillRef.current.on("text-change", () => {
+        const value = quillRef.current?.root.innerHTML || "";
+        helpers.setValue(value);
+        if (changeHandler) {
+          changeHandler(value);
+        }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (isFormReset && quillRef.current) {
+      quillRef.current.root.innerHTML = initialValue;
+    }
+  }, [isFormReset, initialValue]);
 
   return (
     <div>
@@ -58,6 +85,7 @@ export const QuillEditor: FC<QuillEditorProps> = ({
           }}
         />
       </div>
+      <ErrorMessage name={name} component="div" className="error-text" />
     </div>
   );
 };
