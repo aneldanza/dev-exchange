@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import hljs from "highlight.js";
 import "highlight.js/styles/stackoverflow-light.css";
+import moment from "moment";
+
+import { DeleteQuestionModal } from "./DeleteQuestionModal";
+
 import DOMPurify from "dompurify";
 import { useAuth } from "../../services/storeHooks";
-import moment from "moment";
 import { QuestionData } from "./types";
 import Button from "../common/Button";
 
@@ -14,7 +17,7 @@ interface QuestionProps {
 
 export const Question: React.FC<QuestionProps> = ({ question }) => {
   const { user } = useAuth();
-
+  const [showModal, setShowModal] = useState(false);
   hljs.configure({
     cssSelector: ".ql-code-block",
   });
@@ -71,7 +74,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
             }}
           />
         </div>
-        <div className="">
+        <div className="flex gap-2">
           {question.tags.map((tag, index) => (
             <span key={index} className="tag text-xs">
               {tag.name}
@@ -87,7 +90,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
               <Button
                 title="Delete"
                 className="action"
-                onClick={() => console.log("Delete")}
+                onClick={() => setShowModal(true)}
               />
             </div>
           )}
@@ -109,6 +112,12 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
           </div>
         </div>
       </div>
+
+      <DeleteQuestionModal
+        openModal={showModal}
+        setOpenModal={setShowModal}
+        questionId={question.id}
+      />
     </div>
   );
 };
