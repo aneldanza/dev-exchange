@@ -16,28 +16,41 @@ const validationsSchema = Yup.object().shape({
 });
 
 interface EditSettingsProps {
-  userId: number;
-  description: string;
+  data: FullUserData;
 }
 
-const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
+const messages: { [key: string]: { text: string; className: string } } = {
+  success: {
+    text: "User updated successfully",
+    className: "success",
+  },
+
+  error: {
+    text: "An error occurred while updating user",
+    className: "error",
+  },
+};
+
+const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
   const [updateUser] = useUpdateUserMutation();
-  const [about, setAbout] = useState(description);
   const [updatedUser, setUpdatedUser] = useState<FullUserData | null>(null);
+  const [message, setMessage] = useState<string>("");
 
   const initialValues: FormValues = {
-    about: about,
+    about: data.description,
   };
 
   const handleSubmit = async (values: FormValues) => {
     try {
       const result = await updateUser({
-        user: { id: userId, description: values.about },
+        user: { id: data.id, description: values.about },
       });
-      console.log(JSON.stringify(result));
+
       setUpdatedUser(result.data);
+      setMessage("success");
     } catch (error) {
       console.error(error);
+      setMessage("error");
     }
   };
 
@@ -49,7 +62,7 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
           validationSchema={validationsSchema}
           onSubmit={handleSubmit}
         >
-          {() => (
+          {(props) => (
             <Form>
               <div className="list mb-6">
                 <div>
@@ -57,12 +70,11 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
                     name="about"
                     placeholder="Tell us about yourself"
                     label="About me"
-                    changeHandler={(value) => setAbout(value)}
                   />
                   <div className="prose prose-sm">
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(about),
+                        __html: DOMPurify.sanitize(props.values.about),
                       }}
                     />
                   </div>
@@ -86,8 +98,8 @@ const EditSettings: React.FC<EditSettingsProps> = ({ description, userId }) => {
       </div>
 
       {updatedUser && (
-        <div className="flash flash-success">
-          <p>User updated successfully</p>
+        <div className={`flash flash-${message}`}>
+          <p>{messages[message].text}</p>
         </div>
       )}
     </div>
