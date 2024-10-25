@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FullUserData } from "./types";
 import { CustomDropdown } from "../common/Dropdown";
@@ -34,6 +34,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
     }
   };
 
+  useEffect(() => {
+    console.log(data.description);
+  }, [data.description]);
+
   return (
     <div className="flex flex-col md:flex-row gap-6 ">
       <div className="flex shrink-0 w-full md:hidden">
@@ -65,8 +69,8 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
           </div>
           {selectedOption === "Edit" && (
             <EditSettings
-              description={data.description || ""}
-              userId={data.id}
+              data={data}
+              // setAbout={setAbout}
             />
           )}
           {selectedOption === "Delete" && (
