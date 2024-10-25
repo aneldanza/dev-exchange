@@ -16,7 +16,7 @@ export const api = createApi({
     },
     credentials: "include", // need this for cookies to be sent
   }),
-  tagTypes: ["Users", "User", "Tag", "Question"],
+  tagTypes: ["Users", "User", "Tag", "Questions"],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
       query: (payload) => {
@@ -91,7 +91,7 @@ export const api = createApi({
     }),
     getAllQuestions: builder.query({
       query: () => "/questions",
-      providesTags: ["Question"],
+      providesTags: ["Questions"],
     }),
     createQuestion: builder.mutation({
       query: (data) => ({
@@ -109,6 +109,13 @@ export const api = createApi({
         method: "PATCH",
         body: { question: data },
       }),
+    }),
+    deleteQuestion: builder.mutation({
+      query: (id) => ({
+        url: `/questions/${id}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["Questions"],
     }),
   }),
 });
@@ -129,4 +136,5 @@ export const {
   useCreateQuestionMutation,
   useGetQuestionByIdQuery,
   useUpdateQuestionMutation,
+  useDeleteQuestionMutation,
 } = api;
