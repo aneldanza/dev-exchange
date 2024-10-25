@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Question } from "./types";
+import DOMPurify from "dompurify";
+import { QuestionData } from "./types";
 
 interface QuestionsListProps {
-  questions: Question[];
+  questions: QuestionData[];
 }
 
 const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
@@ -18,11 +19,17 @@ const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
             >
               {question.title}
             </Link>
-            <div className="text-xs">
-              {question.body.length > 100
-                ? `${question.body.substring(0, 100)}...`
-                : question.body}
-            </div>
+            <div
+              className="text-xs"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(
+                  question.body.length > 100
+                    ? `${question.body.substring(0, 100)}...`
+                    : question.body
+                ),
+              }}
+            />
+
             <div className="flex gap-1">
               {question.tags.map((tag) => (
                 <span

@@ -20,6 +20,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
   const [showModal, setShowModal] = useState(false);
   hljs.configure({
     cssSelector: ".ql-code-block",
+    ignoreUnescapedHTML: true,
   });
 
   useEffect(() => {
