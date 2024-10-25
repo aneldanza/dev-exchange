@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import hljs from "highlight.js";
-import "highlight.js/styles/github.css"; // Import a highlight.js theme
+import "highlight.js/styles/stackoverflow-light.css";
+import DOMPurify from "dompurify";
 import { useAuth } from "../../services/storeHooks";
 import moment from "moment";
 import { QuestionData } from "./types";
@@ -14,19 +15,34 @@ interface QuestionProps {
 export const Question: React.FC<QuestionProps> = ({ question }) => {
   const { user } = useAuth();
 
+  hljs.configure({
+    cssSelector: ".ql-code-block",
+  });
+
   useEffect(() => {
     if (question) {
       document.querySelectorAll(".ql-code-block-container").forEach((block) => {
-        block.classList.add("custom-code-block");
+        block.classList.add("custom-code-block-container");
       });
 
       document.querySelectorAll(".ql-code-block").forEach((block) => {
-        hljs.highlightBlock(block as HTMLElement);
+        const element = block as HTMLElement;
+
+        // delete data-highlighted attribute to prevent error
+        delete element.dataset.highlighted;
+
+        // get language from data-language attribute or default to "plaintext"
+        const language = element.getAttribute("data-language") || "plaintext";
+
+        // set language class on code block
+        element.classList.add(`language-${language}`);
       });
 
       document.querySelectorAll("code").forEach((block) => {
         hljs.highlightBlock(block as HTMLElement);
       });
+
+      hljs.highlightAll();
     }
   }, [question]);
 
@@ -47,18 +63,22 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
           ).fromNow()}`}</div>
         </div>
       </div>
-      <div className="max-w-3xl w-full">
+      <div className="max-w-3xl w-full flex flex-col gap-4 mt-4">
         <div className="prose prose-sm max-w-full">
-          <div dangerouslySetInnerHTML={{ __html: question.body }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(question.body),
+            }}
+          />
         </div>
-        <div className="tags">
+        <div className="">
           {question.tags.map((tag, index) => (
             <span key={index} className="tag text-xs">
               {tag.name}
             </span>
           ))}
         </div>
-        <div className="my-4">
+        <div className="">
           {user && question.user.id === user.id && (
             <div className="py-2 flex gap-2">
               <Link to={`/questions/${question.id}/edit`} className="action">
