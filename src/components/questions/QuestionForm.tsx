@@ -3,13 +3,14 @@ import { Formik, Form, ErrorMessage, type FormikProps } from "formik";
 import * as Yup from "yup";
 import CreatableSelect from "react-select/creatable";
 import { InputField } from "../common/InputField";
-import { RichTextEditor } from "../common/RichTextField";
 import Button from "../common/Button";
 import Flash from "../common/Flash";
 import { useSearchTagsQuery, useCreateTagMutation } from "../../services/api";
 import { MultiValue } from "react-select";
 import { Option, FormValues } from "./types";
 import { Tag } from "../tags/types";
+
+import { QuillEditor } from "../common/QuillEditor";
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -73,6 +74,18 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     }
   };
 
+  const removeSelectElement = (body: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(body, "text/html");
+
+    // Remove all <select> elements
+    const selects = doc.querySelectorAll("select");
+    selects.forEach((select) => select.remove());
+
+    // Serialize the modified HTML back to a string
+    return doc.body.innerHTML;
+  };
+
   const onSubmit = (
     values: FormValues,
 
@@ -82,8 +95,10 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
       resetForm: () => void;
     }
   ) => {
-    console.log(values);
-    handleQuestion(values);
+    const modifiedBody = removeSelectElement(values.body);
+
+    // Call handleQuestion with the modified values
+    handleQuestion({ ...values, body: modifiedBody });
 
     resetForm();
     setSelectedOptions(initialOptions);
@@ -135,12 +150,11 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
           <Form className="space-y-6 w-full max-w-[800px]">
             <InputField name="title" label="Title" />
 
-            <RichTextEditor
+            <QuillEditor
               name="body"
               label="Description"
               placeholder="Add content of your question here..."
               isFormReset={isFormReset}
-              initialValue={questionData.body}
             />
 
             <div>
