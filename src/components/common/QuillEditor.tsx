@@ -13,6 +13,14 @@ interface QuillEditorProps {
   initialValue?: string;
 }
 
+// Define custom icons
+const icons = Quill.import("ui/icons") as Record<string, string>;
+icons["code-block"] = `
+   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+</svg>
+ `;
+
 export const QuillEditor: FC<QuillEditorProps> = ({
   label,
   name,
@@ -34,7 +42,7 @@ export const QuillEditor: FC<QuillEditorProps> = ({
           },
           toolbar: [
             ["bold", "italic", "underline", { color: [] }],
-            ["blockquote", "code-block"],
+            ["blockquote", "code-block", "code"],
             [{ list: "ordered" }, { list: "bullet" }],
             [{ header: [1, 2, 3, 4, 5, 6, false] }],
             ["link"],
