@@ -80,14 +80,18 @@
   }
 
   .custom-code-block-container {
-    @apply rounded-md p-4 bg-[#f6f6f6] border border-[#f6f6f6] shadow-md;
+    @apply rounded-md p-4 bg-[#f6f6f6] border border-[#f6f6f6] shadow-md whitespace-pre-wrap;
   }
 
   .action {
     @apply text-appGray-300 hover:text-appGray-500 text-xs italic;
   }
 
-  .ql-ui {
-    @apply bg-blue-200 p-1 border-white border rounded-sm text-white;
+  .ql-code-block-container > select {
+    @apply px-1 border-black border rounded-sm text-black text-xs py-0;
+  }
+
+  .ql-editor {
+    @apply whitespace-pre-wrap;
   }
 }
