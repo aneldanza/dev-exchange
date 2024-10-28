@@ -10,9 +10,9 @@ interface QuestionsListProps {
 const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
   return (
     <div>
-      <ul className="list divide-y">
+      <ul className="flex flex-col divide-y">
         {questions.map((question) => (
-          <li key={question.id} className="flex flex-col gap-2">
+          <li key={question.id} className="flex flex-col gap-2 py-3">
             <Link
               to={`questions/${question.id}`}
               className="text-blue-500 text-sm"
