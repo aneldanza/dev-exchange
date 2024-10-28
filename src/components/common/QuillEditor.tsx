@@ -80,7 +80,7 @@ export const QuillEditor: FC<QuillEditorProps> = ({
         <div
           id={name}
           ref={editorRef}
-          className="border rounded-b-md overflow-hidden focus:border-appGray-500"
+          className="border rounded-b-md overflow-hidden focus:border-appGray-500 whitespace-pre-wrap"
           style={{
             height: "200px",
             borderBottomLeftRadius: "0.5rem",
