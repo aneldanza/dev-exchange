@@ -13,7 +13,7 @@ export type QuestionData = {
   };
 };
 
-export type Option = { label: string; value: number };
+export type Option = { label: string; value: string };
 
 export type FormValues = {
   title: string;

@@ -5,7 +5,7 @@ import {
 } from "../../services/api";
 // import { useAuth } from "../../services/storeHooks";
 import { QuestionForm } from "./QuestionForm";
-import { FormValues } from "./types";
+
 import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import { CustomError } from "../common/CustomError";
@@ -27,16 +27,16 @@ const EditQuestionPage: React.FC = () => {
 
   const [updateQuestion] = useUpdateQuestionMutation();
 
-  const handleUpdateQuestion = async (data: FormValues) => {
-    const formattedTags = data.tags.map((option) => ({
-      name: option.label,
-      id: option.value,
-    }));
+  const handleUpdateQuestion = async (data: {
+    title: string;
+    body: string;
+    tags: { name: string; id: number }[];
+  }) => {
     const updatedQuestion = await updateQuestion({
       id: questionId || "",
       title: data.title,
       body: data.body,
-      tags: formattedTags,
+      tags: data.tags,
     }).unwrap();
     console.log(updatedQuestion);
 

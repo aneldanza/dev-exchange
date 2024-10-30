@@ -5,7 +5,7 @@ import CreatableSelect from "react-select/creatable";
 import { InputField } from "../common/InputField";
 import Button from "../common/Button";
 import Flash from "../common/Flash";
-import { useSearchTagsQuery, useCreateTagMutation } from "../../services/api";
+import { useSearchTagsQuery } from "../../services/api";
 import { MultiValue } from "react-select";
 import { Option, FormValues } from "./types";
 import { Tag } from "../tags/types";
@@ -23,7 +23,14 @@ const validationSchema = Yup.object({
 });
 
 interface QuestionFormProps {
-  questionAction: (data: FormValues) => Promise<void>;
+  questionAction: (data: {
+    title: string;
+    body: string;
+    tags: {
+      name: string;
+      id: number;
+    }[];
+  }) => Promise<void>;
   questionData?: { title: string; body: string; tags: Tag[] };
   submitText: string;
 }
@@ -35,7 +42,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
 }) => {
   const initialOptions = questionData.tags.map((tag) => ({
     label: tag.name,
-    value: tag.id,
+    value: tag.id.toString(),
   }));
 
   const [query, setQuery] = useState<string>("");
@@ -55,11 +62,16 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     refetchOnMountOrArgChange: true,
   });
 
-  const [createTag] = useCreateTagMutation();
+  // const [createTag] = useCreateTagMutation();
 
   const handleQuestion = async (data: FormValues) => {
+    const formattedTags = data.tags.map((option) => ({
+      name: option.label,
+      id: option.value.startsWith("tempId-") ? 0 : Number(option.value),
+    }));
+
     try {
-      await questionAction(data);
+      await questionAction({ ...data, tags: formattedTags });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.data) {
@@ -105,19 +117,20 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     setResetForm(true);
   };
 
-  const handleCreateTag = async (
-    data: string,
+  const handleCreateTempTag = async (
+    name: string,
     props: FormikProps<FormValues>
   ) => {
     try {
-      const newTag = await createTag({ name: data }).unwrap();
+      // const newTag = await createTag({ name: name }).unwrap();
+      const tagCount = props.values.tags.length;
       props.setFieldValue("tags", [
         ...props.values["tags"],
-        { label: newTag.name, value: newTag.id },
+        { label: name, value: `tempId-${tagCount}` },
       ]);
       setSelectedOptions([
         ...props.values["tags"],
-        { label: newTag.name, value: newTag.id },
+        { label: name, value: `tempId-${tagCount}` },
       ]);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
@@ -128,7 +141,10 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
   };
 
   const loadTags = (): Option[] => {
-    return suggestions.map((tag) => ({ label: tag.name, value: tag.id }));
+    return suggestions.map((tag) => ({
+      label: tag.name,
+      value: tag.id.toString(),
+    }));
   };
 
   const handleChange = (
@@ -170,7 +186,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
                 isLoading={isLoading}
                 options={loadTags()}
                 onCreateOption={(value) =>
-                  handleCreateTag(value.toLowerCase(), props)
+                  handleCreateTempTag(value.toLowerCase(), props)
                 }
                 isMulti
               />

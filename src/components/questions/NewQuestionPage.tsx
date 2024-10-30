@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useCreateQuestionMutation } from "../../services/api";
 import { useAuth } from "../../services/storeHooks";
 import { QuestionForm } from "./QuestionForm";
-import { FormValues } from "./types";
 
 const NewQuestionPage: React.FC = () => {
   const { user } = useAuth();
@@ -10,16 +9,16 @@ const NewQuestionPage: React.FC = () => {
 
   const [createQuestion] = useCreateQuestionMutation();
 
-  const handleCreateQuestion = async (data: FormValues) => {
-    const formattedTags = data.tags.map((option) => ({
-      name: option.label,
-      id: option.value,
-    }));
+  const handleCreateQuestion = async (data: {
+    title: string;
+    body: string;
+    tags: { name: string; id: number }[];
+  }) => {
     const newQuestion = await createQuestion({
       user_id: user ? user.id : 0,
       title: data.title,
       body: data.body,
-      tags: formattedTags,
+      tags: data.tags,
     }).unwrap();
     console.log(newQuestion);
 
