@@ -9,7 +9,7 @@ interface TagProps {
 
 export const Tag: FC<TagProps> = ({ tag }) => {
   return (
-    <Link to={`/questions/tagged/${tag.id}`} className="tag">
+    <Link to={`/questions/tagged/${tag.id}`} className="tag text-xs">
       {tag.name.toLowerCase()}
     </Link>
   );
