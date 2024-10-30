@@ -10,6 +10,7 @@ import DOMPurify from "dompurify";
 import { useAuth } from "../../services/storeHooks";
 import { QuestionData } from "./types";
 import Button from "../common/Button";
+import { Tag } from "../tags/Tag";
 
 interface QuestionProps {
   question?: QuestionData;
@@ -77,9 +78,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
         </div>
         <div className="flex gap-2">
           {question.tags.map((tag, index) => (
-            <span key={index} className="tag text-xs">
-              {tag.name}
-            </span>
+            <Tag key={index} tag={tag} />
           ))}
         </div>
         <div className="">

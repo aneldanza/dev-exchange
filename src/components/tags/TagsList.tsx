@@ -1,9 +1,9 @@
 import React from "react";
-import { Tag } from "./types";
-import { Link } from "react-router-dom";
+import { Tag } from "./Tag";
+import { TagData } from "./types";
 
 interface TagsListProps {
-  tags: Tag[];
+  tags: TagData[];
 }
 
 export const TagsList: React.FC<TagsListProps> = ({ tags }) => {
@@ -12,9 +12,7 @@ export const TagsList: React.FC<TagsListProps> = ({ tags }) => {
       {tags.map((tag) => (
         <div key={tag.id} className="flex flex-col border rounded-md p-3">
           <div>
-            <Link to={`/tags/${tag.name}`} className="tag">
-              {tag.name.toLowerCase()}
-            </Link>
+            <Tag tag={tag} key={tag.id} />
           </div>
           <div className="text-xs">{tag.description}</div>
         </div>

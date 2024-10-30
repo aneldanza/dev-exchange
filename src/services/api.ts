@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { SignInInfo, SignUpInfo } from "./AuthContext";
 import { SignUpCredentials } from "../components/auth/SignupForm";
 import { SignInCredentials } from "../components/auth/SigninForm";
-import { Tag } from "../components/tags/types";
+import { TagData } from "../components/tags/types";
 import { QuestionData } from "../components/questions/types";
 
 export const api = createApi({
@@ -75,11 +75,11 @@ export const api = createApi({
       query: () => "/users",
       providesTags: ["Users"],
     }),
-    getTags: builder.query<Tag[], undefined>({
+    getTags: builder.query<TagData[], undefined>({
       query: () => "/tags",
       providesTags: ["Tag"],
     }),
-    searchTags: builder.query<Tag[], string>({
+    searchTags: builder.query<TagData[], string>({
       query: (q) => `tags/search?name=${q}`,
     }),
     createTag: builder.mutation({
@@ -89,7 +89,7 @@ export const api = createApi({
         body: { tag: data },
       }),
     }),
-    getTagById: builder.query<Tag, string>({
+    getTagById: builder.query<TagData, string>({
       query: (id) => `/tags/${id}`,
     }),
     getAllQuestions: builder.query({

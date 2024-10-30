@@ -1,9 +1,9 @@
-import { Tag } from "../tags/types";
+import { TagData } from "../tags/types";
 import { CustomError } from "../common/CustomError";
 import QuestionsList from "./QuestionsList";
 
 interface TaggedQuestionPageProps {
-  tag: Tag | undefined;
+  tag: TagData | undefined;
   // Define the props for the TaggedQuestionPage component here
 }
 

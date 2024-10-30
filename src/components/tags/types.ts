@@ -1,6 +1,6 @@
 import { QuestionData } from "../questions/types";
 
-export type Tag = {
+export type TagData = {
   id: number;
   name: string;
   description: string | null;
