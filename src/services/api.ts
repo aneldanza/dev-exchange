@@ -89,6 +89,9 @@ export const api = createApi({
         body: { tag: data },
       }),
     }),
+    getTagById: builder.query<Tag, string>({
+      query: (id) => `/tags/${id}`,
+    }),
     getAllQuestions: builder.query({
       query: () => "/questions",
       providesTags: ["Questions"],
@@ -137,4 +140,5 @@ export const {
   useGetQuestionByIdQuery,
   useUpdateQuestionMutation,
   useDeleteQuestionMutation,
+  useGetTagByIdQuery,
 } = api;
