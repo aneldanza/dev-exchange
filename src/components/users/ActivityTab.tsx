@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Tag } from "../tags/types";
 
 interface ActivityTabProps {
@@ -12,12 +13,16 @@ export const ActivityTab: React.FC<ActivityTabProps> = ({ tags }) => {
   return (
     <div>
       <div>Tags</div>
-      <div className="card flex flex-wrap">
+      <div className="card flex flex-wrap gap-2">
         {tags.length ? (
           tags.map((tag: Tag) => (
-            <div key={tag.id} className="tag text-xs">
+            <Link
+              key={tag.id}
+              className="tag text-xs"
+              to={`/questions/tagged/${tag.id}`}
+            >
               {tag.name}
-            </div>
+            </Link>
           ))
         ) : (
           <div>No tags found</div>
