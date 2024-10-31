@@ -4,6 +4,6 @@ export type TagData = {
   id: number;
   name: string;
   description: string | null;
-  createdAt: string;
+  created_at: string;
   questions: QuestionData[];
 };
