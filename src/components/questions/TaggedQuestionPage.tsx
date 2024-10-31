@@ -16,7 +16,9 @@ export const TaggedQuestionPage: React.FC<TaggedQuestionPageProps> = ({
 
   return (
     <div>
-      <h1>{`[${tag.name}]`}</h1>
+      <div className=" pb-6 border-b">
+        <h1 className="font-bold text-xl">{`[${tag.name}]`}</h1>
+      </div>
       <QuestionsList questions={tag.questions || []} />
     </div>
   );
