@@ -11,7 +11,7 @@ export const InputField: React.FC<InputFieldProps> = ({ name, label }) => {
 
   return (
     <div>
-      <div>{label}</div>
+      <div className="field-label">{label}</div>
       <input
         id={name}
         {...field}

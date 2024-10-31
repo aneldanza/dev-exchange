@@ -4,11 +4,11 @@ import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
-import { FullUserData } from "./types";
+import { UserInfoLimited } from "./types";
 import UsersList from "./UsersList";
 
 const UsersListWithErrorAndLoading = withLoading(
-  withError<{ users: FullUserData[] }>(UsersList, CustomError),
+  withError<{ users: UserInfoLimited[] }>(UsersList, CustomError),
   CustomLoading
 );
 
