@@ -8,7 +8,7 @@ import Flash from "../common/Flash";
 import { useSearchTagsQuery } from "../../services/api";
 import { MultiValue } from "react-select";
 import { Option, FormValues } from "./types";
-import { Tag } from "../tags/types";
+import { TagData } from "../tags/types";
 
 import { QuillEditor } from "../common/QuillEditor";
 
@@ -31,7 +31,7 @@ interface QuestionFormProps {
       id: number;
     }[];
   }) => Promise<void>;
-  questionData?: { title: string; body: string; tags: Tag[] };
+  questionData?: { title: string; body: string; tags: TagData[] };
   submitText: string;
 }
 
