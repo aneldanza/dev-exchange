@@ -17,7 +17,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ data }) => {
               <div className="text-xs text-appGray-100">answers</div>
             </div>
             <div className="list">
-              <div>0</div>
+              <div>{data.questions.length}</div>
               <div className="text-xs text-appGray-100">questions</div>
             </div>
           </div>
