@@ -1,4 +1,4 @@
-import { Tag } from "../tags/types";
+import { TagData } from "../tags/types";
 
 export type QuestionData = {
   id: number;
@@ -6,7 +6,7 @@ export type QuestionData = {
   body: string;
   created_at: string;
   updated_at: string;
-  tags: Tag[];
+  tags: TagData[];
   user: {
     id: number;
     username: string;
