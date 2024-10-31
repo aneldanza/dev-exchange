@@ -9,6 +9,14 @@ interface QuestionsListProps {
 }
 
 const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
+  if (!questions.length) {
+    return (
+      <div className="my-4">
+        <div className="text-sm">There are no questions found</div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <ul className="flex flex-col divide-y">
