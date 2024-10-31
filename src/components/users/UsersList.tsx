@@ -2,10 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
 import moment from "moment";
-import { FullUserData } from "./types";
+import { UserInfoLimited } from "./types";
 
 interface UsersListProps {
-  users: FullUserData[];
+  users: UserInfoLimited[];
 }
 
 const UsersList: React.FC<UsersListProps> = ({ users }) => {
