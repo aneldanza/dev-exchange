@@ -15,7 +15,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
         {questions.map((question) => (
           <li key={question.id} className="flex flex-col gap-2 py-3">
             <Link
-              to={`questions/${question.id}`}
+              to={`/questions/${question.id}`}
               className="text-blue-500 text-sm"
             >
               {question.title}
