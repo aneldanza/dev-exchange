@@ -1,5 +1,6 @@
 import React from "react";
 import { FullUserData } from "./types";
+import { formatCountString } from "../../services/utils";
 
 interface ProfileTabProps {
   data: FullUserData;
@@ -17,8 +18,16 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ data }) => {
               <div className="text-xs text-appGray-100">answers</div>
             </div>
             <div className="list">
-              <div>0</div>
-              <div className="text-xs text-appGray-100">questions</div>
+              <div>{data.questions.length}</div>
+              <div className="text-xs text-appGray-100">
+                {
+                  formatCountString(
+                    data.questions.length,
+                    "question",
+                    "questions"
+                  ).split(" ")[1]
+                }
+              </div>
             </div>
           </div>
         </div>

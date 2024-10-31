@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { SignInInfo, SignUpInfo } from "./AuthContext";
 import { SignUpCredentials } from "../components/auth/SignupForm";
 import { SignInCredentials } from "../components/auth/SigninForm";
-import { Tag } from "../components/tags/types";
+import { TagData } from "../components/tags/types";
+import { QuestionData } from "../components/questions/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -15,7 +16,7 @@ export const api = createApi({
     },
     credentials: "include", // need this for cookies to be sent
   }),
-  tagTypes: ["User", "Tag"],
+  tagTypes: ["Users", "User", "Tag", "Questions"],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
       query: (payload) => {
@@ -25,7 +26,7 @@ export const api = createApi({
           body: JSON.stringify(payload),
         };
       },
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User", "Users"],
     }),
     signIn: builder.mutation<SignInInfo, SignInCredentials>({
       query: (payload) => {
@@ -49,13 +50,14 @@ export const api = createApi({
     }),
     showFullUserInfo: builder.query({
       query: (id) => "/users/" + id,
+      providesTags: ["User"],
     }),
     deleteAccount: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
         method: "delete",
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User", "Users"],
     }),
     updateUser: builder.mutation<
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -71,11 +73,52 @@ export const api = createApi({
     }),
     getAllUsers: builder.query({
       query: () => "/users",
-      providesTags: ["User"],
+      providesTags: ["Users"],
     }),
-    getTags: builder.query<Tag[], undefined>({
+    getTags: builder.query<TagData[], undefined>({
       query: () => "/tags",
       providesTags: ["Tag"],
+    }),
+    searchTags: builder.query<TagData[], string>({
+      query: (q) => `tags/search?name=${q}`,
+    }),
+    createTag: builder.mutation({
+      query: (data) => ({
+        url: "/tags",
+        method: "post",
+        body: { tag: data },
+      }),
+    }),
+    getTagById: builder.query<TagData, string>({
+      query: (id) => `/tags/${id}`,
+    }),
+    getAllQuestions: builder.query({
+      query: () => "/questions",
+      providesTags: ["Questions"],
+    }),
+    createQuestion: builder.mutation({
+      query: (data) => ({
+        url: "/questions",
+        method: "post",
+        body: { question: data },
+      }),
+    }),
+    getQuestionById: builder.query<QuestionData, string>({
+      query: (id) => `/questions/${id}`,
+    }),
+    updateQuestion: builder.mutation({
+      query: (data) => ({
+        url: `/questions/${data.id}`,
+        method: "PATCH",
+        body: { question: data },
+      }),
+    }),
+    deleteQuestion: builder.mutation({
+      query: (id) => ({
+        url: `/questions/${id}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["Questions"],
     }),
   }),
 });
@@ -90,4 +133,12 @@ export const {
   useUpdateUserMutation,
   useGetAllUsersQuery,
   useGetTagsQuery,
+  useSearchTagsQuery,
+  useCreateTagMutation,
+  useGetAllQuestionsQuery,
+  useCreateQuestionMutation,
+  useGetQuestionByIdQuery,
+  useUpdateQuestionMutation,
+  useDeleteQuestionMutation,
+  useGetTagByIdQuery,
 } = api;

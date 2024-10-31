@@ -63,12 +63,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
           <div className="text-xl font-bold border-b border-b-appGray-50 mb-6 pb-6">
             {`${selectedOption} Profile`}
           </div>
-          {selectedOption === "Edit" && (
-            <EditSettings
-              description={data.description || ""}
-              userId={data.id}
-            />
-          )}
+          {selectedOption === "Edit" && <EditSettings data={data} />}
           {selectedOption === "Delete" && (
             <div className="w-full">
               <Button

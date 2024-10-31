@@ -1,4 +1,5 @@
-import { Tag } from "../tags/types";
+import { QuestionData } from "../questions/types";
+import { TagData } from "../tags/types";
 
 export type FullUserData = {
   id: number;
@@ -7,9 +8,8 @@ export type FullUserData = {
   created_at: string;
   updated_at: string;
   description: string;
-  tags: {
-    data: Tag[];
-  };
+  tags: TagData[];
+  questions: QuestionData[];
 };
 
 export interface UserInfoLimited {
@@ -19,6 +19,6 @@ export interface UserInfoLimited {
   created_at: string;
   updated_at: string;
   tags: {
-    data: Tag[];
+    data: TagData[];
   };
 }

@@ -1,8 +1,9 @@
 import React from "react";
-import { Tag } from "../tags/types";
+import { TagData } from "../tags/types";
+import { Tag } from "../tags/Tag";
 
 interface ActivityTabProps {
-  tags: Tag[];
+  tags: TagData[];
   // Define the props for the ActivityTab component here
 }
 
@@ -12,13 +13,9 @@ export const ActivityTab: React.FC<ActivityTabProps> = ({ tags }) => {
   return (
     <div>
       <div>Tags</div>
-      <div className="card flex flex-wrap">
+      <div className="card flex flex-wrap gap-2">
         {tags.length ? (
-          tags.map((tag: Tag) => (
-            <div key={tag.id} className="tag text-xs">
-              {tag.name}
-            </div>
-          ))
+          tags.map((tag: TagData) => <Tag key={tag.id} tag={tag} />)
         ) : (
           <div>No tags found</div>
         )}
