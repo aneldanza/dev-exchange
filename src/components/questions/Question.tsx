@@ -11,6 +11,7 @@ import { useAuth } from "../../services/storeHooks";
 import { QuestionData } from "./types";
 import Button from "../common/Button";
 import { Tag } from "../tags/Tag";
+import { PostMeta } from "../common/PostMeta";
 
 interface QuestionProps {
   question?: QuestionData;
@@ -96,23 +97,12 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
           )}
 
           <div className="flex justify-end">
-            <div className="card bg-blue-100 text-xs text-appGray-400 p-2 border-blue-100">
-              <div>{`asked ${moment(question.created_at).format(
-                "MMM DD [at] HH:mm"
-              )}`}</div>
-              <div>
-                {question.user.id ? (
-                  <Link
-                    to={`/users/${question.user.id}`}
-                    className="text-blue-400 hover:text-blue-500"
-                  >
-                    {question.user.username}
-                  </Link>
-                ) : (
-                  <span className="text-appGray-300">deleted user</span>
-                )}
-              </div>
-            </div>
+            <PostMeta
+              userId={question.user.id}
+              username={question.user.username}
+              createdAt={question.created_at}
+              actionWord="asked"
+            />
           </div>
         </div>
       </div>
