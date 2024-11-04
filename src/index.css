@@ -94,4 +94,16 @@
   .ql-editor {
     @apply whitespace-pre-wrap;
   }
+
+  .activity-list {
+    @apply grid grid-cols-1 gap-6;
+  }
+
+  .activity-card {
+    @apply card flex flex-col divide-y p-0 flex-grow align-middle;
+  }
+
+  .activity-card-row {
+    @apply p-4 text-sm flex justify-between gap-2 max-w-full;
+  }
 }

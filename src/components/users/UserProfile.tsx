@@ -9,12 +9,12 @@ import { SettingsTab } from "./SettingsTab";
 
 interface UserProfileProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: FullUserData | any;
+  data: FullUserData;
 }
 
 export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
   const [activeTab, setActiveTab] = useState("Activity");
-  const { username, created_at, tags, id } = data;
+  const { username, created_at, tags, id, questions } = data;
   const { user } = useAuth();
 
   const handleTabClick = (tab: string) => {
@@ -71,7 +71,9 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
         )}
       </div>
       {activeTab === "Profile" && <ProfileTab data={data} />}
-      {activeTab === "Activity" && <ActivityTab tags={tags} />}
+      {activeTab === "Activity" && (
+        <ActivityTab tags={tags} questions={questions} />
+      )}
       {activeTab === "Settings" && <SettingsTab data={data} />}
     </div>
   );
