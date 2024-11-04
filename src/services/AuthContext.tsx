@@ -39,6 +39,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       setUser(data.user);
     } else if (isError) {
       console.log(error);
+      setUser(null);
     } else if (isLoading) {
       console.log("loading user info from the server ...");
     }
