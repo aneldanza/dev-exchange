@@ -52,18 +52,20 @@ export const ActivityTab: React.FC<ActivityTabProps> = ({
         <div className="mb-2">Tags</div>
         <div className="activity-card">
           {tags.length ? (
-            tags.map((tag: TagData) => (
-              <div className="activity-card-row" key={tag.id}>
-                <Tag key={tag.id} tag={tag} />
-                <div className="text-xs">
-                  {formatCountString(
-                    tag.questions.length,
-                    "question",
-                    "questions"
-                  )}
+            tags
+              .filter((tag: TagData) => tag.questions.length > 0)
+              .map((tag: TagData) => (
+                <div className="activity-card-row" key={tag.id}>
+                  <Tag key={tag.id} tag={tag} />
+                  <div className="text-xs">
+                    {formatCountString(
+                      tag.questions.length,
+                      "question",
+                      "questions"
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))
+              ))
           ) : (
             <div>No tags found</div>
           )}
