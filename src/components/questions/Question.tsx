@@ -101,12 +101,16 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
                 "MMM DD [at] HH:mm"
               )}`}</div>
               <div>
-                <Link
-                  to={`/users/${question.user.id}`}
-                  className="text-blue-400 hover:text-blue-500"
-                >
-                  {question.user.username}
-                </Link>
+                {question.user.id ? (
+                  <Link
+                    to={`/users/${question.user.id}`}
+                    className="text-blue-400 hover:text-blue-500"
+                  >
+                    {question.user.username}
+                  </Link>
+                ) : (
+                  <span className="text-appGray-300">deleted user</span>
+                )}
               </div>
             </div>
           </div>
