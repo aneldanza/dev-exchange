@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
-import { QuestionData } from "./types";
+import { LimitedQuestionData } from "./types";
 import { Tag } from "../tags/Tag";
 
 interface QuestionsListProps {
-  questions: QuestionData[];
+  questions: LimitedQuestionData[];
 }
 
 const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
