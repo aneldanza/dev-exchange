@@ -113,10 +113,14 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
           <AnswersList answers={question.answers} />
         )}
 
-        {user && (
+        {user ? (
           <div>
             <AnswerForm questionId={question.id} userId={user.id} />
           </div>
+        ) : (
+          <Link to="/login" className="btn ">
+            Login to answer
+          </Link>
         )}
       </div>
 
