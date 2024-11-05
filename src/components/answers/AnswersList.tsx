@@ -3,7 +3,11 @@ import { AnswerData } from "./types";
 import { Answer } from "./Answer";
 import { formatCountString } from "../../services/utils";
 
-export const AnswersList: FC<{ answers: AnswerData[] }> = ({ answers }) => {
+interface AnswersListProps {
+  answers: AnswerData[];
+}
+
+export const AnswersList: FC<AnswersListProps> = ({ answers }) => {
   return (
     <div className="flex flex-col my-6">
       <div className="text-lg">
