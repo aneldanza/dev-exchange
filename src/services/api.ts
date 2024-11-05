@@ -129,6 +129,13 @@ export const api = createApi({
       }),
       invalidatesTags: ["Question"],
     }),
+    deleteAnswer: builder.mutation({
+      query: (id) => ({
+        url: `/answers/${id}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["Question"],
+    }),
   }),
 });
 
@@ -151,4 +158,5 @@ export const {
   useDeleteQuestionMutation,
   useGetTagByIdQuery,
   useCreateAnswerMutation,
+  useDeleteAnswerMutation,
 } = api;
