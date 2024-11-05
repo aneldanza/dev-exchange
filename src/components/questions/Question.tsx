@@ -10,7 +10,8 @@ import { PostMeta } from "../common/PostMeta";
 import { AnswersList } from "../answers/AnswersList";
 import { AnswerForm } from "../answers/AnswerForm";
 import { QuestionTags } from "./QuestionTags";
-import { useHighlightCodeBlocks } from "../../hooks/useHighlightCodeBlocks";
+import { PostActions } from "../common/PostActions";
+import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 
 interface QuestionProps {
   question: QuestionData;
@@ -27,22 +28,6 @@ const QuestionMeta: React.FC<{ created_at: string; updated_at: string }> = ({
     <div className="whitespace-nowrap">{`modified ${moment(
       updated_at
     ).fromNow()}`}</div>
-  </div>
-);
-
-const PostActions: React.FC<{
-  questionId: number;
-  setShowModal: (show: boolean) => void;
-}> = ({ questionId, setShowModal }) => (
-  <div className="py-2 flex gap-2">
-    <Link to={`/questions/${questionId}/edit`} className="action">
-      Edit
-    </Link>
-    <Button
-      title="Delete"
-      className="action"
-      onClick={() => setShowModal(true)}
-    />
   </div>
 );
 
@@ -87,7 +72,11 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
 
         <div>
           {user && question.user.id === user.id && (
-            <PostActions questionId={question.id} setShowModal={setShowModal} />
+            <PostActions
+              postId={question.id}
+              setShowModal={setShowModal}
+              name="questions"
+            />
           )}
 
           <div className="flex justify-end">

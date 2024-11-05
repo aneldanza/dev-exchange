@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Button from "../common/Button";
 import { PostMeta } from "../common/PostMeta";
 import { AnswerData } from "./types";
 import { type FC } from "react";
 import { DeleteAnswerModal } from "./DeleteAnswerModal";
 import { useAuth } from "../../services/storeHooks";
+import { PostActions } from "../common/PostActions";
 
 interface AnswerProps {
   answer: AnswerData;
@@ -20,18 +20,11 @@ export const Answer: FC<AnswerProps> = ({ answer }) => {
       </div>
       <div>
         {user && answer.user.id === user.id && (
-          <div className="py-2 flex gap-2">
-            <Button
-              title="Edit"
-              className="action"
-              onClick={() => console.log(`edit answer ${answer.id}`)}
-            />
-            <Button
-              title="Delete"
-              className="action"
-              onClick={() => setShowModal(true)}
-            />
-          </div>
+          <PostActions
+            postId={answer.id}
+            setShowModal={setShowModal}
+            name="answers"
+          />
         )}
 
         <div className="flex justify-end">
