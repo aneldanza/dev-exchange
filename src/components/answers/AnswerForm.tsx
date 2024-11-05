@@ -45,7 +45,7 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
       }}
     >
       {({ isSubmitting, isValid }) => (
-        <Form>
+        <Form className="flex flex-col gap-4 my-4">
           <QuillEditor name="body" label="" placeholder="" />
           <button
             type="submit"
