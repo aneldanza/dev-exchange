@@ -12,6 +12,7 @@ import { QuestionData } from "./types";
 import Button from "../common/Button";
 import { Tag } from "../tags/Tag";
 import { PostMeta } from "../common/PostMeta";
+import { AnswersList } from "../answers/AnswersList";
 
 interface QuestionProps {
   question?: QuestionData;
@@ -105,6 +106,10 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
             />
           </div>
         </div>
+
+        {question.answers.length > 0 && (
+          <AnswersList answers={question.answers} />
+        )}
       </div>
 
       <DeleteQuestionModal
