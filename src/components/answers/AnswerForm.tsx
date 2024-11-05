@@ -2,6 +2,7 @@ import { QuillEditor } from "../common/QuillEditor";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useCreateAnswerMutation } from "../../services/api";
+import { removeSelectElement } from "../../services/utils";
 
 const validationsSchema = Yup.object().shape({
   body: Yup.string().required("Content is required").min(10),
@@ -27,7 +28,7 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
       await createAnswer({
         question_id: questionId,
         user_id: userId,
-        body: values.body,
+        body: removeSelectElement(values.body),
       });
     } catch (error) {
       console.error("Failed to add answer", error);

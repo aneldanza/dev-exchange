@@ -9,6 +9,7 @@ import { useSearchTagsQuery } from "../../services/api";
 import { MultiValue } from "react-select";
 import { Option, FormValues } from "./types";
 import { TagData } from "../tags/types";
+import { removeSelectElement } from "../../services/utils";
 
 import { QuillEditor } from "../common/QuillEditor";
 
@@ -62,8 +63,6 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     refetchOnMountOrArgChange: true,
   });
 
-  // const [createTag] = useCreateTagMutation();
-
   const handleQuestion = async (data: FormValues) => {
     const formattedTags = data.tags.map((option) => ({
       name: option.label,
@@ -84,18 +83,6 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
         setFormError(["An error occurred. Please try again later."]);
       }
     }
-  };
-
-  const removeSelectElement = (body: string) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(body, "text/html");
-
-    // Remove all <select> elements
-    const selects = doc.querySelectorAll("select");
-    selects.forEach((select) => select.remove());
-
-    // Serialize the modified HTML back to a string
-    return doc.body.innerHTML;
   };
 
   const onSubmit = (
