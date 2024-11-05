@@ -12,6 +12,7 @@ export const Answer: FC<{ answer: AnswerData }> = ({ answer }) => {
           username={answer.user.username}
           createdAt={answer.created_at}
           actionWord="answered"
+          theme="answer-meta"
         />
       </div>
     </div>

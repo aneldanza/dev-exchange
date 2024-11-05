@@ -104,6 +104,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
               username={question.user.username}
               createdAt={question.created_at}
               actionWord="asked"
+              theme="question-meta"
             />
           </div>
         </div>

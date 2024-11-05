@@ -6,7 +6,8 @@ interface PostMetaProps {
   createdAt: string;
   username: string;
   userId: number;
-  actionWord: string;
+  actionWord: "asked" | "answered";
+  theme: "answer-meta" | "question-meta";
 }
 
 export const PostMeta: React.FC<PostMetaProps> = ({
@@ -14,11 +15,16 @@ export const PostMeta: React.FC<PostMetaProps> = ({
   userId,
   username,
   actionWord,
+  theme,
 }) => {
   return (
-    <div className="card bg-blue-100 text-xs text-appGray-400 p-2 border-blue-100">
+    <div className={`card text-xs text-appGray-400 p-2 ${theme}`}>
       <div className="post-meta-date">
-        {`${actionWord} ${moment(createdAt).format("MMM DD [at] HH:mm")}`}
+        {`${actionWord} ${
+          actionWord === "asked"
+            ? moment(createdAt).format("MMM DD [at] HH:mm")
+            : moment(createdAt).fromNow()
+        }`}
       </div>
       <div className="post-meta-author">
         {userId ? (
