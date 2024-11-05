@@ -16,12 +16,18 @@ import { AnswersList } from "../answers/AnswersList";
 import { AnswerForm } from "../answers/AnswerForm";
 
 interface QuestionProps {
-  question?: QuestionData;
+  question: QuestionData;
 }
 
 export const Question: React.FC<QuestionProps> = ({ question }) => {
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
+
+  const shouldShowAnswerForm = !(
+    user && question.answers.every((answer) => answer.user.id != user.id)
+  );
+  const [showAnswerForm, setShowAnswerForm] = useState(shouldShowAnswerForm);
+
   hljs.configure({
     cssSelector: ".ql-code-block",
     ignoreUnescapedHTML: true,
@@ -115,7 +121,21 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
 
         {user ? (
           <div>
-            <AnswerForm questionId={question.id} userId={user.id} />
+            {question.answers.some((answer) => answer.user.id === user.id) && (
+              <Button
+                title="Add another answer"
+                onClick={() => setShowAnswerForm(true)}
+                className={`btn btn-primary ${showAnswerForm ? "hidden" : ""}`}
+              />
+            )}
+
+            <div className={`${!showAnswerForm && "hidden"}`}>
+              <AnswerForm
+                questionId={question.id}
+                userId={user.id}
+                setShowAnswerForm={setShowAnswerForm}
+              />
+            </div>
           </div>
         ) : (
           <Link to="/login" className="btn ">

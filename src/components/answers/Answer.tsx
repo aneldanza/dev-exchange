@@ -5,7 +5,9 @@ import { type FC } from "react";
 export const Answer: FC<{ answer: AnswerData }> = ({ answer }) => {
   return (
     <div className="answer">
-      <div className="answer-body">{answer.body}</div>
+      <div className="prose prose-sm">
+        <div dangerouslySetInnerHTML={{ __html: answer.body }} />
+      </div>
       <div className="flex justify-end">
         <PostMeta
           userId={answer.user.id}

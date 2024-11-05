@@ -10,7 +10,6 @@ interface QuillEditorProps {
   name: string;
   placeholder: string;
   isFormReset?: boolean;
-  initialValue?: string;
 }
 
 // Define custom icons
@@ -64,7 +63,7 @@ export const QuillEditor: FC<QuillEditorProps> = ({
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [editorRef.current]);
 
   useEffect(() => {
     if (isFormReset && quillRef.current) {

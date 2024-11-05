@@ -3,6 +3,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useCreateAnswerMutation } from "../../services/api";
 import { removeSelectElement } from "../../services/utils";
+import React, { useState } from "react";
 
 const validationsSchema = Yup.object().shape({
   body: Yup.string().required("Content is required").min(10),
@@ -11,15 +12,21 @@ const validationsSchema = Yup.object().shape({
 interface AnswerFormProps {
   questionId: number;
   userId: number;
+  setShowAnswerForm: (showAnswerForm: boolean) => void;
+  initialBody?: string;
 }
 
 export const AnswerForm: React.FC<AnswerFormProps> = ({
   questionId,
   userId,
+  setShowAnswerForm,
+  initialBody = "",
 }) => {
   const initialValues: { body: string } = {
-    body: "",
+    body: initialBody,
   };
+
+  const [isFormReset, setResetForm] = useState<boolean>(false);
 
   const [createAnswer] = useCreateAnswerMutation();
 
@@ -43,11 +50,19 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
         console.log(values);
         addAnswer(values);
         actions.setSubmitting(false);
+        setResetForm(true);
+        actions.resetForm();
+        setShowAnswerForm(false);
       }}
     >
       {({ isSubmitting, isValid }) => (
         <Form className="flex flex-col gap-4 my-4">
-          <QuillEditor name="body" label="Your Answer" placeholder="" />
+          <QuillEditor
+            name="body"
+            label="Your Answer"
+            placeholder=""
+            isFormReset={isFormReset}
+          />
           <button
             type="submit"
             className="btn btn-primary"
