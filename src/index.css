@@ -114,4 +114,8 @@
   .question-meta {
     @apply bg-blue-100 border-blue-100;
   }
+
+  .answer {
+    @apply border-b border-appGray-50 py-4;
+  }
 }
