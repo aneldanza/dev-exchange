@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { LimitedQuestionData } from "./types";
-import { Tag } from "../tags/Tag";
+import { QuestionTags } from "./QuestionTags";
 
 interface QuestionsListProps {
   questions: LimitedQuestionData[];
@@ -39,11 +39,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
               }}
             />
 
-            <div className="flex gap-1">
-              {question.tags.map((tag) => (
-                <Tag key={tag.id} tag={tag} />
-              ))}
-            </div>
+            <QuestionTags tags={question.tags} />
           </li>
         ))}
       </ul>
