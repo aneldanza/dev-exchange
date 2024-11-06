@@ -14,11 +14,14 @@ const EditAnswerWithErrorAndLoading = withLoading(
 
 const EditAnswerPage = () => {
   const { answerId } = useParams<{ answerId: string }>();
-  const { data: answer, isLoading, error } = useGetAnswerByIdQuery(answerId);
+  const {
+    data: answer,
+    isLoading,
+    error,
+  } = useGetAnswerByIdQuery(answerId, { refetchOnMountOrArgChange: true });
 
   return (
     <div>
-      <h1>Edit Answer</h1>
       <EditAnswerWithErrorAndLoading
         answer={answer}
         isLoading={isLoading}
