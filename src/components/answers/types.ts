@@ -9,3 +9,10 @@ export type AnswerData = {
   };
   question_id: number;
 };
+
+export type FullAnswerData = AnswerData & {
+  question: {
+    body: string;
+    title: string;
+  };
+};
