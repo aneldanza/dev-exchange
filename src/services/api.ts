@@ -136,6 +136,9 @@ export const api = createApi({
       }),
       invalidatesTags: ["Question"],
     }),
+    getAnswerById: builder.query({
+      query: (id) => `/answers/${id}`,
+    }),
   }),
 });
 
@@ -159,4 +162,5 @@ export const {
   useGetTagByIdQuery,
   useCreateAnswerMutation,
   useDeleteAnswerMutation,
+  useGetAnswerByIdQuery,
 } = api;
