@@ -8,6 +8,7 @@ import { QuillEditor } from "../common/QuillEditor";
 import * as Yup from "yup";
 import { UnsavedChangesModal } from "../common/UnsavedChangesModal";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
+import { useUpdateAnswerMutation } from "../../services/api";
 
 interface EditAnswerProps {
   answer: FullAnswerData | undefined;
@@ -23,7 +24,9 @@ const validationsSchema = Yup.object().shape({
 
 export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+
   useHighlightCodeBlocks(answer);
+  const [updateAnswer] = useUpdateAnswerMutation();
   const navigate = useNavigate();
 
   if (!answer) {
@@ -36,7 +39,15 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
   };
 
   const handleSubmit = async (values: EditFormValues) => {
-    console.log(values);
+    try {
+      await updateAnswer({
+        id: answer.id,
+        body: values.body,
+      });
+      navigate(`/questions/${answer.question_id}`);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCancelEdit = (values: EditFormValues) => {

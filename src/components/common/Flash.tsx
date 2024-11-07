@@ -1,35 +1,47 @@
 import React, { useState, useEffect, ReactNode } from "react";
+import { Alert } from "flowbite-react";
 
 interface FlashProps {
   message?: string;
   duration?: number; // duration in milliseconds
   children?: ReactNode;
-  style?: string;
+  style?: "success" | "failure" | "warning" | "info";
+  display: boolean;
+  setFormError: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const Flash: React.FC<FlashProps> = ({
   message,
-  duration = 3000,
+  duration = 2000,
   children,
   style,
+  display,
+  setFormError,
 }) => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(display);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false);
-    }, duration);
+    if (display) {
+      setVisible(true);
+      const timer = setTimeout(() => {
+        setVisible(false);
+        setFormError([]);
+      }, duration);
 
-    return () => clearTimeout(timer);
-  }, [duration]);
+      return () => clearTimeout(timer);
+    }
+  }, [display, duration, setFormError]);
 
-  if (!visible) return null;
+  // if (!visible) return null;
 
   return (
-    <div className={`flash ${style}`}>
-      {message && message}
-      {children && children}
-    </div>
+    <Alert
+      color={style}
+      additionalContent={children}
+      className={`flash ${!visible && "hidden"}`}
+    >
+      <span>{message}</span>
+    </Alert>
   );
 };
 

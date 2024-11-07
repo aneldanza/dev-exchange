@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Formik, Form, ErrorMessage, type FormikProps } from "formik";
 import * as Yup from "yup";
 import CreatableSelect from "react-select/creatable";
@@ -10,6 +10,7 @@ import { MultiValue } from "react-select";
 import { Option, FormValues } from "./types";
 import { TagData } from "../tags/types";
 import { removeSelectElement } from "../../services/utils";
+// import { Alert } from "flowbite-react";
 
 import { QuillEditor } from "../common/QuillEditor";
 
@@ -51,6 +52,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
   const [selectedOptions, setSelectedOptions] =
     useState<Option[]>(initialOptions);
   const [formError, setFormError] = useState<string[]>([]);
+  const formikRef = useRef<FormikProps<FormValues>>(null);
 
   const initialValues: FormValues = {
     title: questionData.title,
@@ -85,23 +87,11 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     }
   };
 
-  const onSubmit = (
-    values: FormValues,
-
-    {
-      resetForm,
-    }: {
-      resetForm: () => void;
-    }
-  ) => {
+  const onSubmit = (values: FormValues) => {
     const modifiedBody = removeSelectElement(values.body);
 
     // Call handleQuestion with the modified values
     handleQuestion({ ...values, body: modifiedBody });
-
-    resetForm();
-    setSelectedOptions(initialOptions);
-    setResetForm(true);
   };
 
   const handleCreateTempTag = async (
@@ -148,73 +138,79 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
+        innerRef={formikRef}
       >
-        {(props) => (
-          <Form className="space-y-6 w-full max-w-[800px]">
-            <InputField name="title" label="Title" />
+        {(props) => {
+          return (
+            <Form className="space-y-6 w-full max-w-[800px]">
+              <InputField name="title" label="Title" />
 
-            <QuillEditor
-              name="body"
-              label="Description"
-              placeholder="Add content of your question here..."
-              isFormReset={isFormReset}
-            />
-
-            <div>
-              <div className="field-label">Tags</div>
-              <CreatableSelect
-                id="tags"
-                name="tags"
-                value={selectedOptions}
-                onChange={(options) => handleChange(options, props)}
-                onInputChange={(inputValue) =>
-                  setQuery(inputValue.toLowerCase())
-                }
-                isLoading={isLoading}
-                options={loadTags()}
-                onCreateOption={(value) =>
-                  handleCreateTempTag(value.toLowerCase(), props)
-                }
-                isMulti
-              />
-              <ErrorMessage
-                name="tags"
-                component="div"
-                className="error-text"
-              />
-            </div>
-
-            <div className="flex flex-col space-y-6 ">
-              <Button
-                type="submit"
-                className="btn btn-primary"
-                title={submitText}
-                onClick={() => {}}
+              <QuillEditor
+                name="body"
+                label="Description"
+                placeholder="Add content of your question here..."
+                isFormReset={isFormReset}
               />
 
-              <Button
-                className="btn btn-warning"
-                title="Cancel"
-                onClick={() => {
-                  props.resetForm();
-                  setSelectedOptions(initialOptions);
-                  setFormError([]);
-                  setResetForm(true);
-                }}
-                type="reset"
-              />
-            </div>
-            {formError.length > 0 && (
-              <Flash style="flash-error">
-                <div className="list ">
+              <div>
+                <div className="field-label">Tags</div>
+                <CreatableSelect
+                  id="tags"
+                  name="tags"
+                  value={selectedOptions}
+                  onChange={(options) => handleChange(options, props)}
+                  onInputChange={(inputValue) =>
+                    setQuery(inputValue.toLowerCase())
+                  }
+                  isLoading={isLoading}
+                  options={loadTags()}
+                  onCreateOption={(value) =>
+                    handleCreateTempTag(value.toLowerCase(), props)
+                  }
+                  isMulti
+                />
+                <ErrorMessage
+                  name="tags"
+                  component="div"
+                  className="error-text"
+                />
+              </div>
+
+              <div className="flex flex-col space-y-6 ">
+                <Button
+                  type="submit"
+                  className="btn btn-primary"
+                  title={submitText}
+                  onClick={() => {}}
+                />
+
+                <Button
+                  className="btn btn-warning"
+                  title="Cancel"
+                  onClick={() => {
+                    props.resetForm();
+                    setSelectedOptions(initialOptions);
+                    setFormError([]);
+                    setResetForm(true);
+                  }}
+                  type="reset"
+                />
+              </div>
+
+              <Flash
+                style="failure"
+                display={!!formError.length}
+                setFormError={setFormError}
+              >
+                <ul className="list-item">
                   {formError.map((error, index) => (
-                    <div key={index}>{`error is: ${error}`}</div>
+                    <li key={index}>{`${error}`}</li>
                   ))}
-                </div>
+                </ul>
               </Flash>
-            )}
-          </Form>
-        )}
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );

@@ -118,4 +118,8 @@
   .answer {
     @apply border-b border-appGray-50 py-4;
   }
+
+  .question-hyperlink {
+    @apply text-blue-500 visited:text-purple-500 hover:text-blue-700;
+  }
 }

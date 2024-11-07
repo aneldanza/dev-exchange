@@ -139,6 +139,14 @@ export const api = createApi({
     getAnswerById: builder.query({
       query: (id) => `/answers/${id}`,
     }),
+    updateAnswer: builder.mutation({
+      query: (data) => ({
+        url: `/answers/${data.id}`,
+        method: "PATCH",
+        body: { answer: data },
+      }),
+      invalidatesTags: ["Question"],
+    }),
   }),
 });
 
@@ -163,4 +171,5 @@ export const {
   useCreateAnswerMutation,
   useDeleteAnswerMutation,
   useGetAnswerByIdQuery,
+  useUpdateAnswerMutation,
 } = api;

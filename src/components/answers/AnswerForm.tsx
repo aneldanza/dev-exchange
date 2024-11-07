@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useCreateAnswerMutation } from "../../services/api";
 import { removeSelectElement } from "../../services/utils";
 import React, { useState } from "react";
+import Flash from "../common/Flash";
 
 const validationsSchema = Yup.object().shape({
   body: Yup.string().required("Content is required").min(10),
@@ -27,6 +28,7 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
   };
 
   const [isFormReset, setResetForm] = useState<boolean>(false);
+  const [formError, setFormError] = useState<string[]>([]);
 
   const [createAnswer] = useCreateAnswerMutation();
 
@@ -37,8 +39,17 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
         user_id: userId,
         body: removeSelectElement(values.body),
       });
-    } catch (error) {
-      console.error("Failed to add answer", error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      if (e.data) {
+        if (e.data.errors) {
+          setFormError([...e.data.errors]);
+        } else {
+          setFormError([e.data.error]);
+        }
+      } else {
+        setFormError(["An error occurred. Please try again later."]);
+      }
     }
   };
 
@@ -70,6 +81,18 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
           >
             Submit
           </button>
+
+          <Flash
+            style="failure"
+            display={!!formError.length}
+            setFormError={setFormError}
+          >
+            <ul className="list-item">
+              {formError.map((error, index) => (
+                <li key={index}>{`${error}`}</li>
+              ))}
+            </ul>
+          </Flash>
         </Form>
       )}
     </Formik>
