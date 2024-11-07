@@ -200,7 +200,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
               <Flash
                 style="failure"
                 display={!!formError.length}
-                setFormError={setFormError}
+                resetDisplay={() => setFormError([])}
               >
                 <ul className="list-item">
                   {formError.map((error, index) => (

@@ -6,6 +6,7 @@ import { useUpdateUserMutation } from "../../services/api";
 import { QuillEditor } from "../common/QuillEditor";
 import { FullUserData } from "./types";
 import { RichContent } from "../common/RichContent";
+import Flash from "../common/Flash";
 
 type FormValues = {
   about: string;
@@ -27,13 +28,12 @@ const messages: { [key: string]: { text: string; className: string } } = {
 
   error: {
     text: "An error occurred while updating user",
-    className: "error",
+    className: "failure",
   },
 };
 
 const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
   const [updateUser] = useUpdateUserMutation();
-  const [updatedUser, setUpdatedUser] = useState<FullUserData | null>(null);
   const [message, setMessage] = useState<string>("");
 
   const initialValues: FormValues = {
@@ -42,15 +42,14 @@ const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      const result = await updateUser({
+      await updateUser({
         user: { id: data.id, description: values.about },
-      });
+      }).unwrap();
 
-      setUpdatedUser(result.data);
       setMessage("success");
     } catch (error) {
       console.error(error);
-      setMessage("error");
+      setMessage("failure");
     }
   };
 
@@ -91,11 +90,12 @@ const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
         </Formik>
       </div>
 
-      {updatedUser && (
-        <div className={`flash flash-${message}`}>
-          <p>{messages[message].text}</p>
-        </div>
-      )}
+      <Flash
+        style="success"
+        display={!!message}
+        resetDisplay={() => setMessage("")}
+        message={messages[message] ? messages[message].text : ""}
+      ></Flash>
     </div>
   );
 };

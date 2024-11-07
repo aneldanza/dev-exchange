@@ -7,7 +7,7 @@ interface FlashProps {
   children?: ReactNode;
   style?: "success" | "failure" | "warning" | "info";
   display: boolean;
-  setFormError: React.Dispatch<React.SetStateAction<string[]>>;
+  resetDisplay: () => void;
 }
 
 const Flash: React.FC<FlashProps> = ({
@@ -16,7 +16,7 @@ const Flash: React.FC<FlashProps> = ({
   children,
   style,
   display,
-  setFormError,
+  resetDisplay,
 }) => {
   const [visible, setVisible] = useState(display);
 
@@ -25,14 +25,12 @@ const Flash: React.FC<FlashProps> = ({
       setVisible(true);
       const timer = setTimeout(() => {
         setVisible(false);
-        setFormError([]);
+        resetDisplay();
       }, duration);
 
       return () => clearTimeout(timer);
     }
-  }, [display, duration, setFormError]);
-
-  // if (!visible) return null;
+  }, [display, duration, resetDisplay]);
 
   return (
     <Alert
