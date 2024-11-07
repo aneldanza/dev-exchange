@@ -57,9 +57,13 @@ export const QuillEditor: FC<QuillEditorProps> = ({
       quillRef.current.clipboard.dangerouslyPasteHTML(0, initialValue);
 
       // Listen for changes and call changeHandler
-      quillRef.current.on("text-change", () => {
+      quillRef.current.on("text-change", (_delta, _oldContent, source) => {
         const value = quillRef.current?.root.innerHTML || "";
         helpers.setValue(value);
+
+        if (source === "user") {
+          helpers.setTouched(true);
+        }
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
