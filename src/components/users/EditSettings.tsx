@@ -1,11 +1,11 @@
 import { useState } from "react";
-import DOMPurify from "dompurify";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import { useUpdateUserMutation } from "../../services/api";
 import { QuillEditor } from "../common/QuillEditor";
 import { FullUserData } from "./types";
+import { RichContent } from "../common/RichContent";
 
 type FormValues = {
   about: string;
@@ -71,13 +71,7 @@ const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
                     placeholder="Tell us about yourself"
                     label="About me"
                   />
-                  <div className="prose prose-sm">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(props.values.about),
-                      }}
-                    />
-                  </div>
+                  <RichContent body={props.values.about} />
                 </div>
               </div>
               <div className="flex flex-col gap-4">

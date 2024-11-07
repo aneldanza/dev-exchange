@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
 import { DeleteQuestionModal } from "./DeleteQuestionModal";
-import DOMPurify from "dompurify";
 import { useAuth } from "../../services/storeHooks";
 import { QuestionData } from "./types";
 import { PostMeta } from "../common/PostMeta";
@@ -9,6 +8,7 @@ import { QuestionTags } from "./QuestionTags";
 import { PostActions } from "../common/PostActions";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { AnswersContainer } from "../answers/AnswersContainer";
+import { RichContent } from "../common/RichContent";
 
 interface QuestionProps {
   question: QuestionData;
@@ -50,13 +50,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
       </div>
 
       <div className="max-w-3xl w-full flex flex-col gap-4 mt-4">
-        <div className="prose prose-sm max-w-full">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(question.body),
-            }}
-          />
-        </div>
+        <RichContent body={question.body} />
 
         <QuestionTags tags={question.tags} />
 

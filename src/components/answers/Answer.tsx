@@ -5,6 +5,7 @@ import { type FC } from "react";
 import { DeleteAnswerModal } from "./DeleteAnswerModal";
 import { useAuth } from "../../services/storeHooks";
 import { PostActions } from "../common/PostActions";
+import { RichContent } from "../common/RichContent";
 
 interface AnswerProps {
   answer: AnswerData;
@@ -15,9 +16,8 @@ export const Answer: FC<AnswerProps> = ({ answer }) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <div className="answer">
-      <div className="prose prose-sm">
-        <div dangerouslySetInnerHTML={{ __html: answer.body }} />
-      </div>
+      <RichContent body={answer.body} />
+
       <div>
         {user && answer.user.id === user.id && (
           <PostActions

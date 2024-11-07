@@ -1,6 +1,7 @@
 import React from "react";
 import { FullUserData } from "./types";
 import { formatCountString } from "../../services/utils";
+import { RichContent } from "../common/RichContent";
 
 interface ProfileTabProps {
   data: FullUserData;
@@ -36,13 +37,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ data }) => {
       <div>
         <div className="text-lg">About</div>
         {data.description ? (
-          <div className="prose prose-sm">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: data.description,
-              }}
-            />
-          </div>
+          <RichContent body={data.description} />
         ) : (
           <div className="card">
             <div className="text-appGray-100 text-sm">
