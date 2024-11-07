@@ -1,7 +1,6 @@
 import { QuillEditor } from "../common/QuillEditor";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-// import { useCreateAnswerMutation } from "../../services/api";
 import { removeSelectElement } from "../../services/utils";
 import React, { useState } from "react";
 import Flash from "../common/Flash";
@@ -11,17 +10,13 @@ const validationsSchema = Yup.object().shape({
 });
 
 interface AnswerFormProps {
-  questionId: number;
-  userId: number;
-  setShowAnswerForm: (showAnswerForm: boolean) => void;
+  setShowAnswerForm?: (showAnswerForm: boolean) => void;
   initialBody?: string;
   answerAction: (data: { body: string }) => Promise<void>;
   submitText?: string;
 }
 
 export const AnswerForm: React.FC<AnswerFormProps> = ({
-  // questionId,
-  // userId,
   setShowAnswerForm,
   initialBody = "",
   answerAction,
@@ -62,9 +57,9 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
         console.log(values);
         addAnswer(values);
         actions.setSubmitting(false);
-        setResetForm(true);
         actions.resetForm();
-        setShowAnswerForm(false);
+        setResetForm(true);
+        setShowAnswerForm && setShowAnswerForm(false);
       }}
     >
       {({ isSubmitting, isValid }) => (
