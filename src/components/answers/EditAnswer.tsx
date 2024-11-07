@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { UnsavedChangesModal } from "../common/UnsavedChangesModal";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { useUpdateAnswerMutation } from "../../services/api";
+import { RichContent } from "../common/RichContent";
 
 interface EditAnswerProps {
   answer: FullAnswerData | undefined;
@@ -84,39 +85,39 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
           validationSchema={validationsSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, isValid, values }) => (
-            <Form>
-              <div className="list mb-6">
-                <div>
-                  <QuillEditor name="body" placeholder="" label="" />
-                  <div className="prose prose-sm max-w-full">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(values.body),
-                      }}
-                    />
+          {({ isSubmitting, isValid, values, touched }) => {
+            return (
+              <Form>
+                <div className="list mb-6">
+                  <div>
+                    <QuillEditor name="body" placeholder="" label="" />
+                    <RichContent body={values.body} />
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={isSubmitting || !isValid}
-                >
-                  Save Edits
-                </button>
+                <div className="flex flex-col gap-4 ">
+                  <button
+                    type="submit"
+                    className="btn btn-primary disabled:cursor-not-allowed disabled:bg-blue-200"
+                    disabled={
+                      Object.keys(touched).length === 0 ||
+                      isSubmitting ||
+                      !isValid
+                    }
+                  >
+                    Save Edits
+                  </button>
 
-                <button
-                  type="reset"
-                  className="btn btn-outline border-0 text-blue-500 py-2 hover:bg-blue-50"
-                  onClick={() => handleCancelEdit(values)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </Form>
-          )}
+                  <button
+                    type="reset"
+                    className="btn btn-outline border-0 text-blue-500 py-2 hover:bg-blue-50"
+                    onClick={() => handleCancelEdit(values)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </Form>
+            );
+          }}
         </Formik>
 
         <UnsavedChangesModal
