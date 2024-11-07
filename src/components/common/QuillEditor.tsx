@@ -10,7 +10,6 @@ interface QuillEditorProps {
   name: string;
   placeholder: string;
   isFormReset?: boolean;
-  initialValue?: string;
 }
 
 // Define custom icons
@@ -58,13 +57,16 @@ export const QuillEditor: FC<QuillEditorProps> = ({
       quillRef.current.clipboard.dangerouslyPasteHTML(0, initialValue);
 
       // Listen for changes and call changeHandler
-      quillRef.current.on("text-change", () => {
+      quillRef.current.on("text-change", (_delta, _oldContent, source) => {
+        if (source === "user") {
+          helpers.setTouched(true);
+        }
         const value = quillRef.current?.root.innerHTML || "";
         helpers.setValue(value);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [editorRef.current]);
 
   useEffect(() => {
     if (isFormReset && quillRef.current) {

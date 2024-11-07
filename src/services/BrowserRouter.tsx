@@ -11,6 +11,7 @@ import QuestionPage from "../components/questions/QuestionPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import EditQuestionPage from "../components/questions/EditQuestionPage";
 import TaggedQuestionPageContainer from "../components/questions/TaggedQuestionPageContainer";
+import EditAnswerPage from "../components/answers/EditAnswerPage";
 
 export const browserRouter = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const browserRouter = createBrowserRouter([
       {
         path: "/questions/tagged/:tagId",
         element: <TaggedQuestionPageContainer />,
+      },
+      {
+        path: "/answers/:answerId/edit",
+        element: <ProtectedRoute element={<EditAnswerPage />} />,
       },
     ],
   },

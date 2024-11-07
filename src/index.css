@@ -8,7 +8,7 @@
   }
 
   .btn-primary {
-    @apply bg-blue-500 text-white  hover:bg-blue-700;
+    @apply bg-blue-500 text-white  hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-appGray-200;
   }
 
   .btn-secondary {
@@ -105,5 +105,21 @@
 
   .activity-card-row {
     @apply p-4 text-sm flex justify-between gap-2 max-w-full;
+  }
+
+  .answer-meta {
+    @apply border-0;
+  }
+
+  .question-meta {
+    @apply bg-blue-100 border-blue-100;
+  }
+
+  .answer {
+    @apply border-b border-appGray-50 py-4;
+  }
+
+  .question-hyperlink {
+    @apply text-blue-500 visited:text-purple-500 hover:text-blue-700;
   }
 }

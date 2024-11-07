@@ -16,7 +16,7 @@ export const api = createApi({
     },
     credentials: "include", // need this for cookies to be sent
   }),
-  tagTypes: ["Users", "User", "Tag", "Questions"],
+  tagTypes: ["Users", "User", "Tag", "Questions", "Question"],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
       query: (payload) => {
@@ -105,6 +105,7 @@ export const api = createApi({
     }),
     getQuestionById: builder.query<QuestionData, string>({
       query: (id) => `/questions/${id}`,
+      providesTags: ["Question"],
     }),
     updateQuestion: builder.mutation({
       query: (data) => ({
@@ -119,6 +120,32 @@ export const api = createApi({
         method: "delete",
       }),
       invalidatesTags: ["Questions"],
+    }),
+    createAnswer: builder.mutation({
+      query: (data) => ({
+        url: "/answers",
+        method: "post",
+        body: { answer: data },
+      }),
+      invalidatesTags: ["Question"],
+    }),
+    deleteAnswer: builder.mutation({
+      query: (id) => ({
+        url: `/answers/${id}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["Question"],
+    }),
+    getAnswerById: builder.query({
+      query: (id) => `/answers/${id}`,
+    }),
+    updateAnswer: builder.mutation({
+      query: (data) => ({
+        url: `/answers/${data.id}`,
+        method: "PATCH",
+        body: { answer: data },
+      }),
+      invalidatesTags: ["Question"],
     }),
   }),
 });
@@ -141,4 +168,8 @@ export const {
   useUpdateQuestionMutation,
   useDeleteQuestionMutation,
   useGetTagByIdQuery,
+  useCreateAnswerMutation,
+  useDeleteAnswerMutation,
+  useGetAnswerByIdQuery,
+  useUpdateAnswerMutation,
 } = api;
