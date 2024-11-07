@@ -177,12 +177,13 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
               </div>
 
               <div className="flex flex-col space-y-6 ">
-                <Button
+                <button
                   type="submit"
                   className="btn btn-primary"
-                  title={submitText}
-                  onClick={() => {}}
-                />
+                  disabled={props.isSubmitting || !props.isValid}
+                >
+                  {submitText}
+                </button>
 
                 <Button
                   className="btn btn-warning"
