@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import moment from "moment";
 import { DeleteQuestionModal } from "./DeleteQuestionModal";
 import DOMPurify from "dompurify";
 import { useAuth } from "../../services/storeHooks";
 import { QuestionData } from "./types";
-import Button from "../common/Button";
 import { PostMeta } from "../common/PostMeta";
-import { AnswersList } from "../answers/AnswersList";
-import { AnswerForm } from "../answers/AnswerForm";
 import { QuestionTags } from "./QuestionTags";
 import { PostActions } from "../common/PostActions";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
+import { AnswersContainer } from "../answers/AnswersContainer";
 
 interface QuestionProps {
   question: QuestionData;
@@ -34,15 +31,8 @@ const QuestionMeta: React.FC<{ created_at: string; updated_at: string }> = ({
 export const Question: React.FC<QuestionProps> = ({ question }) => {
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
-  const [showAnswerForm, setShowAnswerForm] = useState(false);
 
   useHighlightCodeBlocks(question);
-
-  useEffect(() => {
-    setShowAnswerForm(
-      !!(user && question.answers.every((answer) => answer.user.id !== user.id))
-    );
-  }, [user, question.answers]);
 
   if (!question) {
     return <div>No question data available.</div>;
@@ -90,33 +80,11 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
           </div>
         </div>
 
-        {question.answers.length > 0 && (
-          <AnswersList answers={question.answers} />
-        )}
-
-        {user ? (
-          <div>
-            {question.answers.some((answer) => answer.user.id === user.id) && (
-              <Button
-                title="Add another answer"
-                onClick={() => setShowAnswerForm(true)}
-                className={`btn btn-primary ${showAnswerForm ? "hidden" : ""}`}
-              />
-            )}
-
-            <div className={`${!showAnswerForm && "hidden"}`}>
-              <AnswerForm
-                questionId={question.id}
-                userId={user.id}
-                setShowAnswerForm={setShowAnswerForm}
-              />
-            </div>
-          </div>
-        ) : (
-          <Link to="/login" className="btn ">
-            Login to answer
-          </Link>
-        )}
+        <AnswersContainer
+          questionId={question.id}
+          userId={question.user.id}
+          answers={question.answers}
+        />
       </div>
 
       <DeleteQuestionModal

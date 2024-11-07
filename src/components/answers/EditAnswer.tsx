@@ -43,7 +43,7 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
       await updateAnswer({
         id: answer.id,
         body: values.body,
-      });
+      }).unwrap();
       navigate(`/questions/${answer.question_id}`);
     } catch (error) {
       console.error(error);

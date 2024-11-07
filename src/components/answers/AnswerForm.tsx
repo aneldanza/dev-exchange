@@ -1,7 +1,7 @@
 import { QuillEditor } from "../common/QuillEditor";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useCreateAnswerMutation } from "../../services/api";
+// import { useCreateAnswerMutation } from "../../services/api";
 import { removeSelectElement } from "../../services/utils";
 import React, { useState } from "react";
 import Flash from "../common/Flash";
@@ -15,13 +15,17 @@ interface AnswerFormProps {
   userId: number;
   setShowAnswerForm: (showAnswerForm: boolean) => void;
   initialBody?: string;
+  answerAction: (data: { body: string }) => Promise<void>;
+  submitText?: string;
 }
 
 export const AnswerForm: React.FC<AnswerFormProps> = ({
-  questionId,
-  userId,
+  // questionId,
+  // userId,
   setShowAnswerForm,
   initialBody = "",
+  answerAction,
+  submitText = "Submit",
 }) => {
   const initialValues: { body: string } = {
     body: initialBody,
@@ -30,15 +34,12 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
   const [isFormReset, setResetForm] = useState<boolean>(false);
   const [formError, setFormError] = useState<string[]>([]);
 
-  const [createAnswer] = useCreateAnswerMutation();
+  // const [createAnswer] = useCreateAnswerMutation();
 
   const addAnswer = async (values: { body: string }) => {
+    const modifiedBody = removeSelectElement(values.body);
     try {
-      await createAnswer({
-        question_id: questionId,
-        user_id: userId,
-        body: removeSelectElement(values.body),
-      });
+      await answerAction({ body: modifiedBody });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.data) {
@@ -79,7 +80,7 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
             className="btn btn-primary"
             disabled={isSubmitting || !isValid}
           >
-            Submit
+            {submitText}
           </button>
 
           <Flash
