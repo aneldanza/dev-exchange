@@ -74,7 +74,15 @@ const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
                 </div>
               </div>
               <div className="flex flex-col gap-4">
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={
+                    props.isSubmitting ||
+                    Object.keys(props.touched).length === 0 ||
+                    !props.isValid
+                  }
+                >
                   Save
                 </button>
 

@@ -29,8 +29,6 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
   const [isFormReset, setResetForm] = useState<boolean>(false);
   const [formError, setFormError] = useState<string[]>([]);
 
-  // const [createAnswer] = useCreateAnswerMutation();
-
   const addAnswer = async (values: { body: string }) => {
     const modifiedBody = removeSelectElement(values.body);
     try {
@@ -62,7 +60,7 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
         setShowAnswerForm && setShowAnswerForm(false);
       }}
     >
-      {({ isSubmitting, isValid }) => (
+      {({ isSubmitting, isValid, touched }) => (
         <Form className="flex flex-col gap-4 my-4">
           <QuillEditor
             name="body"
@@ -73,7 +71,9 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={isSubmitting || !isValid}
+            disabled={
+              isSubmitting || Object.keys(touched).length === 0 || !isValid
+            }
           >
             {submitText}
           </button>

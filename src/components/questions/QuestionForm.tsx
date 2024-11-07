@@ -129,6 +129,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     props: FormikProps<FormValues>
   ) => {
     setSelectedOptions(options as Option[]);
+    props.setFieldTouched("tags", true);
     props.setFieldValue("tags", options);
   };
 
@@ -180,7 +181,11 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  disabled={props.isSubmitting || !props.isValid}
+                  disabled={
+                    props.isSubmitting ||
+                    Object.keys(props.touched).length === 0 ||
+                    !props.isValid
+                  }
                 >
                   {submitText}
                 </button>

@@ -97,7 +97,7 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
                 <div className="flex flex-col gap-4 ">
                   <button
                     type="submit"
-                    className="btn btn-primary disabled:cursor-not-allowed disabled:bg-blue-200"
+                    className="btn btn-primary "
                     disabled={
                       Object.keys(touched).length === 0 ||
                       isSubmitting ||
