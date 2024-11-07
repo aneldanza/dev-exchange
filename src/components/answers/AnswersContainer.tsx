@@ -52,8 +52,6 @@ export const AnswersContainer: React.FC<AnswersContainerProps> = ({
 
           <div className={`${!showAnswerForm && "hidden"}`}>
             <AnswerForm
-              questionId={questionId}
-              userId={user.id}
               answerAction={addAnswer}
               setShowAnswerForm={setShowAnswerForm}
             />
