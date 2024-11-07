@@ -11,7 +11,7 @@ import { AnswersContainer } from "../answers/AnswersContainer";
 import { RichContent } from "../common/RichContent";
 
 interface QuestionProps {
-  question: QuestionData;
+  question: QuestionData | undefined;
 }
 
 const QuestionMeta: React.FC<{ created_at: string; updated_at: string }> = ({
