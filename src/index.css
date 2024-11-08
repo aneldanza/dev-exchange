@@ -28,7 +28,7 @@
   }
 
   .error-text {
-    @apply text-red-500 text-xs;
+    @apply text-red-500 text-xs hover:text-red-700;
   }
 
   .tag {
@@ -84,7 +84,7 @@
   }
 
   .action {
-    @apply text-appGray-300 hover:text-appGray-500 text-xs italic;
+    @apply text-appGray-300 hover:text-appGray-500 text-xs italic cursor-pointer;
   }
 
   .ql-code-block-container > select {

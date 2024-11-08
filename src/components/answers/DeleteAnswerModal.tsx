@@ -17,11 +17,11 @@ export const DeleteAnswerModal: FC<ModalProps> = ({
   setOpenModal,
   id,
 }) => {
-  const [deleteQuestion, { isLoading }] = useDeleteAnswerMutation();
+  const [deleteAnswer, { isLoading }] = useDeleteAnswerMutation();
 
   const handleDelete = () => {
     try {
-      deleteQuestion(id);
+      deleteAnswer(id);
       setOpenModal(false);
     } catch (error) {
       console.error(error);

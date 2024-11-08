@@ -4,6 +4,8 @@ import { CommentForm } from "./CommentForm";
 import { Button } from "../common/Button";
 import { type FC, useState } from "react";
 
+import { useAuth } from "../../services/storeHooks";
+
 interface CommentsContainerProps {
   comments: CommentData[];
   postType: string;
@@ -17,10 +19,12 @@ export const CommentsContainer: FC<CommentsContainerProps> = ({
 }) => {
   const [formVisible, setFormVisible] = useState<boolean>(false);
 
+  const { user } = useAuth();
+
   return (
     <div className="w-full py-4">
       <div>
-        <CommentsList comments={comments} />
+        <CommentsList comments={comments} user={user} />
 
         {formVisible && (
           <div className="mt-4">
