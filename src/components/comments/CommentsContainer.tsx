@@ -21,17 +21,22 @@ export const CommentsContainer: FC<CommentsContainerProps> = ({
     <div className="w-full py-4">
       <div>
         <CommentsList comments={comments} />
+
         {formVisible && (
-          <CommentForm
-            postType={postType}
-            postId={postId}
-            setFormVisible={setFormVisible}
-          />
+          <div className="mt-4">
+            <CommentForm
+              postType={postType}
+              postId={postId}
+              setFormVisible={setFormVisible}
+            />
+          </div>
         )}
       </div>
-      <div>
+      <div className="mt-4">
         <Button
-          className={`btn btn-secondary ${formVisible ? "hidden" : ""}`}
+          className={`btn btn-secondary border-none ${
+            formVisible ? "hidden" : ""
+          }`}
           title="Add Comment"
           type="button"
           onClick={() => setFormVisible(true)}
