@@ -4,8 +4,12 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import { FullUserData } from "../users/types";
 import { DeletePostModal } from "../common/DeletePostModal";
-import { useDeleteCommentMutation } from "../../services/api";
+import {
+  useDeleteCommentMutation,
+  useUpdateCommentMutation,
+} from "../../services/api";
 import { useState } from "react";
+import { CommentForm } from "./CommentForm";
 
 interface CommentsListProps {
   comments: CommentData[];
@@ -19,7 +23,16 @@ export const CommentsList: FC<CommentsListProps> = ({
   user,
 }) => {
   const [deleteComment, { isLoading }] = useDeleteCommentMutation();
+  const [updateComment] = useUpdateCommentMutation();
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [editComment, setEditComment] = useState<boolean>(false);
+
+  const handleUpdateComment = async (body: string) => {
+    await updateComment({
+      id: comments[0].id,
+      body,
+    }).unwrap();
+  };
 
   return (
     <div className="w-full border-y border-appGray-50 divide-y">
@@ -40,7 +53,12 @@ export const CommentsList: FC<CommentsListProps> = ({
               {moment(comment.created_at).fromNow()}
             </span>
             {user && user.id === comment.user.id && (
-              <span className="action ml-2">Edit</span>
+              <span
+                className={`action ml-2 ${editComment ? "hidden" : ""}`}
+                onClick={() => setEditComment(true)}
+              >
+                Edit
+              </span>
             )}
             {user && (
               <span
@@ -51,6 +69,14 @@ export const CommentsList: FC<CommentsListProps> = ({
               </span>
             )}
           </div>
+
+          {editComment && (
+            <CommentForm
+              body={comment.body}
+              formAction={handleUpdateComment}
+              setFormVisible={setEditComment}
+            />
+          )}
 
           <DeletePostModal
             openModal={showModal}

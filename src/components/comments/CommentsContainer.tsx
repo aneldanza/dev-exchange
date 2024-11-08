@@ -3,6 +3,7 @@ import { CommentData } from "./types";
 import { CommentForm } from "./CommentForm";
 import { Button } from "../common/Button";
 import { type FC, useState } from "react";
+import { useCreateCommentMutation } from "../../services/api";
 
 import { useAuth } from "../../services/storeHooks";
 
@@ -18,8 +19,17 @@ export const CommentsContainer: FC<CommentsContainerProps> = ({
   postType,
 }) => {
   const [formVisible, setFormVisible] = useState<boolean>(false);
-
+  const [createComment] = useCreateCommentMutation();
   const { user } = useAuth();
+
+  const handleCreateComment = async (body: string) => {
+    await createComment({
+      body,
+      commentable_id: postId,
+      commentable_type: postType,
+      user_id: user?.id,
+    }).unwrap();
+  };
 
   return (
     <div className="w-full py-4">
@@ -29,9 +39,8 @@ export const CommentsContainer: FC<CommentsContainerProps> = ({
         {formVisible && (
           <div className="mt-4">
             <CommentForm
-              postType={postType}
-              postId={postId}
               setFormVisible={setFormVisible}
+              formAction={handleCreateComment}
             />
           </div>
         )}

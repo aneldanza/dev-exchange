@@ -1,34 +1,24 @@
 import { type FC, useState } from "react";
 import { Form, Formik, ErrorMessage, Field } from "formik";
 import Flash from "../common/Flash";
-import { useCreateCommentMutation } from "../../services/api";
-import { useAuth } from "../../services/storeHooks";
 
 interface CommentFormProps {
-  body?: "";
-  postType: string;
-  postId: number;
+  body?: string;
   setFormVisible: (visible: boolean) => void;
+  formAction: (body: string) => void;
 }
 
 export const CommentForm: FC<CommentFormProps> = ({
   body = "",
-  postType,
-  postId,
+
   setFormVisible,
+  formAction,
 }) => {
-  const [createComment] = useCreateCommentMutation();
   const [formError, setFormError] = useState<string[]>([]);
-  const { user } = useAuth();
 
   const handleSubmit = async (values: { body: string }) => {
     try {
-      await createComment({
-        ...values,
-        commentable_id: postId,
-        commentable_type: postType,
-        user_id: user?.id,
-      }).unwrap();
+      await formAction(values.body);
 
       setFormVisible(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
