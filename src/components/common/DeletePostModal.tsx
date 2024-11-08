@@ -1,27 +1,28 @@
 import { Modal, Button, Flowbite } from "flowbite-react";
-
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { type FC } from "react";
-
-import { useDeleteAnswerMutation } from "../../services/api";
 import { customTheme } from "../../flowbiteCustomTheme";
 
 interface ModalProps {
   openModal: boolean;
   setOpenModal: (open: boolean) => void;
   id: number;
+  deleteRecord: (id: number) => void;
+  isLoading: boolean;
+  prompt: string;
 }
 
-export const DeleteAnswerModal: FC<ModalProps> = ({
+export const DeletePostModal: FC<ModalProps> = ({
   openModal,
   setOpenModal,
+  deleteRecord,
   id,
+  isLoading,
+  prompt,
 }) => {
-  const [deleteQuestion, { isLoading }] = useDeleteAnswerMutation();
-
   const handleDelete = () => {
     try {
-      deleteQuestion(id);
+      deleteRecord(id);
       setOpenModal(false);
     } catch (error) {
       console.error(error);
@@ -36,7 +37,7 @@ export const DeleteAnswerModal: FC<ModalProps> = ({
             <div className="text-center">
               <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-appGray-400 dark:text-appGray-200" />
               <h3 className="mb-5 text-lg font-normal text-appGray-500 dark:text-appGray-400">
-                Are you sure you want to delete this answer?
+                {prompt}
               </h3>
               <div className="flex justify-center gap-4">
                 <Button

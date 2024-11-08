@@ -9,6 +9,7 @@ import { PostActions } from "../common/PostActions";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { AnswersContainer } from "../answers/AnswersContainer";
 import { RichContent } from "../common/RichContent";
+import { CommentsContainer } from "../comments/CommentsContainer";
 
 interface QuestionProps {
   question: QuestionData | undefined;
@@ -73,6 +74,12 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
             />
           </div>
         </div>
+
+        <CommentsContainer
+          comments={question.comments}
+          postId={question.id}
+          postType="Question"
+        />
 
         <AnswersContainer
           questionId={question.id}

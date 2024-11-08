@@ -12,7 +12,7 @@
   }
 
   .btn-secondary {
-    @apply text-blue-500  border border-blue-500;
+    @apply text-blue-500  border border-blue-500 hover:text-blue-700 hover:border-blue-700;
   }
 
   .btn-outline {
@@ -28,7 +28,7 @@
   }
 
   .error-text {
-    @apply text-red-500 text-xs;
+    @apply text-red-500 text-xs hover:text-red-700;
   }
 
   .tag {
@@ -84,7 +84,7 @@
   }
 
   .action {
-    @apply text-appGray-300 hover:text-appGray-500 text-xs italic;
+    @apply text-appGray-300 hover:text-appGray-500 text-xs italic cursor-pointer;
   }
 
   .ql-code-block-container > select {
@@ -119,7 +119,7 @@
     @apply border-b border-appGray-50 py-4;
   }
 
-  .question-hyperlink {
-    @apply text-blue-500 visited:text-purple-500 hover:text-blue-700;
+  .hyperlink {
+    @apply text-blue-400 visited:text-purple-500 hover:text-blue-500;
   }
 }
