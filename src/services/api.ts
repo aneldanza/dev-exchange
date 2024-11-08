@@ -147,6 +147,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Question"],
     }),
+    createComment: builder.mutation({
+      query: (data) => ({
+        url: "/comments",
+        method: "post",
+        body: { comment: data },
+      }),
+      invalidatesTags: ["Question"],
+    }),
   }),
 });
 
@@ -172,4 +180,5 @@ export const {
   useDeleteAnswerMutation,
   useGetAnswerByIdQuery,
   useUpdateAnswerMutation,
+  useCreateCommentMutation,
 } = api;
