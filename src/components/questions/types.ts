@@ -1,5 +1,6 @@
 import { TagData } from "../tags/types";
 import { AnswerData } from "../answers/types";
+import { CommentData } from "../comments/types";
 
 export type LimitedQuestionData = {
   id: number;
@@ -22,6 +23,7 @@ export type QuestionData = {
     username: string;
   };
   answers: AnswerData[];
+  comments: CommentData[];
 };
 
 export type Option = { label: string; value: string };

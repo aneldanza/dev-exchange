@@ -2,10 +2,11 @@ import { useState } from "react";
 import { PostMeta } from "../common/PostMeta";
 import { AnswerData } from "./types";
 import { type FC } from "react";
-import { DeleteAnswerModal } from "./DeleteAnswerModal";
+import { DeletePostModal } from "../common/DeletePostModal";
 import { useAuth } from "../../services/storeHooks";
 import { PostActions } from "../common/PostActions";
 import { RichContent } from "../common/RichContent";
+import { useDeleteAnswerMutation } from "../../services/api";
 
 interface AnswerProps {
   answer: AnswerData;
@@ -14,6 +15,8 @@ interface AnswerProps {
 export const Answer: FC<AnswerProps> = ({ answer }) => {
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
+  const [deleteAnswer, { isLoading }] = useDeleteAnswerMutation();
+
   return (
     <div className="answer">
       <RichContent body={answer.body} />
@@ -38,10 +41,13 @@ export const Answer: FC<AnswerProps> = ({ answer }) => {
         </div>
       </div>
 
-      <DeleteAnswerModal
+      <DeletePostModal
         openModal={showModal}
         setOpenModal={setShowModal}
         id={answer.id}
+        prompt="Are you sure you want to delete this answer?"
+        deleteRecord={deleteAnswer}
+        isLoading={isLoading}
       />
     </div>
   );

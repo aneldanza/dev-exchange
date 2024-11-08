@@ -62,10 +62,7 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
   return (
     <div className="flex flex-col gap-6 text-base">
       <div>
-        <Link
-          to={`/questions/${answer.question_id}`}
-          className="question-hyperlink"
-        >
+        <Link to={`/questions/${answer.question_id}`} className="hyperlink">
           {answer.question.title}
         </Link>
         <div className="prose prose-sm max-w-full">
