@@ -21,25 +21,32 @@ const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
     <div>
       <ul className="flex flex-col divide-y">
         {questions.map((question) => (
-          <li key={question.id} className="flex flex-col gap-2 py-3">
-            <Link
-              to={`/questions/${question.id}`}
-              className="text-blue-500 text-sm"
-            >
-              {question.title}
-            </Link>
-            <div
-              className="text-xs"
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(
-                  question.body.length > 100
-                    ? `${question.body.substring(0, 100)}...`
-                    : question.body
-                ),
-              }}
-            />
+          <li key={question.id} className="flex gap-4 py-3">
+            <div className="flex flex-col gap-4 text-xs sm:text-sm">
+              <div>{`${question.votes} votes`}</div>
+              <div>{`${question.answers} answers`}</div>
+            </div>
 
-            <QuestionTags tags={question.tags} />
+            <div className="flex flex-col gap-2">
+              <Link
+                to={`/questions/${question.id}`}
+                className="text-blue-500 text-sm"
+              >
+                {question.title}
+              </Link>
+              <div
+                className="text-xs"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(
+                    question.body.length > 100
+                      ? `${question.body.substring(0, 100)}...`
+                      : question.body
+                  ),
+                }}
+              />
+
+              <QuestionTags tags={question.tags} />
+            </div>
           </li>
         ))}
       </ul>

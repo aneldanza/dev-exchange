@@ -29,6 +29,16 @@ const QuestionMeta: React.FC<{ created_at: string; updated_at: string }> = ({
   </div>
 );
 
+const QuestionActivity: React.FC<{ votes: number; answers: number }> = ({
+  votes,
+  answers,
+}) => (
+  <div className="flex flex-col gap-4 text-xs sm:text-sm">
+    <div>{`${votes} votes`}</div>
+    <div>{`${answers} answers`}</div>
+  </div>
+);
+
 export const Question: React.FC<QuestionProps> = ({ question }) => {
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
