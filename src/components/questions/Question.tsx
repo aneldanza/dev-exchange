@@ -11,6 +11,7 @@ import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { AnswersContainer } from "../answers/AnswersContainer";
 import { RichContent } from "../common/RichContent";
 import { CommentsContainer } from "../comments/CommentsContainer";
+import { useCastVoteMutation } from "../../services/api";
 
 interface QuestionProps {
   question: QuestionData | undefined;
@@ -36,9 +37,23 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
 
   useHighlightCodeBlocks(question);
 
+  const [castVote] = useCastVoteMutation();
+
   if (!question) {
     return <div>No question data available.</div>;
   }
+
+  const handleVote = async (value: number) => {
+    try {
+      await castVote({
+        votable_id: question.id,
+        votable_type: "Question",
+        value,
+      }).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="">
@@ -57,11 +72,13 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
             <IoIosArrowDropup
               size={34}
               className="text-appGray-200 hover:text-appGray-400 cursor-pointer"
+              onClick={handleVote.bind(null, 1)}
             />
             <div className="text-xl">{question.votes}</div>
             <IoIosArrowDropdown
               size={34}
               className="text-appGray-200 hover:text-appGray-400 cursor-pointer"
+              onClick={handleVote.bind(null, -1)}
             />
           </div>
         </div>
