@@ -7,6 +7,7 @@ import { useAuth } from "../../services/storeHooks";
 import { PostActions } from "../common/PostActions";
 import { RichContent } from "../common/RichContent";
 import { useDeleteAnswerMutation } from "../../services/api";
+import { CommentsContainer } from "../comments/CommentsContainer";
 
 interface AnswerProps {
   answer: AnswerData;
@@ -39,6 +40,12 @@ export const Answer: FC<AnswerProps> = ({ answer }) => {
             theme="answer-meta"
           />
         </div>
+
+        <CommentsContainer
+          comments={answer.comments}
+          postId={answer.id}
+          postType="Answer"
+        />
       </div>
 
       <DeletePostModal

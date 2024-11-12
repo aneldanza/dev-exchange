@@ -1,3 +1,5 @@
+import { CommentData } from "../comments/types";
+
 export type AnswerData = {
   id: number;
   body: string;
@@ -8,6 +10,7 @@ export type AnswerData = {
     username: string;
   };
   question_id: number;
+  comments: CommentData[];
 };
 
 export type FullAnswerData = AnswerData & {
