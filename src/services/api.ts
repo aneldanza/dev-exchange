@@ -170,6 +170,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Question"],
     }),
+    castVote: builder.mutation({
+      query: (data) => ({
+        url: "/votes",
+        method: "post",
+        body: { vote: data },
+      }),
+      invalidatesTags: ["Question"],
+    }),
   }),
 });
 
@@ -198,4 +206,5 @@ export const {
   useCreateCommentMutation,
   useDeleteCommentMutation,
   useUpdateCommentMutation,
+  useCastVoteMutation,
 } = api;
