@@ -1,5 +1,14 @@
+import { AnswerData } from "../answers/types";
 import { QuestionData } from "../questions/types";
 import { TagData } from "../tags/types";
+
+export type VoteData = {
+  id: number;
+  user_id: number;
+  votable_id: number;
+  votable_type: string;
+  value: number;
+};
 
 export type FullUserData = {
   id: number;
@@ -10,6 +19,8 @@ export type FullUserData = {
   description: string;
   tags: TagData[];
   questions: QuestionData[];
+  answers: AnswerData[];
+  votes: VoteData[];
 };
 
 export interface UserInfoLimited {
