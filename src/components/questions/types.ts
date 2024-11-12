@@ -9,6 +9,12 @@ export type LimitedQuestionData = {
   created_at: string;
   updated_at: string;
   tags: TagData[];
+  user: {
+    id: number;
+    username: string;
+  };
+  answers: number;
+  votes: number;
 };
 
 export type QuestionData = {
@@ -24,6 +30,7 @@ export type QuestionData = {
   };
   answers: AnswerData[];
   comments: CommentData[];
+  votes: number;
 };
 
 export type Option = { label: string; value: string };

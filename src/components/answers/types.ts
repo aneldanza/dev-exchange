@@ -11,6 +11,7 @@ export type AnswerData = {
   };
   question_id: number;
   comments: CommentData[];
+  votes: number;
 };
 
 export type FullAnswerData = AnswerData & {
