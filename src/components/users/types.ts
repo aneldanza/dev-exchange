@@ -1,4 +1,3 @@
-import { AnswerData } from "../answers/types";
 import { QuestionData } from "../questions/types";
 import { TagData } from "../tags/types";
 
@@ -19,7 +18,13 @@ export type FullUserData = {
   description: string;
   tags: TagData[];
   questions: QuestionData[];
-  answers: AnswerData[];
+  answers: {
+    question_title: string;
+    question_id: number;
+    tags: TagData[];
+    creeated_at: string;
+    votes: number;
+  };
   votes: VoteData[];
 };
 
