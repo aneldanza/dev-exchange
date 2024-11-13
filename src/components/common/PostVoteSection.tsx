@@ -1,5 +1,6 @@
 import { type FC, useState } from "react";
-import { IoIosArrowDropup, IoIosArrowDropdown } from "react-icons/io";
+import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
+
 import { useCastVoteMutation } from "../../services/api";
 import Flash from "./Flash";
 
@@ -40,13 +41,13 @@ export const PostVoteSection: FC<PostVoteSectionProps> = ({
   return (
     <>
       <div className="flex flex-col items-center gap-4">
-        <IoIosArrowDropup
+        <IoMdArrowDropup
           size={34}
           className="text-appGray-200 hover:text-appGray-400 cursor-pointer"
           onClick={handleVote.bind(null, 1)}
         />
         <div className="text-xl">{votes}</div>
-        <IoIosArrowDropdown
+        <IoMdArrowDropdown
           size={34}
           className="text-appGray-200 hover:text-appGray-400 cursor-pointer"
           onClick={handleVote.bind(null, -1)}
