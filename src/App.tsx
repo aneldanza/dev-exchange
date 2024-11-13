@@ -13,7 +13,7 @@ export default function App() {
           <div className="hidden min-w-40 max-w-64 grow-1 border py-6 border-appGray-100 border-t-0 border-l-0 sm:block h-screen">
             <Menu />
           </div>
-          <div className="px-4 py-6 w-full h-full overflow-scroll">
+          <div className="px-4 py-6 w-full h-[calc(100vh-4rem)] overflow-scroll">
             <Outlet />
           </div>
         </main>
