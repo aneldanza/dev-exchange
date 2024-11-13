@@ -5,9 +5,13 @@ import { RichContent } from "../common/RichContent";
 
 interface ProfileTabProps {
   data: FullUserData;
+  setActiveTab: (tab: string) => void;
 }
 
-export const ProfileTab: React.FC<ProfileTabProps> = ({ data }) => {
+export const ProfileTab: React.FC<ProfileTabProps> = ({
+  data,
+  setActiveTab,
+}) => {
   return (
     <div className="flex flex-col space-y-4">
       <div>
@@ -49,7 +53,14 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ data }) => {
         ) : (
           <div className="card">
             <div className="text-appGray-100 text-sm">
-              Your about me section is empty
+              Your about me section is empty. Would you like to add something?
+              🤔{" "}
+              <span
+                onClick={() => setActiveTab("Settings")}
+                className="hyperlink"
+              >
+                Edit Profile
+              </span>
             </div>
           </div>
         )}
