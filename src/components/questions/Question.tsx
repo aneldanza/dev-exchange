@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { IoIosArrowDropup, IoIosArrowDropdown } from "react-icons/io";
+import { PostVoteSection } from "../common/PostVoteSection";
 import { DeleteQuestionModal } from "./DeleteQuestionModal";
 import { useAuth } from "../../services/storeHooks";
 import { QuestionData } from "./types";
@@ -11,7 +11,6 @@ import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { AnswersContainer } from "../answers/AnswersContainer";
 import { RichContent } from "../common/RichContent";
 import { CommentsContainer } from "../comments/CommentsContainer";
-import { useCastVoteMutation } from "../../services/api";
 
 interface QuestionProps {
   question: QuestionData | undefined;
@@ -37,23 +36,9 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
 
   useHighlightCodeBlocks(question);
 
-  const [castVote] = useCastVoteMutation();
-
   if (!question) {
     return <div>No question data available.</div>;
   }
-
-  const handleVote = async (value: number) => {
-    try {
-      await castVote({
-        votable_id: question.id,
-        votable_type: "Question",
-        value,
-      }).unwrap();
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div className="">
@@ -68,19 +53,11 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
 
       <div className="max-w-3xl w-full flex gap-4 mt-4">
         <div className="pt-4">
-          <div className="flex flex-col items-center gap-4">
-            <IoIosArrowDropup
-              size={34}
-              className="text-appGray-200 hover:text-appGray-400 cursor-pointer"
-              onClick={handleVote.bind(null, 1)}
-            />
-            <div className="text-xl">{question.votes}</div>
-            <IoIosArrowDropdown
-              size={34}
-              className="text-appGray-200 hover:text-appGray-400 cursor-pointer"
-              onClick={handleVote.bind(null, -1)}
-            />
-          </div>
+          <PostVoteSection
+            postId={question.id}
+            votes={question.votes}
+            postType="Question"
+          />
         </div>
         <div className="flex flex-col gap-4">
           <RichContent body={question.body} />
