@@ -59,7 +59,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
             postType="Question"
           />
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 flex-grow">
           <RichContent body={question.body} />
 
           <QuestionTags tags={question.tags} />
