@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
+import { PostVoteSection } from "../common/PostVoteSection";
 import { DeleteQuestionModal } from "./DeleteQuestionModal";
 import { useAuth } from "../../services/storeHooks";
 import { QuestionData } from "./types";
@@ -50,36 +51,47 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
         />
       </div>
 
-      <div className="max-w-3xl w-full flex flex-col gap-4 mt-4">
-        <RichContent body={question.body} />
-
-        <QuestionTags tags={question.tags} />
-
-        <div>
-          {user && question.user.id === user.id && (
-            <PostActions
+      <div className="max-w-3xl w-full ">
+        <div className="flex gap-4 mt-4 align-top">
+          <div className="pt-4">
+            <PostVoteSection
               postId={question.id}
-              setShowModal={setShowModal}
-              name="questions"
+              votes={question.votes}
+              postType="Question"
             />
-          )}
+          </div>
+          <div className="flex flex-col gap-4 flex-grow">
+            <RichContent body={question.body} />
 
-          <div className="flex justify-end">
-            <PostMeta
-              userId={question.user.id}
-              username={question.user.username}
-              createdAt={question.created_at}
-              actionWord="asked"
-              theme="question-meta"
+            <QuestionTags tags={question.tags} />
+
+            <div>
+              {user && question.user.id === user.id && (
+                <PostActions
+                  postId={question.id}
+                  setShowModal={setShowModal}
+                  name="questions"
+                />
+              )}
+
+              <div className="flex justify-end">
+                <PostMeta
+                  userId={question.user.id}
+                  username={question.user.username}
+                  createdAt={question.created_at}
+                  actionWord="asked"
+                  theme="question-meta"
+                />
+              </div>
+            </div>
+
+            <CommentsContainer
+              comments={question.comments}
+              postId={question.id}
+              postType="Question"
             />
           </div>
         </div>
-
-        <CommentsContainer
-          comments={question.comments}
-          postId={question.id}
-          postType="Question"
-        />
 
         <AnswersContainer
           questionId={question.id}

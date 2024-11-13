@@ -34,7 +34,7 @@ export const CommentsContainer: FC<CommentsContainerProps> = ({
   return (
     <div className="w-full py-4">
       <div>
-        <CommentsList comments={comments} user={user} />
+        <CommentsList comments={comments} />
 
         {formVisible && (
           <div className="mt-4">

@@ -7,6 +7,8 @@ import { useAuth } from "../../services/storeHooks";
 import { PostActions } from "../common/PostActions";
 import { RichContent } from "../common/RichContent";
 import { useDeleteAnswerMutation } from "../../services/api";
+import { CommentsContainer } from "../comments/CommentsContainer";
+import { PostVoteSection } from "../common/PostVoteSection";
 
 interface AnswerProps {
   answer: AnswerData;
@@ -18,29 +20,43 @@ export const Answer: FC<AnswerProps> = ({ answer }) => {
   const [deleteAnswer, { isLoading }] = useDeleteAnswerMutation();
 
   return (
-    <div className="answer">
-      <RichContent body={answer.body} />
+    <>
+      <div className="flex gap-4">
+        <PostVoteSection
+          postId={answer.id}
+          votes={answer.votes}
+          postType="Answer"
+        />
+        <div className="flex-grow">
+          <RichContent body={answer.body} />
 
-      <div>
-        {user && answer.user.id === user.id && (
-          <PostActions
-            postId={answer.id}
-            setShowModal={setShowModal}
-            name="answers"
-          />
-        )}
+          <div>
+            {user && answer.user.id === user.id && (
+              <PostActions
+                postId={answer.id}
+                setShowModal={setShowModal}
+                name="answers"
+              />
+            )}
 
-        <div className="flex justify-end">
-          <PostMeta
-            userId={answer.user.id}
-            username={answer.user.username}
-            createdAt={answer.created_at}
-            actionWord="answered"
-            theme="answer-meta"
-          />
+            <div className="flex justify-end">
+              <PostMeta
+                userId={answer.user.id}
+                username={answer.user.username}
+                createdAt={answer.created_at}
+                actionWord="answered"
+                theme="answer-meta"
+              />
+            </div>
+
+            <CommentsContainer
+              comments={answer.comments}
+              postId={answer.id}
+              postType="Answer"
+            />
+          </div>
         </div>
       </div>
-
       <DeletePostModal
         openModal={showModal}
         setOpenModal={setShowModal}
@@ -49,6 +65,6 @@ export const Answer: FC<AnswerProps> = ({ answer }) => {
         deleteRecord={deleteAnswer}
         isLoading={isLoading}
       />
-    </div>
+    </>
   );
 };
