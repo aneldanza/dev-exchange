@@ -15,8 +15,16 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ data }) => {
         <div className="card">
           <div className="flex gap-4">
             <div className="list">
-              <div>0</div>
-              <div className="text-xs text-appGray-100">answers</div>
+              <div>{data.answers.length}</div>
+              <div className="text-xs text-appGray-100">
+                {
+                  formatCountString(
+                    data.answers.length,
+                    "answer",
+                    "answers"
+                  ).split(" ")[1]
+                }
+              </div>
             </div>
             <div className="list">
               <div>{data.questions.length}</div>

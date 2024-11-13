@@ -24,7 +24,7 @@ export type FullUserData = {
     tags: TagData[];
     creeated_at: string;
     votes: number;
-  };
+  }[];
   votes: VoteData[];
 };
 
