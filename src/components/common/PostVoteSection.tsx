@@ -40,7 +40,7 @@ export const PostVoteSection: FC<PostVoteSectionProps> = ({
   };
   return (
     <>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center">
         <IoMdArrowDropup
           size={34}
           className="text-appGray-200 hover:text-appGray-400 cursor-pointer"
