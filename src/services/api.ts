@@ -172,7 +172,7 @@ export const api = createApi({
     }),
     castVote: builder.mutation({
       query: (data) => ({
-        url: "/votes",
+        url: "/votes/cast_vote",
         method: "post",
         body: { vote: data },
       }),
