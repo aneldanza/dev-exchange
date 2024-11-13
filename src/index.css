@@ -64,7 +64,7 @@
   }
 
   .flash {
-    @apply p-4 mb-4 min-w-14 text-sm rounded-md fixed top-0 left-1/2 transform -translate-x-1/2;
+    @apply p-4 mb-4 min-w-14 text-sm rounded-md fixed top-16 left-1/2 transform -translate-x-1/2;
   }
 
   .flash-error {
