@@ -178,6 +178,12 @@ export const api = createApi({
       }),
       invalidatesTags: ["Question"],
     }),
+    searchPostsByUser: builder.query({
+      query: (query) =>
+        `/users/search_posts?user_id=${query.id}&tag_name=${query.tag_name}${
+          query.sort ? `&sort=${query.sort}` : ""
+        }`,
+    }),
   }),
 });
 
@@ -207,4 +213,5 @@ export const {
   useDeleteCommentMutation,
   useUpdateCommentMutation,
   useCastVoteMutation,
+  useSearchPostsByUserQuery,
 } = api;
