@@ -1,7 +1,10 @@
-import React from "react";
-import { FullUserData } from "./types";
+import React, { useCallback } from "react";
+import { FullUserData, UserAnswerData } from "./types";
 import { formatCountString } from "../../services/utils";
 import { RichContent } from "../common/RichContent";
+import { TagData } from "../tags/types";
+import { Tag } from "../tags/Tag";
+import { QuestionData } from "../questions/types";
 
 interface ProfileTabProps {
   data: FullUserData;
@@ -12,6 +15,37 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
   data,
   setActiveTab,
 }) => {
+  const aggregateTags = useCallback(
+    (questions: QuestionData[], answers: UserAnswerData[]) => {
+      const tags: Record<
+        string,
+        { tag: TagData; posts: (QuestionData | UserAnswerData)[] }
+      > = {};
+
+      const posts = [...questions, ...answers];
+
+      posts.forEach((post) => {
+        post.tags.forEach((tag) => {
+          if (tags[tag.id]) {
+            (tags[tag.id].posts as (QuestionData | UserAnswerData)[]).push(
+              post
+            );
+          } else {
+            tags[tag.id] = {
+              tag,
+              posts: [post],
+            };
+          }
+        });
+      });
+
+      return tags;
+    },
+    []
+  );
+
+  const tags = aggregateTags(data.questions, data.answers);
+
   return (
     <div className="flex flex-col space-y-4">
       <div>
@@ -64,6 +98,24 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
             </div>
           </div>
         )}
+      </div>
+
+      <div className="">
+        <div className="mb-2 text-lg">Tags</div>
+        <div className="activity-card">
+          {Object.keys(tags).length ? (
+            Object.values(tags).map((tag) => (
+              <div className="activity-card-row items-center" key={tag.tag.id}>
+                <Tag key={tag.tag.id} tag={tag.tag} />
+                <div className="text-xs">
+                  {formatCountString(tag.posts.length, "post", "posts")}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div>No tags found</div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,14 @@ export type VoteData = {
   value: number;
 };
 
+export type UserAnswerData = {
+  question_title: string;
+  question_id: number;
+  tags: TagData[];
+  created_at: string;
+  votes: number;
+};
+
 export type FullUserData = {
   id: number;
   username: string;
@@ -18,13 +26,7 @@ export type FullUserData = {
   description: string;
   tags: TagData[];
   questions: QuestionData[];
-  answers: {
-    question_title: string;
-    question_id: number;
-    tags: TagData[];
-    creeated_at: string;
-    votes: number;
-  }[];
+  answers: UserAnswerData[];
   votes: VoteData[];
 };
 
