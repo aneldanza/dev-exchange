@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import { SignUpForm } from "../components/auth/SignupForm";
 import { SignInForm } from "../components/auth/SigninForm";
-import { TagsPage } from "../components/tags/TagsPage";
+import { TagsPageContainer } from "../components/tags/TagsPageContainer";
 import { UserPage } from "../components/users/UserPage";
 import { AllUsersPage } from "../components/users/AllUsersPage";
 import AllQuestionsPage from "../components/questions/AllQuestionsPage";
@@ -23,7 +23,7 @@ export const browserRouter = createBrowserRouter([
       { path: "/login", element: <SignInForm /> },
       { path: "users", element: <AllUsersPage /> },
       { path: "users/:userId", element: <UserPage /> },
-      { path: "/tags", element: <TagsPage /> },
+      { path: "/tags", element: <TagsPageContainer /> },
       { path: "/questions", element: <AllQuestionsPage /> },
       { path: "/questions/:questionId", element: <QuestionPage /> },
       {
