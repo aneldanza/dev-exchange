@@ -3,13 +3,63 @@ import { FullUserData, UserAnswerData } from "./types";
 import { formatCountString } from "../../services/utils";
 import { RichContent } from "../common/RichContent";
 import { TagData } from "../tags/types";
-import { Tag } from "../tags/Tag";
 import { QuestionData } from "../questions/types";
+import { TopTags } from "./TopTags";
 
 interface ProfileTabProps {
   data: FullUserData;
   setActiveTab: (tab: string) => void;
 }
+
+const Stats: React.FC<{ questionsCount: number; answersCount: number }> = ({
+  questionsCount,
+  answersCount,
+}) => (
+  <div>
+    <div className="text-lg">Stats</div>
+    <div className="card">
+      <div className="flex gap-4">
+        <div className="list">
+          <div>{answersCount}</div>
+          <div className="text-xs text-appGray-100">
+            {formatCountString(answersCount, "answer", "answers").split(" ")[1]}
+          </div>
+        </div>
+        <div className="list">
+          <div>{questionsCount}</div>
+          <div className="text-xs text-appGray-100">
+            {
+              formatCountString(questionsCount, "question", "questions").split(
+                " "
+              )[1]
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const About: React.FC<{
+  description: string;
+  setActiveTab: (tab: string) => void;
+}> = ({ description, setActiveTab }) => (
+  <div>
+    <div className="text-lg">About</div>
+    {description ? (
+      <RichContent body={description} />
+    ) : (
+      <div className="card">
+        <div className="text-appGray-100 text-sm">
+          Your about me section is empty. Would you like to add something? 🤔{" "}
+          <span onClick={() => setActiveTab("Settings")} className="hyperlink">
+            Edit Profile
+          </span>
+        </div>
+      </div>
+    )}
+  </div>
+);
 
 export const ProfileTab: React.FC<ProfileTabProps> = ({
   data,
@@ -47,75 +97,20 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({
   const tags = aggregateTags(data.questions, data.answers);
 
   return (
-    <div className="flex flex-col space-y-4">
-      <div>
-        <div className="text-lg">Stats</div>
-        <div className="card">
-          <div className="flex gap-4">
-            <div className="list">
-              <div>{data.answers.length}</div>
-              <div className="text-xs text-appGray-100">
-                {
-                  formatCountString(
-                    data.answers.length,
-                    "answer",
-                    "answers"
-                  ).split(" ")[1]
-                }
-              </div>
-            </div>
-            <div className="list">
-              <div>{data.questions.length}</div>
-              <div className="text-xs text-appGray-100">
-                {
-                  formatCountString(
-                    data.questions.length,
-                    "question",
-                    "questions"
-                  ).split(" ")[1]
-                }
-              </div>
-            </div>
-          </div>
+    <div className="flex space-y-6 sm:flex-row sm:space-x-6 sm:space-y-0">
+      <div className="flex flex-col space-y-4">
+        <div>
+          <Stats
+            questionsCount={data.questions.length}
+            answersCount={data.answers.length}
+          />
         </div>
       </div>
 
-      <div>
-        <div className="text-lg">About</div>
-        {data.description ? (
-          <RichContent body={data.description} />
-        ) : (
-          <div className="card">
-            <div className="text-appGray-100 text-sm">
-              Your about me section is empty. Would you like to add something?
-              🤔{" "}
-              <span
-                onClick={() => setActiveTab("Settings")}
-                className="hyperlink"
-              >
-                Edit Profile
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
+      <div className="flex flex-col space-y-4 flex-grow">
+        <About description={data.description} setActiveTab={setActiveTab} />
 
-      <div className="">
-        <div className="mb-2 text-lg">Tags</div>
-        <div className="activity-card">
-          {Object.keys(tags).length ? (
-            Object.values(tags).map((tag) => (
-              <div className="activity-card-row items-center" key={tag.tag.id}>
-                <Tag key={tag.tag.id} tag={tag.tag} />
-                <div className="text-xs">
-                  {formatCountString(tag.posts.length, "post", "posts")}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div>No tags found</div>
-          )}
-        </div>
+        <TopTags tags={tags} />
       </div>
     </div>
   );
