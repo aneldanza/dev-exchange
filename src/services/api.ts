@@ -4,6 +4,7 @@ import { SignUpCredentials } from "../components/auth/SignupForm";
 import { SignInCredentials } from "../components/auth/SigninForm";
 import { TagData } from "../components/tags/types";
 import { QuestionData } from "../components/questions/types";
+import { FullUserData } from "../components/users/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -48,7 +49,7 @@ export const api = createApi({
     getCurrentUser: builder.query({
       query: () => "/current_user",
     }),
-    showFullUserInfo: builder.query({
+    showFullUserInfo: builder.query<FullUserData, string>({
       query: (id) => "/users/" + id,
       providesTags: ["User"],
     }),
@@ -180,7 +181,7 @@ export const api = createApi({
     }),
     searchPostsByUser: builder.query({
       query: (query) =>
-        `/users/search_posts?user_id=${query.id}&tag_name=${query.tag_name}${
+        `/users/${query.id}/search_posts?tag_name=${query.tag}${
           query.sort ? `&sort=${query.sort}` : ""
         }`,
     }),
