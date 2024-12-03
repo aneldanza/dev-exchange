@@ -5,12 +5,15 @@ import { Tag } from "../tags/Tag";
 import { QuestionData } from "../questions/types";
 import { UserAnswerData } from "./types";
 
-export const TopTags: React.FC<{
+interface TopTagsProps {
   tags: Record<
     string,
     { tag: TagData; posts: (QuestionData | UserAnswerData)[] }
   >;
-}> = ({ tags }) => {
+  userId: number;
+}
+
+export const TopTags: React.FC<TopTagsProps> = ({ tags, userId }) => {
   const sortedTags = useMemo(
     () => Object.values(tags).sort((a, b) => b.posts.length - a.posts.length),
     [tags]
@@ -30,7 +33,11 @@ export const TopTags: React.FC<{
         {topFiveTags.length ? (
           sortedTags.map((tag) => (
             <div className="activity-card-row items-center" key={tag.tag.id}>
-              <Tag key={tag.tag.id} tag={tag.tag} />
+              <Tag
+                key={tag.tag.id}
+                tag={tag.tag}
+                url={`/users/${userId}/search?tag=${tag.tag.name}`}
+              />
               <div className="text-xs">
                 {formatCountString(tag.posts.length, "post", "posts")}
               </div>
