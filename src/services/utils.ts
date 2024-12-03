@@ -3,7 +3,7 @@ export const formatCountString = (
   singular: string,
   plural: string
 ): string => {
-  return count === 1 ? `${count} ${singular}` : `${count} ${plural}`;
+  return Math.abs(count) === 1 ? `${count} ${singular}` : `${count} ${plural}`;
 };
 
 export const removeSelectElement = (body: string) => {
