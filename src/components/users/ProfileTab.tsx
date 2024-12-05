@@ -1,13 +1,11 @@
-import React, { useCallback } from "react";
-import { FullUserData, UserAnswerData } from "./types";
+import React, { useContext } from "react";
+import { FullUserData } from "./types";
 import { formatCountString } from "../../services/utils";
 import { RichContent } from "../common/RichContent";
-import { TagData } from "../tags/types";
-import { QuestionData } from "../questions/types";
 import { TopTags } from "./TopTags";
+import { UserContext } from "./UserContext";
 
 interface ProfileTabProps {
-  data: FullUserData;
   setActiveTab: (tab: string) => void;
 }
 
@@ -52,7 +50,7 @@ const About: React.FC<{
       <div className="card">
         <div className="text-appGray-100 text-sm">
           Your about me section is empty. Would you like to add something? 🤔{" "}
-          <span onClick={() => setActiveTab("Settings")} className="hyperlink">
+          <span onClick={() => setActiveTab("settings")} className="hyperlink">
             Edit Profile
           </span>
         </div>
@@ -61,56 +59,25 @@ const About: React.FC<{
   </div>
 );
 
-export const ProfileTab: React.FC<ProfileTabProps> = ({
-  data,
-  setActiveTab,
-}) => {
-  const aggregateTags = useCallback(
-    (questions: QuestionData[], answers: UserAnswerData[]) => {
-      const tags: Record<
-        string,
-        { tag: TagData; posts: (QuestionData | UserAnswerData)[] }
-      > = {};
-
-      const posts = [...questions, ...answers];
-
-      posts.forEach((post) => {
-        post.tags.forEach((tag) => {
-          if (tags[tag.id]) {
-            (tags[tag.id].posts as (QuestionData | UserAnswerData)[]).push(
-              post
-            );
-          } else {
-            tags[tag.id] = {
-              tag,
-              posts: [post],
-            };
-          }
-        });
-      });
-
-      return tags;
-    },
-    []
-  );
-
-  const tags = aggregateTags(data.questions, data.answers);
+export const ProfileTab: React.FC<ProfileTabProps> = ({ setActiveTab }) => {
+  const { postsByTag, fullUserData } = useContext(UserContext);
+  const { questions, answers, id, description } = fullUserData as FullUserData;
 
   return (
-    <div className="flex space-y-6 sm:flex-row sm:space-x-6 sm:space-y-0">
+    <div className="flex flex-col space-y-6 sm:flex-row sm:space-x-6 sm:space-y-0">
       <div className="flex flex-col space-y-4">
         <div>
           <Stats
-            questionsCount={data.questions.length}
-            answersCount={data.answers.length}
+            questionsCount={questions.length}
+            answersCount={answers.length}
           />
         </div>
       </div>
 
       <div className="flex flex-col space-y-4 flex-grow">
-        <About description={data.description} setActiveTab={setActiveTab} />
+        <About description={description} setActiveTab={setActiveTab} />
 
-        <TopTags tags={tags} />
+        <TopTags tags={postsByTag} userId={id} />
       </div>
     </div>
   );
