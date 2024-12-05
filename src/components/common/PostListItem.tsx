@@ -17,7 +17,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
     <li className="flex flex-col sm:flex-row gap-4 py-3">
       <div className="flex flex-row sm:flex-col gap-4 text-xs sm:text-sm text-appGray-300">
         <div>{formatCountString(post.votes, "vote", "votes")}</div>
-        {post.answers && (
+        {!!post.answers && (
           <div>{formatCountString(post.answers, "answer", "answers")}</div>
         )}
       </div>
