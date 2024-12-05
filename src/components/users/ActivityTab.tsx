@@ -1,7 +1,7 @@
 import { useContext, useMemo } from "react";
 import { QuestionData } from "../questions/types";
 import { PostsByTag, UserContext } from "./UserContext";
-import { FullUserData } from "./types";
+import { FullUserData, UserAnswerData } from "./types";
 import { TopItemsCard } from "./TopItemsCard";
 import { TagItem } from "./TagItem";
 import { PostItem } from "./PostItem";
@@ -10,7 +10,7 @@ export const ActivityTab = () => {
   // Implement the logic for the ActivityTab component here
 
   const { postsByTag, fullUserData } = useContext(UserContext);
-  const { questions, id } = fullUserData as FullUserData;
+  const { questions, id, answers } = fullUserData as FullUserData;
 
   const sortedItems = useMemo(
     () =>
@@ -30,6 +30,20 @@ export const ActivityTab = () => {
             votes={question.votes}
             type="question"
             created_at={question.created_at}
+          />
+        )}
+      />
+
+      <TopItemsCard<UserAnswerData>
+        sortedItems={answers}
+        name="answer"
+        renderItem={(answer: UserAnswerData) => (
+          <PostItem
+            id={answer.question_id}
+            title={answer.question_title}
+            votes={answer.votes}
+            type="question"
+            created_at={answer.created_at}
           />
         )}
       />
