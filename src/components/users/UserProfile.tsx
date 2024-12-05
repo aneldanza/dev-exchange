@@ -69,9 +69,9 @@ export const UserProfile: React.FC = () => {
         {user?.id === id && (
           <div
             className={`tab ${
-              activeTab === "Settings" ? "active-tab" : "inactive-tab"
+              activeTab === "wettings" ? "active-tab" : "inactive-tab"
             }`}
-            onClick={() => handleTabClick("Settings")}
+            onClick={() => handleTabClick("settings")}
           >
             Settings
           </div>
@@ -81,7 +81,7 @@ export const UserProfile: React.FC = () => {
       {activeTab === "activity" && (
         <ActivityTab tags={tags} questions={questions} />
       )}
-      {activeTab === "Settings" && (
+      {activeTab === "settings" && (
         <SettingsTab data={data.fullUserData as FullUserData} />
       )}
     </div>
