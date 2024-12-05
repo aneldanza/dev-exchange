@@ -1,22 +1,16 @@
-import React from "react";
-import { TagData } from "../tags/types";
-import { Tag } from "../tags/Tag";
+import { useContext } from "react";
 import { QuestionData } from "../questions/types";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { formatCountString } from "../../services/utils";
+import { UserContext } from "./UserContext";
+import { FullUserData } from "./types";
+import { TopTags } from "./TopTags";
 
-interface ActivityTabProps {
-  tags: TagData[];
-  questions: QuestionData[];
-  // Define the props for the ActivityTab component here
-}
-
-export const ActivityTab: React.FC<ActivityTabProps> = ({
-  tags,
-  questions,
-}) => {
+export const ActivityTab = () => {
   // Implement the logic for the ActivityTab component here
+
+  const { postsByTag, fullUserData } = useContext(UserContext);
+  const { questions, id } = fullUserData as FullUserData;
 
   return (
     <div className="activity-list">
@@ -48,29 +42,7 @@ export const ActivityTab: React.FC<ActivityTabProps> = ({
         </div>
       </div>
 
-      <div className="">
-        <div className="mb-2">Tags</div>
-        <div className="activity-card">
-          {tags.length ? (
-            tags
-              .filter((tag: TagData) => tag.questions.length > 0)
-              .map((tag: TagData) => (
-                <div className="activity-card-row" key={tag.id}>
-                  <Tag key={tag.id} tag={tag} />
-                  <div className="text-xs">
-                    {formatCountString(
-                      tag.questions.length,
-                      "question",
-                      "questions"
-                    )}
-                  </div>
-                </div>
-              ))
-          ) : (
-            <div>No tags found</div>
-          )}
-        </div>
-      </div>
+      <TopTags tags={postsByTag} userId={id} />
     </div>
   );
 };

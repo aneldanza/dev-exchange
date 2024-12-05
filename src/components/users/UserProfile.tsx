@@ -11,8 +11,7 @@ import { UserContext } from "./UserContext";
 export const UserProfile: React.FC = () => {
   const [activeTab, setActiveTab] = useState("activity");
   const data = useContext(UserContext);
-  const { username, created_at, tags, id, questions } =
-    data.fullUserData as FullUserData;
+  const { username, created_at, id } = data.fullUserData as FullUserData;
   const { user } = useAuth();
 
   useEffect(() => {
@@ -78,9 +77,7 @@ export const UserProfile: React.FC = () => {
         )}
       </div>
       {activeTab === "profile" && <ProfileTab setActiveTab={setActiveTab} />}
-      {activeTab === "activity" && (
-        <ActivityTab tags={tags} questions={questions} />
-      )}
+      {activeTab === "activity" && <ActivityTab />}
       {activeTab === "settings" && (
         <SettingsTab data={data.fullUserData as FullUserData} />
       )}
