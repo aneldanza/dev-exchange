@@ -1,24 +1,31 @@
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ActivityTab } from "./ActivityTab";
 import { ProfileTab } from "./ProfileTab";
 import { FullUserData } from "./types";
 import { CakeIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "../../services/storeHooks";
 import { SettingsTab } from "./SettingsTab";
+import { UserContext } from "./UserContext";
 
-interface UserProfileProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: FullUserData;
-}
-
-export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
-  const [activeTab, setActiveTab] = useState("Activity");
-  const { username, created_at, tags, id, questions } = data;
+export const UserProfile: React.FC = () => {
+  const [activeTab, setActiveTab] = useState("activity");
+  const data = useContext(UserContext);
+  const { username, created_at, tags, id, questions } =
+    data.fullUserData as FullUserData;
   const { user } = useAuth();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const tab = searchParams.get("tab") || "";
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, []);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
+    window.history.pushState({}, "", `?tab=${tab}`);
   };
 
   return (
@@ -45,17 +52,17 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
       <div className="flex flex-wrap gap-2">
         <div
           className={`tab ${
-            activeTab === "Profile" ? "active-tab" : "inactive-tab"
+            activeTab === "profile" ? "active-tab" : "inactive-tab"
           }`}
-          onClick={() => handleTabClick("Profile")}
+          onClick={() => handleTabClick("profile")}
         >
           Profile
         </div>
         <div
           className={`tab ${
-            activeTab === "Activity" ? "active-tab" : "inactive-tab"
+            activeTab === "activity" ? "active-tab" : "inactive-tab"
           }`}
-          onClick={() => handleTabClick("Activity")}
+          onClick={() => handleTabClick("activity")}
         >
           Activity
         </div>
@@ -70,13 +77,13 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
           </div>
         )}
       </div>
-      {activeTab === "Profile" && (
-        <ProfileTab data={data} setActiveTab={setActiveTab} />
-      )}
-      {activeTab === "Activity" && (
+      {activeTab === "profile" && <ProfileTab setActiveTab={setActiveTab} />}
+      {activeTab === "activity" && (
         <ActivityTab tags={tags} questions={questions} />
       )}
-      {activeTab === "Settings" && <SettingsTab data={data} />}
+      {activeTab === "Settings" && (
+        <SettingsTab data={data.fullUserData as FullUserData} />
+      )}
     </div>
   );
 };
