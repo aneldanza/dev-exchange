@@ -1,10 +1,10 @@
 import { useContext, useMemo } from "react";
-import { QuestionData } from "../questions/types";
-import { PostsByTag, UserContext } from "./UserContext";
-import { FullUserData, UserAnswerData } from "./types";
-import { TopItemsCard } from "./TopItemsCard";
-import { TagItem } from "./TagItem";
-import { PostItem } from "./PostItem";
+import { QuestionData } from "../../questions/types";
+import { PostsByTag, UserContext } from "../UserContext";
+import { FullUserData, UserAnswerData } from "../types";
+import { TopItemsCard } from "../TopItemsCard";
+import { TagItem } from "../TagItem";
+import { PostItem } from "../PostItem";
 
 export const ActivityTab = () => {
   // Implement the logic for the ActivityTab component here

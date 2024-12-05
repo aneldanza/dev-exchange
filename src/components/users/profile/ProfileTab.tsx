@@ -1,10 +1,10 @@
 import React, { useContext, useMemo } from "react";
-import { FullUserData } from "./types";
-import { formatCountString } from "../../services/utils";
-import { RichContent } from "../common/RichContent";
-import { TopItemsCard } from "./TopItemsCard";
-import { TagItem } from "./TagItem";
-import { UserContext, type PostsByTag } from "./UserContext";
+import { FullUserData } from "../types";
+import { formatCountString } from "../../../services/utils";
+import { RichContent } from "../../common/RichContent";
+import { TopItemsCard } from "../TopItemsCard";
+import { TagItem } from "../TagItem";
+import { UserContext, type PostsByTag } from "../UserContext";
 
 interface ProfileTabProps {
   setActiveTab: (tab: string) => void;

@@ -1,11 +1,11 @@
 import moment from "moment";
 import React, { useState, useContext, useEffect } from "react";
-import { ActivityTab } from "./ActivityTab";
-import { ProfileTab } from "./ProfileTab";
+import { ActivityTab } from "./activity/ActivityTab";
+import { ProfileTab } from "./profile/ProfileTab";
 import { FullUserData } from "./types";
 import { CakeIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "../../services/storeHooks";
-import { SettingsTab } from "./SettingsTab";
+import { SettingsTab } from "./settings/SettingsTab";
 import { UserContext } from "./UserContext";
 
 export const UserProfile: React.FC = () => {

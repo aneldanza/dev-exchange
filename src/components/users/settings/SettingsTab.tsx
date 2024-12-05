@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FullUserData } from "./types";
-import { CustomDropdown } from "../common/Dropdown";
-import { Button } from "../common/Button";
-import { useDeleteAccountMutation } from "../../services/api";
-import { useAuth } from "../../services/storeHooks";
+import { FullUserData } from "../types";
+import { CustomDropdown } from "../../common/Dropdown";
+import { Button } from "../../common/Button";
+import { useDeleteAccountMutation } from "../../../services/api";
+import { useAuth } from "../../../services/storeHooks";
 import EditSettings from "./EditSettings";
 
 interface SettingsTabProps {
