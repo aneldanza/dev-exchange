@@ -17,3 +17,7 @@ export const removeSelectElement = (body: string) => {
   // Serialize the modified HTML back to a string
   return doc.body.innerHTML;
 };
+
+export const capitalize = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
