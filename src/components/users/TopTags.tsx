@@ -23,15 +23,15 @@ export const TopTags: React.FC<TopTagsProps> = ({ tags, userId }) => {
 
   return (
     <div>
-      <div className="flex justify-between">
-        <div className="mb-2 text-lg">Top Tags</div>
+      <div className="flex justify-between items-center mb-2">
+        <div className="text-lg">Top Tags</div>
         {sortedTags.length > topFiveTags.length && (
           <div className="text-xs text-appGray-100">View all tags</div>
         )}
       </div>
       <div className="activity-card">
         {topFiveTags.length ? (
-          sortedTags.map((tag) => (
+          topFiveTags.map((tag) => (
             <div className="activity-card-row items-center" key={tag.tag.id}>
               <Tag
                 key={tag.tag.id}
