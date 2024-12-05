@@ -36,7 +36,22 @@ export interface UserInfoLimited {
   email: string;
   created_at: string;
   updated_at: string;
-  tags: {
-    data: TagData[];
-  };
+  tags: TagData[];
 }
+export type Post = {
+  id: number | null;
+  question_id: number;
+  title: string;
+  body: string;
+  tags: TagData[];
+  votes: number;
+  answers: number | null;
+  user: {
+    username: string | null;
+    id: number | null;
+  };
+  created_at: string;
+  updated_at: string;
+};
+
+export type Posts = { type: "question" | "answer"; post: Post }[];
