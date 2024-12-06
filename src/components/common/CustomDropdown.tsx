@@ -7,9 +7,8 @@ interface CustomDropdownProps {
 }
 
 const dropdownTheme = {
-  content: "bg-gray-100",
   inlineWrapper:
-    "border border-appGray-400 flex items-center justify-between px-2 py-1 rounded cursor-pointer min-w-32 w-full",
+    "border border-appGray-400 hover:border-blue-500 flex items-center justify-between px-2 py-1 rounded cursor-pointer min-w-32 w-full",
 };
 
 export const CustomDropdown: React.FC<CustomDropdownProps> = ({

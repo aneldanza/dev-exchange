@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FullUserData } from "../types";
-import { CustomDropdown } from "../../common/Dropdown";
+import { CustomDropdown } from "../../common/CustomDropdown";
 import { Button } from "../../common/Button";
 import { useDeleteAccountMutation } from "../../../services/api";
 import { useAuth } from "../../../services/storeHooks";
@@ -67,7 +67,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
           {selectedOption === "Delete" && (
             <div className="w-full">
               <Button
-                className="btn-primary bg-red-500 hover:bg-red-700"
+                className="btn btn-primary bg-red-500 hover:bg-red-700"
                 title="Delete profile"
                 onClick={handleDeleteAccount}
               />
