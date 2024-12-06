@@ -2,13 +2,13 @@ import React from "react";
 import { TopItemsCard } from "../TopItemsCard";
 import { PostItem } from "../PostItem";
 import { TagItem } from "../TagItem";
-import { UserAnswerData } from "../types";
+import { PostData } from "../types";
 import { PostsByTag } from "../UserContext";
-import { QuestionData } from "../../questions/types";
+import { LimitedQuestionData } from "../../questions/types";
 
 interface SummaryProps {
-  questions: QuestionData[];
-  answers: UserAnswerData[];
+  questions: LimitedQuestionData[];
+  answers: PostData[];
   id: number;
   sortedItems: PostsByTag[];
 }
@@ -21,10 +21,10 @@ export const Summary: React.FC<SummaryProps> = ({
 }) => {
   return (
     <div className="activity-list">
-      <TopItemsCard<QuestionData>
+      <TopItemsCard<LimitedQuestionData>
         sortedItems={questions}
         name="question"
-        renderItem={(question: QuestionData) => (
+        renderItem={(question: LimitedQuestionData) => (
           <PostItem
             id={question.id}
             title={question.title}
@@ -35,13 +35,13 @@ export const Summary: React.FC<SummaryProps> = ({
         )}
       />
 
-      <TopItemsCard<UserAnswerData>
+      <TopItemsCard<PostData>
         sortedItems={answers}
         name="answer"
-        renderItem={(answer: UserAnswerData) => (
+        renderItem={(answer: PostData) => (
           <PostItem
             id={answer.question_id}
-            title={answer.question_title}
+            title={answer.title}
             votes={answer.votes}
             type="question"
             created_at={answer.created_at}

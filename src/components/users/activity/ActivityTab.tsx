@@ -1,12 +1,12 @@
 import { useContext, useMemo, useState } from "react";
 import { CustomDropdown } from "../../common/CustomDropdown";
-import { QuestionData } from "../../questions/types";
+import { LimitedQuestionData } from "../../questions/types";
 import { PostsByTag, UserContext } from "../UserContext";
-import { FullUserData, UserAnswerData } from "../types";
-import { TopItemsCard } from "../TopItemsCard";
+import { FullUserData, PostData } from "../types";
 import { TagItem } from "../TagItem";
-import { PostItem } from "../PostItem";
 import { Summary } from "./Summary";
+import { Posts } from "./Posts";
+import { Post } from "./Post";
 
 export const ActivityTab = () => {
   // Implement the logic for the ActivityTab component here
@@ -59,39 +59,25 @@ export const ActivityTab = () => {
           />
         )}
         {selectedOption === "questions" && (
-          <TopItemsCard<QuestionData>
-            sortedItems={questions}
-            name="question"
-            renderItem={(question: QuestionData) => (
-              <PostItem
-                id={question.id}
-                title={question.title}
-                votes={question.votes}
-                type="question"
-                created_at={question.created_at}
-              />
+          <Posts<LimitedQuestionData>
+            posts={questions}
+            label="Questions"
+            renderItem={(question: LimitedQuestionData) => (
+              <Post post={{ ...question, question_id: question.id }} />
             )}
           />
         )}
         {selectedOption === "answers" && (
-          <TopItemsCard<UserAnswerData>
-            sortedItems={answers}
-            name="answer"
-            renderItem={(answer: UserAnswerData) => (
-              <PostItem
-                id={answer.question_id}
-                title={answer.question_title}
-                votes={answer.votes}
-                type="question"
-                created_at={answer.created_at}
-              />
-            )}
+          <Posts<PostData>
+            posts={answers}
+            label="Answers"
+            renderItem={(answer: PostData) => <Post post={answer} />}
           />
         )}
         {selectedOption === "tags" && (
-          <TopItemsCard<PostsByTag>
-            sortedItems={sortedItems}
-            name="tag"
+          <Posts<PostsByTag>
+            posts={sortedItems}
+            label="Tags"
             renderItem={(tagItem: PostsByTag) => (
               <TagItem
                 tag={tagItem.tag}

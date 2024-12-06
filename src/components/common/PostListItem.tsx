@@ -4,11 +4,11 @@ import DOMPurify from "dompurify";
 import moment from "moment";
 import { TbMessageQuestion, TbMessageExclamation } from "react-icons/tb";
 import { QuestionTags } from "../questions/QuestionTags";
-import { Post } from "../users/types";
+import { PostData } from "../users/types";
 import { formatCountString } from "../../services/utils";
 
 interface PostListItemProps {
-  item: { post: Post; type: "question" | "answer" };
+  item: { post: PostData; type: "question" | "answer" };
 }
 
 export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
@@ -44,9 +44,9 @@ export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
           className="text-xs"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(
-              post.body.length > 100
+              post.body && post.body.length > 100
                 ? `${post.body.substring(0, 100)}...`
-                : post.body
+                : post.body || ""
             ),
           }}
         />
