@@ -35,6 +35,8 @@ export default {
           900: "#b71c1c",
         },
         appGray: {
+          25: "#f7f8f9",
+          35: "#f0f2f4",
           50: "#dfe2e4",
           100: "#9ca4aa",
           200: "#7b858f",
