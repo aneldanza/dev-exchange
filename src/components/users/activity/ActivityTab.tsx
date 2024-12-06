@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { CustomDropdown } from "../../common/CustomDropdown";
 import { LimitedQuestionData } from "../../questions/types";
 import { PostsByTag, UserContext } from "../UserContext";
@@ -8,14 +8,30 @@ import { Summary } from "./Summary";
 import { Posts } from "./Posts";
 import { Post } from "./Post";
 
+const options = ["summary", "questions", "answers", "tags"];
+
 export const ActivityTab = () => {
   // Implement the logic for the ActivityTab component here
 
   const { postsByTag, fullUserData } = useContext(UserContext);
   const { questions, id, answers } = fullUserData as FullUserData;
 
-  const options = ["summary", "questions", "answers", "tags"];
   const [selectedOption, setSelectedOption] = useState<string>(options[0]);
+
+  const handleTabSelect = (option: string) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("nav", option);
+    window.history.pushState({}, "", url);
+    setSelectedOption(option);
+  };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const nav = searchParams.get("nav") || "";
+    if (options.includes(nav)) {
+      setSelectedOption(nav);
+    }
+  }, []);
 
   const sortedItems = useMemo(
     () =>
@@ -28,7 +44,7 @@ export const ActivityTab = () => {
       <div className="flex shrink-0 w-full md:hidden">
         <CustomDropdown
           options={options}
-          handleOptionSelect={setSelectedOption}
+          handleOptionSelect={handleTabSelect}
           selectedOption={selectedOption}
         />
       </div>

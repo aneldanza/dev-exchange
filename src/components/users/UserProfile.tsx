@@ -8,6 +8,8 @@ import { useAuth } from "../../services/storeHooks";
 import { SettingsTab } from "./settings/SettingsTab";
 import { UserContext } from "./UserContext";
 
+const options = ["profile", "activity", "settings"];
+
 export const UserProfile: React.FC = () => {
   const [activeTab, setActiveTab] = useState("activity");
   const data = useContext(UserContext);
@@ -15,12 +17,30 @@ export const UserProfile: React.FC = () => {
   const { user } = useAuth();
 
   useEffect(() => {
+    const handlePopState = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const tab = searchParams.get("tab") || "";
+      if (options.includes(tab)) {
+        setActiveTab(tab);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
     const searchParams = new URLSearchParams(window.location.search);
     const tab = searchParams.get("tab") || "";
-    if (tab) {
+    if (!tab) {
+      window.history.pushState({}, "", `?tab=${activeTab}`);
+    }
+
+    if (options.includes(tab)) {
       setActiveTab(tab);
     }
-  }, []);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [activeTab]);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
