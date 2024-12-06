@@ -1,4 +1,5 @@
 import { Dropdown } from "flowbite-react";
+import { capitalize } from "../../services/utils";
 
 interface CustomDropdownProps {
   options: string[];
@@ -17,10 +18,15 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
   selectedOption,
 }) => {
   return (
-    <Dropdown label={selectedOption} inline color="info" theme={dropdownTheme}>
+    <Dropdown
+      label={capitalize(selectedOption)}
+      inline
+      color="info"
+      theme={dropdownTheme}
+    >
       {options.map((option) => (
         <Dropdown.Item key={option} onClick={() => handleOptionSelect(option)}>
-          {option}
+          {capitalize(option)}
         </Dropdown.Item>
       ))}
     </Dropdown>
