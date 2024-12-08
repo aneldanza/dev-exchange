@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useShowFullUserInfoQuery } from "../../services/api";
 import { withLoading } from "../hoc/withLoading";
@@ -7,9 +7,11 @@ import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
 import { UserProfile } from "./UserProfile";
 import { UserContext } from "./UserContext";
-import { QuestionData } from "../questions/types";
-import { UserAnswerData } from "./types";
+import { LimitedQuestionData } from "../questions/types";
+import { PostData } from "./types";
 import { TagData } from "../tags/types";
+
+const options = ["profile", "activity", "settings"];
 
 // First, wrap UserProfile with withError, then pass the resulting component to withLoading
 const UserProfileWithErrorAndLoading = withLoading(
@@ -23,11 +25,39 @@ export const UserPage: React.FC = () => {
     refetchOnMountOrArgChange: true,
   });
 
+  const [activeTab, setActiveTab] = useState("activity");
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const tab = searchParams.get("tab") || "";
+      if (options.includes(tab)) {
+        setActiveTab(tab);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const tab = searchParams.get("tab") || "";
+    if (!tab) {
+      window.history.pushState({}, "", `?tab=${activeTab}`);
+    }
+
+    if (options.includes(tab)) {
+      setActiveTab(tab);
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [activeTab]);
+
   const aggregateTags = useCallback(
-    (questions: QuestionData[], answers: UserAnswerData[]) => {
+    (questions: LimitedQuestionData[], answers: PostData[]) => {
       const tags: Record<
         string,
-        { tag: TagData; posts: (QuestionData | UserAnswerData)[] }
+        { tag: TagData; posts: (LimitedQuestionData | PostData)[] }
       > = {};
 
       const posts = [...questions, ...answers];
@@ -35,7 +65,7 @@ export const UserPage: React.FC = () => {
       posts.forEach((post) => {
         post.tags.forEach((tag) => {
           if (tags[tag.id]) {
-            (tags[tag.id].posts as (QuestionData | UserAnswerData)[]).push(
+            (tags[tag.id].posts as (LimitedQuestionData | PostData)[]).push(
               post
             );
           } else {
@@ -55,7 +85,9 @@ export const UserPage: React.FC = () => {
   const postsByTag = aggregateTags(data?.questions || [], data?.answers || []);
 
   return (
-    <UserContext.Provider value={{ fullUserData: data, postsByTag }}>
+    <UserContext.Provider
+      value={{ fullUserData: data, postsByTag, activeTab, setActiveTab }}
+    >
       <UserProfileWithErrorAndLoading error={error} isLoading={isLoading} />
     </UserContext.Provider>
   );
