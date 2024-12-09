@@ -24,7 +24,7 @@ export const TopItemsCard = <T,>({
         <div className="text-lg">{`Top ${capitalize(name)}s`}</div>
         {sortedItems.length > topFiveItems.length && (
           <Link
-            to={`/users/${userId}?tab=activity&nav=${name}s`}
+            to={`/users/${userId}?tab=${name}s`}
             className="text-xs text-appGray-100"
             onClick={() => setActiveTab("activity")}
           >{`View all ${name}s`}</Link>
