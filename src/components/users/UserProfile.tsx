@@ -1,5 +1,7 @@
 import moment from "moment";
 import React, { useContext } from "react";
+import { PencilIcon } from "@heroicons/react/20/solid";
+import { Button } from "../common/Button";
 import { ActivityTab } from "./activity/ActivityTab";
 import { ProfileTab } from "./profile/ProfileTab";
 import { FullUserData } from "./types";
@@ -23,14 +25,16 @@ export const UserProfile: React.FC = () => {
   return (
     <div className="flex flex-col space-y-6">
       <div className="grid">
-        {/* <div className="justify-items-end grid">
-          <Button
-            title="Edit Profile"
-            onClick={() => {}}
-            className="btn-outline"
-            icon={<PencilIcon className="w-4" />}
-          />
-        </div> */}
+        {user?.id === id && (
+          <div className="justify-items-end grid">
+            <Button
+              title="Edit Profile"
+              onClick={() => handleTabClick("settings")}
+              className="btn btn-outline"
+              icon={<PencilIcon className="w-4" />}
+            />
+          </div>
+        )}
         <div>
           <div className="text-2xl font-semibold mb-4">{username}</div>
           <div className="flex gap-1 text-appGray-100">
