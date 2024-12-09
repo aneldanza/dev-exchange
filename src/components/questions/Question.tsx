@@ -93,11 +93,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
           </div>
         </div>
 
-        <AnswersContainer
-          questionId={question.id}
-          userId={question.user.id}
-          answers={question.answers}
-        />
+        <AnswersContainer questionId={question.id} answers={question.answers} />
       </div>
 
       <DeleteQuestionModal

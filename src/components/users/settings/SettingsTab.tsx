@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FullUserData } from "./types";
-import { CustomDropdown } from "../common/Dropdown";
-import { Button } from "../common/Button";
-import { useDeleteAccountMutation } from "../../services/api";
-import { useAuth } from "../../services/storeHooks";
+import { FullUserData } from "../types";
+import { CustomDropdown } from "../../common/CustomDropdown";
+import { Button } from "../../common/Button";
+import { useDeleteAccountMutation } from "../../../services/api";
+import { useAuth } from "../../../services/storeHooks";
+import { UserContext } from "../UserContext";
 import EditSettings from "./EditSettings";
 
 interface SettingsTabProps {
@@ -16,8 +17,17 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
 
   const [deleteAccount] = useDeleteAccountMutation();
   const [selectedOption, setSelectedOption] = useState<string>(options[0]);
-  const { setUser } = useAuth();
+  const { setUser, user } = useAuth();
+  const { setActiveTab, fullUserData } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (fullUserData?.id !== user?.id) {
+      setActiveTab("summary");
+      window.history.pushState({}, "", `?tab=summary`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleDeleteAccount = async () => {
     try {
@@ -67,7 +77,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
           {selectedOption === "Delete" && (
             <div className="w-full">
               <Button
-                className="btn-primary bg-red-500 hover:bg-red-700"
+                className="btn btn-primary bg-red-500 hover:bg-red-700"
                 title="Delete profile"
                 onClick={handleDeleteAccount}
               />

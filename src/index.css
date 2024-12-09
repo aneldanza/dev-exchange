@@ -39,6 +39,10 @@
     @apply text-white bg-appOrange border-appOrange hover:bg-appOrangeDark hover:border-appOrangeDark;
   }
 
+  .secondary-active-tab {
+    @apply text-appGray-500 bg-appGray-35 border-appGray-35 hover:bg-appGray-50 hover:border-appGray-50;
+  }
+
   .inactive-tab {
     @apply bg-transparent border-transparent text-gray-500  hover:border-appGray-50 hover:bg-appGray-50;
   }
