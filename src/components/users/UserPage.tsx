@@ -10,8 +10,7 @@ import { UserContext } from "./UserContext";
 import { LimitedQuestionData } from "../questions/types";
 import { PostData } from "./types";
 import { TagData } from "../tags/types";
-
-const options = ["profile", "activity", "settings"];
+import { options, activityTabs } from "./activity/constants";
 
 // First, wrap UserProfile with withError, then pass the resulting component to withLoading
 const UserProfileWithErrorAndLoading = withLoading(
@@ -25,9 +24,10 @@ export const UserPage: React.FC = () => {
     refetchOnMountOrArgChange: true,
   });
 
-  const [activeTab, setActiveTab] = useState("activity");
+  const [activeTab, setActiveTab] = useState(activityTabs[0]);
 
   useEffect(() => {
+    console.log(activeTab);
     const handlePopState = () => {
       const searchParams = new URLSearchParams(window.location.search);
       const tab = searchParams.get("tab") || "";

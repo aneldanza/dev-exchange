@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { ActivityTab } from "./activity/ActivityTab";
 import { ProfileTab } from "./profile/ProfileTab";
 import { FullUserData } from "./types";
@@ -7,11 +7,12 @@ import { CakeIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "../../services/storeHooks";
 import { SettingsTab } from "./settings/SettingsTab";
 import { UserContext } from "./UserContext";
+import { activityTabs } from "./activity/constants";
 
 export const UserProfile: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("activity");
   const data = useContext(UserContext);
   const { username, created_at, id } = data.fullUserData as FullUserData;
+  const { activeTab, setActiveTab } = data;
   const { user } = useAuth();
 
   const handleTabClick = (tab: string) => {
@@ -51,9 +52,9 @@ export const UserProfile: React.FC = () => {
         </div>
         <div
           className={`tab ${
-            activeTab === "activity" ? "active-tab" : "inactive-tab"
+            activeTab === "summary" ? "active-tab" : "inactive-tab"
           }`}
-          onClick={() => handleTabClick("activity")}
+          onClick={() => handleTabClick("summary")}
         >
           Activity
         </div>
@@ -69,7 +70,7 @@ export const UserProfile: React.FC = () => {
         )}
       </div>
       {activeTab === "profile" && <ProfileTab setActiveTab={setActiveTab} />}
-      {activeTab === "activity" && <ActivityTab />}
+      {activityTabs.includes(activeTab) && <ActivityTab />}
       {activeTab === "settings" && (
         <SettingsTab data={data.fullUserData as FullUserData} />
       )}
