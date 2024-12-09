@@ -5,11 +5,15 @@ import { TagData } from "./types";
 
 interface TagProps {
   tag: TagData;
+  url?: string;
 }
 
-export const Tag: FC<TagProps> = ({ tag }) => {
+export const Tag: FC<TagProps> = ({ tag, url }) => {
   return (
-    <Link to={`/questions/tagged/${tag.id}`} className="tag text-xs">
+    <Link
+      to={url ? url : `/questions/tagged/${tag.id}`}
+      className="tag text-xs"
+    >
       {tag.name.toLowerCase()}
     </Link>
   );

@@ -9,13 +9,11 @@ import { useAuth } from "../../services/storeHooks";
 
 interface AnswersContainerProps {
   questionId: number;
-  userId: number;
   answers: AnswerData[];
 }
 
 export const AnswersContainer: React.FC<AnswersContainerProps> = ({
   questionId,
-  userId,
   answers,
 }) => {
   const [createAnswer] = useCreateAnswerMutation();
@@ -28,10 +26,10 @@ export const AnswersContainer: React.FC<AnswersContainerProps> = ({
     );
   }, [user, answers]);
 
-  const addAnswer = async (values: { body: string }) => {
+  const addAnswer = async (values: { body: string; user_id: number }) => {
     await createAnswer({
       question_id: questionId,
-      user_id: userId,
+      user_id: values.user_id,
       body: values.body,
     }).unwrap();
   };

@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import { useUpdateUserMutation } from "../../services/api";
-import { QuillEditor } from "../common/QuillEditor";
-import { FullUserData } from "./types";
-import { RichContent } from "../common/RichContent";
-import Flash from "../common/Flash";
+import { useUpdateUserMutation } from "../../../services/api";
+import { QuillEditor } from "../../common/QuillEditor";
+import { FullUserData } from "../types";
+import { RichContent } from "../../common/RichContent";
+import Flash from "../../common/Flash";
 
 type FormValues = {
   about: string;

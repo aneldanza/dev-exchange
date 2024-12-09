@@ -3,7 +3,7 @@ export const formatCountString = (
   singular: string,
   plural: string
 ): string => {
-  return count === 1 ? `${count} ${singular}` : `${count} ${plural}`;
+  return Math.abs(count) === 1 ? `${count} ${singular}` : `${count} ${plural}`;
 };
 
 export const removeSelectElement = (body: string) => {
@@ -16,4 +16,8 @@ export const removeSelectElement = (body: string) => {
 
   // Serialize the modified HTML back to a string
   return doc.body.innerHTML;
+};
+
+export const capitalize = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };

@@ -1,37 +1,40 @@
 import moment from "moment";
-import React, { useState } from "react";
-import { ActivityTab } from "./ActivityTab";
-import { ProfileTab } from "./ProfileTab";
+import React, { useContext } from "react";
+import { PencilIcon } from "@heroicons/react/20/solid";
+import { Button } from "../common/Button";
+import { ActivityTab } from "./activity/ActivityTab";
+import { ProfileTab } from "./profile/ProfileTab";
 import { FullUserData } from "./types";
 import { CakeIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "../../services/storeHooks";
-import { SettingsTab } from "./SettingsTab";
+import { SettingsTab } from "./settings/SettingsTab";
+import { UserContext } from "./UserContext";
+import { activityTabs } from "./activity/constants";
 
-interface UserProfileProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: FullUserData;
-}
-
-export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
-  const [activeTab, setActiveTab] = useState("Activity");
-  const { username, created_at, tags, id, questions } = data;
+export const UserProfile: React.FC = () => {
+  const data = useContext(UserContext);
+  const { username, created_at, id } = data.fullUserData as FullUserData;
+  const { activeTab, setActiveTab } = data;
   const { user } = useAuth();
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
+    window.history.pushState({}, "", `?tab=${tab}`);
   };
 
   return (
     <div className="flex flex-col space-y-6">
       <div className="grid">
-        {/* <div className="justify-items-end grid">
-          <Button
-            title="Edit Profile"
-            onClick={() => {}}
-            className="btn-outline"
-            icon={<PencilIcon className="w-4" />}
-          />
-        </div> */}
+        {user?.id === id && (
+          <div className="justify-items-end grid">
+            <Button
+              title="Edit Profile"
+              onClick={() => handleTabClick("settings")}
+              className="btn btn-outline"
+              icon={<PencilIcon className="w-4" />}
+            />
+          </div>
+        )}
         <div>
           <div className="text-2xl font-semibold mb-4">{username}</div>
           <div className="flex gap-1 text-appGray-100">
@@ -45,36 +48,36 @@ export const UserProfile: React.FC<UserProfileProps> = ({ data }) => {
       <div className="flex flex-wrap gap-2">
         <div
           className={`tab ${
-            activeTab === "Profile" ? "active-tab" : "inactive-tab"
+            activeTab === "profile" ? "active-tab" : "inactive-tab"
           }`}
-          onClick={() => handleTabClick("Profile")}
+          onClick={() => handleTabClick("profile")}
         >
           Profile
         </div>
         <div
           className={`tab ${
-            activeTab === "Activity" ? "active-tab" : "inactive-tab"
+            activityTabs.includes(activeTab) ? "active-tab" : "inactive-tab"
           }`}
-          onClick={() => handleTabClick("Activity")}
+          onClick={() => handleTabClick("summary")}
         >
           Activity
         </div>
         {user?.id === id && (
           <div
             className={`tab ${
-              activeTab === "Settings" ? "active-tab" : "inactive-tab"
+              activeTab === "settings" ? "active-tab" : "inactive-tab"
             }`}
-            onClick={() => handleTabClick("Settings")}
+            onClick={() => handleTabClick("settings")}
           >
             Settings
           </div>
         )}
       </div>
-      {activeTab === "Profile" && <ProfileTab data={data} />}
-      {activeTab === "Activity" && (
-        <ActivityTab tags={tags} questions={questions} />
+      {activeTab === "profile" && <ProfileTab setActiveTab={setActiveTab} />}
+      {activityTabs.includes(activeTab) && <ActivityTab />}
+      {activeTab === "settings" && (
+        <SettingsTab data={data.fullUserData as FullUserData} />
       )}
-      {activeTab === "Settings" && <SettingsTab data={data} />}
     </div>
   );
 };

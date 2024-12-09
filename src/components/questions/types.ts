@@ -10,8 +10,8 @@ export type LimitedQuestionData = {
   updated_at: string;
   tags: TagData[];
   user: {
-    id: number;
-    username: string;
+    id: number | null;
+    username: string | null;
   };
   answers: number;
   votes: number;
@@ -25,8 +25,8 @@ export type QuestionData = {
   updated_at: string;
   tags: TagData[];
   user: {
-    id: number;
-    username: string;
+    id: number | null;
+    username: string | null;
   };
   answers: AnswerData[];
   comments: CommentData[];

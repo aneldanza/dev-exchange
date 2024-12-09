@@ -1,4 +1,4 @@
-import { QuestionData } from "../questions/types";
+import { LimitedQuestionData } from "../questions/types";
 import { TagData } from "../tags/types";
 
 export type VoteData = {
@@ -9,6 +9,16 @@ export type VoteData = {
   value: number;
 };
 
+export type UserAnswerData = {
+  title: string;
+  question_id: number;
+  tags: TagData[];
+  created_at: string;
+  updated_at: string;
+  votes: number;
+  id: number;
+};
+
 export type FullUserData = {
   id: number;
   username: string;
@@ -17,14 +27,8 @@ export type FullUserData = {
   updated_at: string;
   description: string;
   tags: TagData[];
-  questions: QuestionData[];
-  answers: {
-    question_title: string;
-    question_id: number;
-    tags: TagData[];
-    creeated_at: string;
-    votes: number;
-  }[];
+  questions: LimitedQuestionData[];
+  answers: PostData[];
   votes: VoteData[];
 };
 
@@ -34,7 +38,22 @@ export interface UserInfoLimited {
   email: string;
   created_at: string;
   updated_at: string;
-  tags: {
-    data: TagData[];
-  };
+  tags: TagData[];
 }
+export type PostData = {
+  id: number | null;
+  question_id: number;
+  title: string;
+  body?: string;
+  tags: TagData[];
+  votes: number;
+  answers: number | null;
+  user: {
+    username: string | null;
+    id: number | null;
+  };
+  created_at: string;
+  updated_at: string;
+};
+
+export type Posts = { type: "question" | "answer"; post: PostData }[];
