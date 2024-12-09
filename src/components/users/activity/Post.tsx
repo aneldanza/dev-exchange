@@ -21,7 +21,9 @@ export const Post: FC<PostProps> = ({ post }) => {
 
       <div className="flex flex-col gap-2 flex-grow">
         <Link
-          to={`/questions/${post.question_id}`}
+          to={`/questions/${post.question_id}${
+            post.id ? `?answerId=${post.id}` : ""
+          }`}
           className="text-blue-500 text-sm"
         >
           {post.title}
