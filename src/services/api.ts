@@ -3,7 +3,10 @@ import { SignInInfo, SignUpInfo } from "./AuthContext";
 import { SignUpCredentials } from "../components/auth/SignupForm";
 import { SignInCredentials } from "../components/auth/SigninForm";
 import { TagData } from "../components/tags/types";
-import { QuestionData } from "../components/questions/types";
+import {
+  LimitedQuestionData,
+  QuestionData,
+} from "../components/questions/types";
 import { FullUserData } from "../components/users/types";
 
 export const api = createApi({
@@ -93,7 +96,7 @@ export const api = createApi({
     getTagById: builder.query<TagData, string>({
       query: (id) => `/tags/${id}`,
     }),
-    getAllQuestions: builder.query({
+    getAllQuestions: builder.query<LimitedQuestionData[], undefined>({
       query: () => "/questions",
       providesTags: ["Questions"],
     }),
