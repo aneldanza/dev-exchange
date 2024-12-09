@@ -6,16 +6,16 @@ interface PostItemProps {
   votes: number;
   title: string;
   created_at: string;
-  id: number;
-  type: string;
+  id: number | null;
+  question_id: number;
 }
 
 export const PostItem: React.FC<PostItemProps> = ({
   votes,
   title,
   id,
+  question_id,
   created_at,
-  type,
 }) => {
   return (
     <div className="activity-card-row">
@@ -24,7 +24,7 @@ export const PostItem: React.FC<PostItemProps> = ({
       </div>
       <div className="flex-grow overflow-hidden">
         <Link
-          to={`/${type}s/${id}`}
+          to={`/questions/${question_id}${id ? "?answerId=" + id : ""}`}
           className="text-blue-400 break-words truncate block max-w-full"
         >
           {title}

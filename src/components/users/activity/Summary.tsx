@@ -26,10 +26,10 @@ export const Summary: React.FC<SummaryProps> = ({
         name="question"
         renderItem={(question: LimitedQuestionData) => (
           <PostItem
-            id={question.id}
+            id={null}
+            question_id={question.id}
             title={question.title}
             votes={question.votes}
-            type="question"
             created_at={question.created_at}
           />
         )}
@@ -40,10 +40,10 @@ export const Summary: React.FC<SummaryProps> = ({
         name="answer"
         renderItem={(answer: PostData) => (
           <PostItem
-            id={answer.question_id}
+            id={answer.id}
+            question_id={answer.question_id}
             title={answer.title}
             votes={answer.votes}
-            type="question"
             created_at={answer.created_at}
           />
         )}
