@@ -14,7 +14,7 @@ export const ActivityTab = () => {
 
   const { postsByTag, fullUserData, setActiveTab, activeTab } =
     useContext(UserContext);
-  const { questions, id, answers } = fullUserData as FullUserData;
+  const { questions, id, answers, votes } = fullUserData as FullUserData;
 
   const handleTabSelect = (option: string) => {
     const url = new URL(window.location.href);
@@ -60,6 +60,7 @@ export const ActivityTab = () => {
             answers={answers}
             id={id}
             sortedItems={sortedItems}
+            votes={votes}
           />
         )}
         {activeTab === "questions" && (

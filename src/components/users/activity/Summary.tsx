@@ -2,15 +2,17 @@ import React from "react";
 import { TopItemsCard } from "../TopItemsCard";
 import { PostItem } from "../PostItem";
 import { TagItem } from "../TagItem";
-import { PostData } from "../types";
+import { PostData, VoteData } from "../types";
 import { PostsByTag } from "../UserContext";
 import { LimitedQuestionData } from "../../questions/types";
+import { formatCountString } from "../../../services/utils";
 
 interface SummaryProps {
   questions: LimitedQuestionData[];
   answers: PostData[];
   id: number;
   sortedItems: PostsByTag[];
+  votes: VoteData[];
 }
 
 export const Summary: React.FC<SummaryProps> = ({
@@ -18,7 +20,12 @@ export const Summary: React.FC<SummaryProps> = ({
   answers,
   id,
   sortedItems,
+  votes,
 }) => {
+  const upvotes = votes.filter((v) => v.value === 1).length;
+  const questionVotes = votes.filter((v) => v.votable_type === "Question");
+  const answerVotes = votes.filter((v) => v.votable_type === "Answer");
+
   return (
     <div className="activity-list">
       <TopItemsCard<LimitedQuestionData>
@@ -60,6 +67,46 @@ export const Summary: React.FC<SummaryProps> = ({
           />
         )}
       />
+
+      <div>
+        <div className="flex justify-between items-center mb-2">
+          <div className="text-lg">Votes cast</div>
+        </div>
+        <div className="activity-card">
+          <div className="grid grid-cols-3 p-4 text-sm justify-between">
+            <div className="">
+              <div>{upvotes}</div>
+              <div className="text-xs text-appGray-100">
+                {formatCountString(upvotes, "upvote", "upvotes").split(" ")[1]}
+              </div>
+            </div>
+            <div className="">
+              <div>{questionVotes.length}</div>
+              <div className="text-xs text-appGray-100">
+                {
+                  formatCountString(
+                    questionVotes.length,
+                    "question vote",
+                    "question votes"
+                  ).split(" ")[1]
+                }
+              </div>
+            </div>
+            <div className="">
+              <div>{answerVotes.length}</div>
+              <div className="text-xs text-appGray-100">
+                {
+                  formatCountString(
+                    answerVotes.length,
+                    "answer vote",
+                    "answer votes"
+                  ).split(" ")[1]
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
