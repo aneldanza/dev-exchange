@@ -56,7 +56,7 @@ export const UserProfile: React.FC = () => {
         </div>
         <div
           className={`tab ${
-            activeTab === "summary" ? "active-tab" : "inactive-tab"
+            activityTabs.includes(activeTab) ? "active-tab" : "inactive-tab"
           }`}
           onClick={() => handleTabClick("summary")}
         >
@@ -65,7 +65,7 @@ export const UserProfile: React.FC = () => {
         {user?.id === id && (
           <div
             className={`tab ${
-              activeTab === "wettings" ? "active-tab" : "inactive-tab"
+              activeTab === "settings" ? "active-tab" : "inactive-tab"
             }`}
             onClick={() => handleTabClick("settings")}
           >
