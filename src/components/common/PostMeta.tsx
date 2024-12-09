@@ -4,8 +4,8 @@ import moment from "moment";
 
 interface PostMetaProps {
   createdAt: string;
-  username: string;
-  userId: number;
+  username: string | null;
+  userId: number | null;
   actionWord: "asked" | "answered";
   theme: "answer-meta" | "question-meta";
 }
@@ -13,7 +13,7 @@ interface PostMetaProps {
 export const PostMeta: React.FC<PostMetaProps> = ({
   createdAt,
   userId,
-  username,
+  username = "unknown user",
   actionWord,
   theme,
 }) => {

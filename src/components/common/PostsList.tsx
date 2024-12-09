@@ -19,7 +19,10 @@ const PostsList: React.FC<PostsListProps> = ({ items }) => {
     <div>
       <ul className="flex flex-col divide-y max-w-2xl">
         {items.map((item) => (
-          <PostListItem key={item.post.id} item={item} />
+          <PostListItem
+            key={item.post.id || item.post.question_id}
+            item={item}
+          />
         ))}
       </ul>
     </div>

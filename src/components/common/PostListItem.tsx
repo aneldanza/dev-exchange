@@ -35,7 +35,10 @@ export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
               />
             )}
           </div>
-          <Link to={`/questions/$post.id}`} className="text-blue-500 text-sm">
+          <Link
+            to={`/questions/${post.question_id}`}
+            className="text-blue-500 text-sm"
+          >
             {post.title}
           </Link>
         </div>

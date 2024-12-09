@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { removeSelectElement } from "../../services/utils";
 import React, { useState } from "react";
 import Flash from "../common/Flash";
+import { useAuth } from "../../services/storeHooks";
 
 const validationsSchema = Yup.object().shape({
   body: Yup.string().required("Content is required").min(10),
@@ -12,7 +13,7 @@ const validationsSchema = Yup.object().shape({
 interface AnswerFormProps {
   setShowAnswerForm?: (showAnswerForm: boolean) => void;
   initialBody?: string;
-  answerAction: (data: { body: string }) => Promise<void>;
+  answerAction: (data: { body: string; user_id: number }) => Promise<void>;
   submitText?: string;
 }
 
@@ -28,11 +29,17 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
 
   const [isFormReset, setResetForm] = useState<boolean>(false);
   const [formError, setFormError] = useState<string[]>([]);
+  const { user } = useAuth();
 
   const addAnswer = async (values: { body: string }) => {
+    if (!user) {
+      setFormError(["You need to be logged in to answer a question."]);
+      return;
+    }
+
     const modifiedBody = removeSelectElement(values.body);
     try {
-      await answerAction({ body: modifiedBody });
+      await answerAction({ body: modifiedBody, user_id: user.id });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.data) {
