@@ -4,7 +4,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useSignOutMutation } from "../../services/api";
 import { useAuth } from "../../services/storeHooks";
 import { Menu } from "../layout/Menu";
-import { SearchBar } from "./SearchBar";
+// import { SearchBar } from "./SearchBar";
+import SearchInput from "./SearchInput";
 
 export const TopNavigationBar = () => {
   const [logOut] = useSignOutMutation();
@@ -65,7 +66,9 @@ export const TopNavigationBar = () => {
         </div>
 
         <div className="text-blue ">Logo</div>
-        <SearchBar />
+        <div className="w-2/3">
+          <SearchInput />
+        </div>
         <nav className="flex shrink-0 space-x-2 items-center justify-between">
           {user ? (
             <>
