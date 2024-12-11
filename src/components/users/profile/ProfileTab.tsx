@@ -5,6 +5,7 @@ import { RichContent } from "../../common/RichContent";
 import { TopItemsCard } from "../TopItemsCard";
 import { TagItem } from "../TagItem";
 import { UserContext, type PostsByTag } from "../UserContext";
+import { useAuth } from "../../../services/storeHooks";
 
 interface ProfileTabProps {
   setActiveTab: (tab: string) => void;
@@ -42,23 +43,38 @@ const Stats: React.FC<{ questionsCount: number; answersCount: number }> = ({
 const About: React.FC<{
   description: string;
   setActiveTab: (tab: string) => void;
-}> = ({ description, setActiveTab }) => (
-  <div>
-    <div className="text-lg">About</div>
-    {description ? (
-      <RichContent body={description} />
-    ) : (
-      <div className="card">
-        <div className="text-appGray-100 text-sm">
-          Your about me section is empty. Would you like to add something? 🤔{" "}
-          <span onClick={() => setActiveTab("settings")} className="hyperlink">
-            Edit Profile
-          </span>
+  userId: number;
+}> = ({ description, setActiveTab, userId }) => {
+  const { user } = useAuth();
+
+  return (
+    <div>
+      <div className="text-lg">About</div>
+      {description ? (
+        <RichContent body={description} />
+      ) : (
+        <div className="card">
+          {user && user.id === userId ? (
+            <div className="text-appGray-100 text-sm">
+              Your about me section is empty. Would you like to add something?
+              🤔{" "}
+              <span
+                onClick={() => setActiveTab("settings")}
+                className="hyperlink"
+              >
+                Edit Profile
+              </span>
+            </div>
+          ) : (
+            <div className="text-appGray-100 text-sm">
+              This user has not added an about me section
+            </div>
+          )}
         </div>
-      </div>
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
+};
 
 export const ProfileTab: React.FC<ProfileTabProps> = ({ setActiveTab }) => {
   const { postsByTag, fullUserData } = useContext(UserContext);
@@ -82,7 +98,11 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ setActiveTab }) => {
       </div>
 
       <div className="flex flex-col space-y-4 flex-grow">
-        <About description={description} setActiveTab={setActiveTab} />
+        <About
+          description={description}
+          setActiveTab={setActiveTab}
+          userId={id}
+        />
 
         <TopItemsCard<PostsByTag>
           sortedItems={sortedItems}

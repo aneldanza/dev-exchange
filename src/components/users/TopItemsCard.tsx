@@ -36,7 +36,7 @@ export const TopItemsCard = <T,>({
             <div key={index}>{renderItem(item)}</div>
           ))
         ) : (
-          <div>{`No ${name}s found`}</div>
+          <div className="text-appGray-100 text-sm">{`No ${name}s found`}</div>
         )}
       </div>
     </div>

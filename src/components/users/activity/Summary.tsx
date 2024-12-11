@@ -73,7 +73,7 @@ export const Summary: React.FC<SummaryProps> = ({
           <div className="text-lg">Votes cast</div>
         </div>
         <div className="activity-card">
-          <div className="grid grid-cols-3 p-4 text-sm justify-between">
+          <div className="grid grid-cols-3 text-sm justify-between">
             <div className="">
               <div>{upvotes}</div>
               <div className="text-xs text-appGray-100">
