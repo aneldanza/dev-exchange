@@ -62,19 +62,14 @@ export const SearchBar: React.FC = () => {
 
   return (
     <Select
-      options={
-        isSuccess
-          ? data.map((question) => {
-              return { label: question.title, value: question.id };
-            })
-          : []
-      }
+      options={isSuccess ? data : []}
       isClearable={true}
       isSearchable={true}
       components={{
         IndicatorSeparator: () => null,
         DropdownIndicator,
       }}
+      placeholder="Search for posts"
       styles={customStyles}
       formatOptionLabel={OptionLabel}
       isLoading={isLoading}

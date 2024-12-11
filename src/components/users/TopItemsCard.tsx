@@ -36,7 +36,7 @@ export const TopItemsCard = <T,>({
             <div key={index}>{renderItem(item)}</div>
           ))
         ) : (
-          <div className="text-appGray-100 text-sm">{`No ${name}s found`}</div>
+          <div className="text-appGray-100 text-sm activity-card-row">{`No ${name}s found`}</div>
         )}
       </div>
     </div>

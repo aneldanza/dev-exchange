@@ -66,7 +66,7 @@ const About: React.FC<{
               </span>
             </div>
           ) : (
-            <div className="text-appGray-100 text-sm">
+            <div className="text-appGray-100 text-sm activity-card-row">
               This user has not added an about me section
             </div>
           )}

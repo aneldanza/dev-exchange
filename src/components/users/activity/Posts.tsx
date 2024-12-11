@@ -18,7 +18,7 @@ export const Posts = <T,>({ posts, label, renderItem }: PostsProps<T>) => {
         {posts.length ? (
           posts.map((item, index) => <div key={index}>{renderItem(item)}</div>)
         ) : (
-          <div>{`No ${label.toLowerCase()} found`}</div>
+          <div className="activity-card-row text-appGray-100 text-sm">{`No ${label.toLowerCase()} found`}</div>
         )}
       </div>
     </div>
