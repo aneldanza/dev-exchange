@@ -188,6 +188,12 @@ export const api = createApi({
           query.sort ? `&sort=${query.sort}` : ""
         }`,
     }),
+    searchAllPosts: builder.query({
+      query: (query) =>
+        `/search_posts/page/${query.pageNum}?query=${query.value}${
+          query.sort ? `&sort=${query.sort}` : ""
+        }`,
+    }),
   }),
 });
 
@@ -218,4 +224,5 @@ export const {
   useUpdateCommentMutation,
   useCastVoteMutation,
   useSearchPostsByUserQuery,
+  useSearchAllPostsQuery,
 } = api;
