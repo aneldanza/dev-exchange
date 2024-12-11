@@ -104,7 +104,7 @@
   }
 
   .activity-card {
-    @apply card flex flex-col divide-y p-0 flex-grow align-middle;
+    @apply card flex flex-col divide-y p-4 flex-grow align-middle;
   }
 
   .activity-card-row {
