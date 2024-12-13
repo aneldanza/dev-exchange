@@ -42,7 +42,8 @@ export interface UserInfoLimited {
 }
 export type PostData = {
   id: number | null;
-  question_id: number;
+  type: "Question" | "Answer";
+  question_id: number | null;
   title: string;
   body?: string;
   tags: TagData[];
@@ -56,4 +57,4 @@ export type PostData = {
   updated_at: string;
 };
 
-export type Posts = { type: "question" | "answer"; post: PostData }[];
+export type Posts = PostData[];

@@ -8,11 +8,10 @@ import { PostData } from "../users/types";
 import { formatCountString } from "../../services/utils";
 
 interface PostListItemProps {
-  item: { post: PostData; type: "question" | "answer" };
+  post: PostData;
 }
 
-export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
-  const { post, type } = item;
+export const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
   return (
     <li className="flex flex-col sm:flex-row gap-4 py-3">
       <div className="flex flex-row sm:flex-col gap-4 text-xs sm:text-sm text-appGray-300">
@@ -25,7 +24,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
       <div className="flex flex-col gap-2 flex-grow">
         <div className="flex gap-4 items-center">
           <div>
-            {type === "question" ? (
+            {post.type === "Question" ? (
               <TbMessageQuestion size={22} color="blue-500" />
             ) : (
               <TbMessageExclamation
