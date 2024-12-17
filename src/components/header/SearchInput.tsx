@@ -2,11 +2,13 @@ import React from "react";
 import { TextInput, TextInputProps } from "flowbite-react";
 import { Form, Formik, Field } from "formik";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 const SearchInput: React.FC = () => {
+  const navigate = useNavigate();
+
   const handleSearch = (values: { search: string }) => {
-    console.log("Searching for:", values.search);
-    // Add your search logic here
+    navigate(`/search?q=${values.search}`);
   };
 
   const initialValues = {
