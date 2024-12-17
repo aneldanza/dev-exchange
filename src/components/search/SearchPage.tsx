@@ -32,7 +32,7 @@ const PostsWithLoadingAndError = withLoading(
 );
 
 const sortTabs = ["Relevance", "Newest", "Oldest", "Score"];
-const pageSize = 10;
+const pageSize = 5;
 
 const SearchPageContainer = () => {
   const searchParams = new URLSearchParams(window.location.search);
@@ -98,7 +98,7 @@ const SearchPageContainer = () => {
           error={error}
           isLoading={isLoading}
         />
-        {data && data.posts.length > pageSize && (
+        {data && data.total_results > pageSize && (
           <div className="flex justify-center">
             <Pagination
               currentPage={currentPage}
