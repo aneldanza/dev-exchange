@@ -8,6 +8,10 @@ import {
   QuestionData,
 } from "../components/questions/types";
 import { FullUserData } from "../components/users/types";
+import {
+  PostsSearchPayload,
+  PostsSearchResponse,
+} from "../components/search/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -188,9 +192,9 @@ export const api = createApi({
           query.sort ? `&sort=${query.sort}` : ""
         }`,
     }),
-    searchAllPosts: builder.query({
+    searchAllPosts: builder.query<PostsSearchResponse, PostsSearchPayload>({
       query: (query) =>
-        `/search_posts/page/${query.pageNum}?query=${query.value}${
+        `/search_posts/page/${query.page}?query=${query.value}${
           query.sort ? `&sort=${query.sort}` : ""
         }`,
     }),
