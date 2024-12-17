@@ -196,7 +196,7 @@ export const api = createApi({
       query: (query) =>
         `/search_posts/page/${query.page}?query=${query.value}${
           query.sort ? `&sort=${query.sort}` : ""
-        }`,
+        }&limit=${query.limit}`,
     }),
   }),
 });
