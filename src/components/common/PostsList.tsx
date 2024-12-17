@@ -3,11 +3,11 @@ import { Posts } from "../users/types";
 import { PostListItem } from "./PostListItem";
 
 interface PostsListProps {
-  items: Posts;
+  items: Posts | undefined;
 }
 
 const PostsList: React.FC<PostsListProps> = ({ items }) => {
-  if (!items.length) {
+  if (!items || !items.length) {
     return (
       <div className="my-4">
         <div className="text-sm">There are no posts found</div>
