@@ -10,30 +10,13 @@ import { Button } from "../common/Button";
 import { useNavigate } from "react-router-dom";
 import { formatCountString } from "../../services/utils";
 import { SortTabs } from "../common/SortTabs";
-
-const paginationTheme = {
-  base: "text-xs",
-  pages: {
-    previous: {
-      base: "ml-0 rounded-l-lg border border-appGray-300 bg-white px-3 py-2 leading-tight text-gray-500 enabled:hover:bg-appGray-100 enabled:hover:text-appGray-700 dark:border-appGray-700 dark:bg-appGray-800 dark:text-appGray-400 enabled:dark:hover:bg-appGray-700 enabled:dark:hover:text-white",
-    },
-    next: {
-      base: "rounded-r-lg border border-appGray-300 bg-white px-3 py-2 leading-tight text-gray-500 enabled:hover:bg-appGray-100 enabled:hover:text-appGray-700 dark:border-appGray-700 dark:bg-appGray-800 dark:text-appGray-400 enabled:dark:hover:bg-appGray-700 enabled:dark:hover:text-white",
-    },
-    selector: {
-      base: "w-12 border border-appGray-300 bg-white py-2 leading-tight text-gray-500 enabled:hover:bg-appGray-100 enabled:hover:text-appGray-700 dark:border-appGray-700 dark:bg-appGray-800 dark:text-appGray-400 enabled:dark:hover:bg-appGray-700 enabled:dark:hover:text-white",
-      active: "bg-appGray-50 text-appGray-500",
-    },
-  },
-};
+import { sortTabs, defaultPageSize } from "../common/constants";
+import { paginationTheme } from "../../flowbiteCustomTheme";
 
 const PostsWithLoadingAndError = withLoading(
   withError(PostsList, CustomError),
   CustomLoading
 );
-
-const sortTabs = ["Relevance", "Newest", "Oldest", "Score"];
-const pageSize = 5;
 
 const SearchPageContainer = () => {
   const searchParams = new URLSearchParams(window.location.search);
@@ -50,7 +33,7 @@ const SearchPageContainer = () => {
       value: q,
       page: currentPage,
       sort: selectedTab.toLowerCase(),
-      limit: pageSize,
+      limit: defaultPageSize,
     },
     { refetchOnMountOrArgChange: true }
   );
@@ -78,18 +61,20 @@ const SearchPageContainer = () => {
               "results"
             )}
           </div>
-          <SortTabs
-            sortOptions={sortTabs}
-            selectedOption={selectedTab}
-            setSelectedOption={setSelectedTab}
-          />
+          <div className="text-xs">
+            <SortTabs
+              sortOptions={sortTabs}
+              selectedOption={selectedTab}
+              setSelectedOption={setSelectedTab}
+            />
+          </div>
         </div>
         <PostsWithLoadingAndError
           items={data ? data.posts : undefined}
           error={error}
           isLoading={isLoading}
         />
-        {data && data.total_results > pageSize && (
+        {data && data.total_results > defaultPageSize && (
           <div className="flex justify-center">
             <Pagination
               currentPage={currentPage}
