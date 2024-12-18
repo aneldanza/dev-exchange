@@ -6,6 +6,7 @@ import { TbMessageQuestion, TbMessageExclamation } from "react-icons/tb";
 import { QuestionTags } from "../questions/QuestionTags";
 import { PostData } from "../users/types";
 import { formatCountString } from "../../services/utils";
+import { PostTitle } from "./PostTitle";
 
 interface PostListItemProps {
   post: PostData;
@@ -34,14 +35,11 @@ export const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
               />
             )}
           </div>
-          <Link
-            to={`/questions/${post.question_id}${
-              post.id ? `?answerId=${post.id}` : ""
-            }`}
-            className="text-blue-500 text-sm"
-          >
-            {post.title}
-          </Link>
+          <PostTitle
+            title={post.title}
+            id={post.id}
+            question_id={post.question_id}
+          />
         </div>
 
         <div

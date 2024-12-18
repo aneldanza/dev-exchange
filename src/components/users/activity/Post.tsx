@@ -4,6 +4,7 @@ import { QuestionTags } from "../../questions/QuestionTags";
 import moment from "moment";
 import { formatCountString } from "../../../services/utils";
 import { PostData } from "../types";
+import { PostTitle } from "../../common/PostTitle";
 
 interface PostProps {
   post: PostData;
@@ -20,16 +21,11 @@ export const Post: FC<PostProps> = ({ post }) => {
       </div>
 
       <div className="flex flex-col gap-2 flex-grow">
-        <Link
-          to={
-            post.question_id
-              ? `/questions/${post.question_id}?answerId=${post.id}`
-              : `/questions/${post.id}`
-          }
-          className="text-blue-500 text-sm"
-        >
-          {post.title}
-        </Link>
+        <PostTitle
+          title={post.title}
+          id={post.id}
+          question_id={post.question_id}
+        />
 
         <QuestionTags tags={post.tags} />
 
