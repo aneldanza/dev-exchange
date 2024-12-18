@@ -6,8 +6,8 @@ interface PostItemProps {
   votes: number;
   title: string;
   created_at: string;
-  id: number | null;
-  question_id: number;
+  id: number;
+  question_id: number | null;
 }
 
 export const PostItem: React.FC<PostItemProps> = ({
@@ -24,7 +24,11 @@ export const PostItem: React.FC<PostItemProps> = ({
       </div>
       <div className="flex-grow overflow-hidden">
         <Link
-          to={`/questions/${question_id}${id ? "?answerId=" + id : ""}`}
+          to={
+            question_id
+              ? `/questions/${question_id}?answerId=${id}`
+              : `/questions/${id}`
+          }
           className="text-blue-400 break-words truncate block max-w-full"
         >
           {title}

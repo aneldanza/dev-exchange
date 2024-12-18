@@ -1,6 +1,6 @@
 import { useContext, useMemo } from "react";
 import { CustomDropdown } from "../../common/CustomDropdown";
-import { LimitedQuestionData } from "../../questions/types";
+// import { LimitedQuestionData } from "../../questions/types";
 import { PostsByTag, UserContext } from "../UserContext";
 import { FullUserData, PostData } from "../types";
 import { TagItem } from "../TagItem";
@@ -64,12 +64,10 @@ export const ActivityTab = () => {
           />
         )}
         {activeTab === "questions" && (
-          <Posts<LimitedQuestionData>
+          <Posts<PostData>
             posts={questions}
             label="Questions"
-            renderItem={(question: LimitedQuestionData) => (
-              <Post post={{ ...question, question_id: question.id }} />
-            )}
+            renderItem={(question: PostData) => <Post post={question} />}
           />
         )}
         {activeTab === "answers" && (

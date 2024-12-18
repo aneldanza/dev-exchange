@@ -4,11 +4,11 @@ import { PostItem } from "../PostItem";
 import { TagItem } from "../TagItem";
 import { PostData, VoteData } from "../types";
 import { PostsByTag } from "../UserContext";
-import { LimitedQuestionData } from "../../questions/types";
+// import { LimitedQuestionData } from "../../questions/types";
 import { formatCountString } from "../../../services/utils";
 
 interface SummaryProps {
-  questions: LimitedQuestionData[];
+  questions: PostData[];
   answers: PostData[];
   id: number;
   sortedItems: PostsByTag[];
@@ -28,12 +28,12 @@ export const Summary: React.FC<SummaryProps> = ({
 
   return (
     <div className="activity-list">
-      <TopItemsCard<LimitedQuestionData>
+      <TopItemsCard<PostData>
         sortedItems={questions}
         name="question"
-        renderItem={(question: LimitedQuestionData) => (
+        renderItem={(question: PostData) => (
           <PostItem
-            id={null}
+            id={question.id}
             question_id={question.id}
             title={question.title}
             votes={question.votes}

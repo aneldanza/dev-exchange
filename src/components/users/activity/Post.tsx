@@ -14,16 +14,18 @@ export const Post: FC<PostProps> = ({ post }) => {
     <li className="flex flex-col sm:flex-row gap-4 py-3">
       <div className="flex flex-row sm:flex-col gap-4 text-xs sm:text-sm text-appGray-300">
         <div>{formatCountString(post.votes, "vote", "votes")}</div>
-        {post.answers && (
+        {post.answers !== null && (
           <div>{formatCountString(post.answers, "answer", "answers")}</div>
         )}
       </div>
 
       <div className="flex flex-col gap-2 flex-grow">
         <Link
-          to={`/questions/${post.question_id}${
-            post.id ? `?answerId=${post.id}` : ""
-          }`}
+          to={
+            post.question_id
+              ? `/questions/${post.question_id}?answerId=${post.id}`
+              : `/questions/${post.id}`
+          }
           className="text-blue-500 text-sm"
         >
           {post.title}
