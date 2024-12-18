@@ -12,7 +12,7 @@ export const SortTabs: FC<SortTabsProps> = ({
   selectedOption,
 }) => {
   return (
-    <div className="border rounded-md p-1 text-sm border-appGray-300">
+    <div className="border rounded-md p-1 border-appGray-300">
       {sortOptions.map((option) => (
         <button
           key={option}
