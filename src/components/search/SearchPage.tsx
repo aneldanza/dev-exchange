@@ -9,6 +9,7 @@ import { useSearchAllPostsQuery } from "../../services/api";
 import { Button } from "../common/Button";
 import { useNavigate } from "react-router-dom";
 import { formatCountString } from "../../services/utils";
+import { SortTabs } from "../common/SortTabs";
 
 const paginationTheme = {
   base: "text-xs",
@@ -77,21 +78,11 @@ const SearchPageContainer = () => {
               "results"
             )}
           </div>
-          <div className="border rounded-md p-1 text-sm border-appGray-300">
-            {sortTabs.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setSelectedTab(tab)}
-                className={`${
-                  selectedTab === tab
-                    ? " bg-appGray-50 rounded-sm text-appGay-500 font-medium p-1"
-                    : "text-appGray-300 p-1"
-                } px-2 py-1`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
+          <SortTabs
+            sortOptions={sortTabs}
+            selectedOption={selectedTab}
+            setSelectedOption={setSelectedTab}
+          />
         </div>
         <PostsWithLoadingAndError
           items={data ? data.posts : undefined}
