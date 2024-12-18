@@ -4,8 +4,9 @@ import { SignUpCredentials } from "../components/auth/SignupForm";
 import { SignInCredentials } from "../components/auth/SigninForm";
 import { TagData } from "../components/tags/types";
 import {
-  LimitedQuestionData,
   QuestionData,
+  QuestionPagePayload,
+  QuestionsPageResponse,
 } from "../components/questions/types";
 import { FullUserData } from "../components/users/types";
 import {
@@ -100,8 +101,9 @@ export const api = createApi({
     getTagById: builder.query<TagData, string>({
       query: (id) => `/tags/${id}`,
     }),
-    getAllQuestions: builder.query<LimitedQuestionData[], undefined>({
-      query: () => "/questions",
+    getAllQuestions: builder.query<QuestionsPageResponse, QuestionPagePayload>({
+      query: (payload) =>
+        `/questions?page=${payload.page}&limit=${payload.limit}&sort=${payload.sort}`,
       providesTags: ["Questions"],
     }),
     createQuestion: builder.mutation({
