@@ -17,6 +17,23 @@ export type LimitedQuestionData = {
   votes: number;
 };
 
+export type QuestionsPageResponse = {
+  questions: LimitedQuestionData[];
+  total_results: number;
+  total_pages: number;
+  current_page: number;
+  next_page: number | null;
+  prev_page: number | null;
+  first_page: boolean;
+  last_page: boolean;
+};
+
+export type QuestionPagePayload = {
+  page: number;
+  limit?: number;
+  sort?: string;
+};
+
 export type QuestionData = {
   id: number;
   title: string;
