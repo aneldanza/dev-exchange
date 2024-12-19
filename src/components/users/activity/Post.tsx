@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { Link } from "react-router-dom";
 import { QuestionTags } from "../../questions/QuestionTags";
 import moment from "moment";
 import { formatCountString } from "../../../services/utils";
 import { PostData } from "../types";
 import { PostTitle } from "../../common/PostTitle";
+import { PostAuthor } from "../../common/PostAuthor";
 
 interface PostProps {
   post: PostData;
@@ -30,13 +30,7 @@ export const Post: FC<PostProps> = ({ post }) => {
         <QuestionTags tags={post.tags} />
 
         <div className="self-end text-xs">
-          <span className="hyperlink">
-            {post.user.id ? (
-              <Link to={`/users/${post.user.id}`}>{post.user.username}</Link>
-            ) : (
-              "deleted user"
-            )}
-          </span>{" "}
+          <PostAuthor userId={post.user.id} username={post.user.username} />
           <span className="text-gray-500">
             {moment(post.created_at).fromNow()}
           </span>
