@@ -69,21 +69,21 @@ export const ActivityTab = () => {
         {activeTab === "questions" && (
           <Posts<PostData>
             posts={questions}
-            label="Questions"
+            label="Question"
             renderItem={(question: PostData) => <Post post={question} />}
           />
         )}
         {activeTab === "answers" && (
           <Posts<PostData>
             posts={answers}
-            label="Answers"
+            label="Answer"
             renderItem={(answer: PostData) => <Post post={answer} />}
           />
         )}
         {activeTab === "tags" && (
           <Posts<PostsByTag>
             posts={fullUserData?.posts_by_tag || []}
-            label="Tags"
+            label="Tag"
             renderItem={(tagItem: PostsByTag) => (
               <TagItem
                 tag={tagItem.tag}

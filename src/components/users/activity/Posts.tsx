@@ -1,4 +1,5 @@
 import React from "react";
+import { formatCountString } from "../../../services/utils";
 
 interface PostsProps<T> {
   posts: T[];
@@ -11,7 +12,7 @@ export const Posts = <T,>({ posts, label, renderItem }: PostsProps<T>) => {
     <div className="flex flex-col">
       <div className="flex justify-between items-center mb-2">
         <div className="text-lg">
-          {posts.length} {label}
+          {formatCountString(posts.length, label, `${label}s`)}
         </div>
       </div>
       <div className="activity-card px-4">

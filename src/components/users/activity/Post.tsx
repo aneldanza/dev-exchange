@@ -31,6 +31,7 @@ export const Post: FC<PostProps> = ({ post }) => {
 
         <div className="self-end text-xs">
           <PostAuthor userId={post.user.id} username={post.user.username} />
+          {""}
           <span className="text-gray-500">
             {moment(post.created_at).fromNow()}
           </span>
