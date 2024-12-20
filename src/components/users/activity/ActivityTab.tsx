@@ -1,8 +1,8 @@
 import { useContext, useMemo } from "react";
 import { CustomDropdown } from "../../common/CustomDropdown";
 // import { LimitedQuestionData } from "../../questions/types";
-import { PostsByTag, UserContext } from "../UserContext";
-import { FullUserData, PostData } from "../types";
+import { UserContext } from "../UserContext";
+import { FullUserData, PostData, PostsByTag } from "../types";
 import { TagItem } from "../TagItem";
 import { Summary } from "./Summary";
 import { Posts } from "./Posts";
@@ -12,8 +12,7 @@ import { activityTabs } from "./constants";
 export const ActivityTab = () => {
   // Implement the logic for the ActivityTab component here
 
-  const { postsByTag, fullUserData, setActiveTab, activeTab } =
-    useContext(UserContext);
+  const { fullUserData, setActiveTab, activeTab } = useContext(UserContext);
   const { questions, id, answers, votes } = fullUserData as FullUserData;
 
   const handleTabSelect = (option: string) => {
@@ -25,8 +24,12 @@ export const ActivityTab = () => {
 
   const sortedItems = useMemo(
     () =>
-      Object.values(postsByTag).sort((a, b) => b.posts.length - a.posts.length),
-    [postsByTag]
+      fullUserData
+        ? Object.values(fullUserData.posts_by_tag).sort(
+            (a, b) => b.posts.length - a.posts.length
+          )
+        : [],
+    [fullUserData]
   );
 
   return (
@@ -79,7 +82,7 @@ export const ActivityTab = () => {
         )}
         {activeTab === "tags" && (
           <Posts<PostsByTag>
-            posts={sortedItems}
+            posts={fullUserData?.posts_by_tag || []}
             label="Tags"
             renderItem={(tagItem: PostsByTag) => (
               <TagItem
@@ -89,6 +92,17 @@ export const ActivityTab = () => {
               />
             )}
           />
+          // <Posts<PostsByTag>
+          //   posts={sortedItems}
+          //   label="Tags"
+          //   renderItem={(tagItem: PostsByTag) => (
+          //     <TagItem
+          //       tag={tagItem.tag}
+          //       userId={id}
+          //       postsCount={tagItem.posts.length}
+          //     />
+          //   )}
+          // />
         )}
       </div>
     </div>

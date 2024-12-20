@@ -2,10 +2,10 @@ import React from "react";
 import { TopItemsCard } from "../TopItemsCard";
 import { PostItem } from "../PostItem";
 import { TagItem } from "../TagItem";
-import { PostData, VoteData } from "../types";
-import { PostsByTag } from "../UserContext";
-// import { LimitedQuestionData } from "../../questions/types";
+import { PostData, VoteData, PostsByTag } from "../types";
 import { formatCountString } from "../../../services/utils";
+import { sortTabs } from "../../common/constants";
+import { sortTags } from "../../users/activity/constants";
 
 interface SummaryProps {
   questions: PostData[];
@@ -31,6 +31,7 @@ export const Summary: React.FC<SummaryProps> = ({
       <TopItemsCard<PostData>
         sortedItems={questions}
         name="question"
+        sortOptions={sortTabs}
         renderItem={(question: PostData) => (
           <PostItem
             id={question.id}
@@ -45,6 +46,7 @@ export const Summary: React.FC<SummaryProps> = ({
       <TopItemsCard<PostData>
         sortedItems={answers}
         name="answer"
+        sortOptions={sortTabs}
         renderItem={(answer: PostData) => (
           <PostItem
             id={answer.id}
@@ -59,6 +61,7 @@ export const Summary: React.FC<SummaryProps> = ({
       <TopItemsCard<PostsByTag>
         sortedItems={sortedItems}
         name="tag"
+        sortOptions={sortTags}
         renderItem={(tagItem: PostsByTag) => (
           <TagItem
             tag={tagItem.tag}
