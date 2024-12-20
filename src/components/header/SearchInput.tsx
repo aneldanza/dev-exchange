@@ -4,11 +4,16 @@ import { Form, Formik, Field } from "formik";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 
-const SearchInput: React.FC = () => {
+interface SearchInputProps {
+  hideInput?: () => void;
+}
+
+const SearchInput: React.FC<SearchInputProps> = ({ hideInput }) => {
   const navigate = useNavigate();
 
   const handleSearch = (values: { search: string }) => {
     navigate(`/search?q=${values.search}`);
+    hideInput && hideInput();
   };
 
   const initialValues = {

@@ -92,7 +92,7 @@ export const TopNavigationBar: React.FC = () => {
         {showSearchBar && (
           <div className="sm:hidden absolute w-full left-0 bg-appGray-50 py-2 px-2 flex">
             <div className="w-full">
-              <SearchInput />
+              <SearchInput hideInput={() => setShowSearchBar(false)} />
             </div>
           </div>
         )}
