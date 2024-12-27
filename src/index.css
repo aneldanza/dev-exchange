@@ -108,7 +108,7 @@
   }
 
   .activity-card-row {
-    @apply my-4 text-sm flex justify-between gap-2 max-w-full;
+    @apply my-4 text-sm flex justify-between gap-2 max-w-full items-center;
   }
 
   .answer-meta {

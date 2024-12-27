@@ -11,7 +11,7 @@ interface SummaryProps {
   questions: PostData[];
   answers: PostData[];
   id: number;
-  sortedItems: PostsByTag[];
+  postsByTag: PostsByTag[];
   votes: VoteData[];
 }
 
@@ -19,7 +19,7 @@ export const Summary: React.FC<SummaryProps> = ({
   questions,
   answers,
   id,
-  sortedItems,
+  postsByTag,
   votes,
 }) => {
   const upvotes = votes.filter((v) => v.value === 1).length;
@@ -59,7 +59,7 @@ export const Summary: React.FC<SummaryProps> = ({
       />
 
       <TopItemsCard<PostsByTag>
-        sortedItems={sortedItems}
+        sortedItems={postsByTag}
         name="tag"
         sortOptions={sortTags}
         renderItem={(tagItem: PostsByTag) => (

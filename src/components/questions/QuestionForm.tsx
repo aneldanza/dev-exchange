@@ -109,6 +109,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
         ...props.values["tags"],
         { label: name, value: `tempId-${tagCount}` },
       ]);
+      props.setFieldTouched("tags", true);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
@@ -128,6 +129,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     options: MultiValue<Option>,
     props: FormikProps<FormValues>
   ) => {
+    console.log("inside hand");
     setSelectedOptions(options as Option[]);
     props.setFieldTouched("tags", true);
     props.setFieldValue("tags", options);
