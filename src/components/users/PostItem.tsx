@@ -1,13 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import moment from "moment";
+import { PostTitle } from "../common/PostTitle";
 
 interface PostItemProps {
   votes: number;
   title: string;
   created_at: string;
-  id: number | null;
-  question_id: number;
+  id: number;
+  question_id: number | null;
 }
 
 export const PostItem: React.FC<PostItemProps> = ({
@@ -23,12 +23,7 @@ export const PostItem: React.FC<PostItemProps> = ({
         {votes}
       </div>
       <div className="flex-grow overflow-hidden">
-        <Link
-          to={`/questions/${question_id}${id ? "?answerId=" + id : ""}`}
-          className="text-blue-400 break-words truncate block max-w-full"
-        >
-          {title}
-        </Link>
+        <PostTitle title={title} id={id} question_id={question_id} />
       </div>
       <div className="text-xs flex-shrink-0 whitespace-nowrap">
         {moment(created_at).format("MMM DD, YYYY")}

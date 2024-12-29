@@ -2,16 +2,16 @@ import React from "react";
 import { TopItemsCard } from "../TopItemsCard";
 import { PostItem } from "../PostItem";
 import { TagItem } from "../TagItem";
-import { PostData, VoteData } from "../types";
-import { PostsByTag } from "../UserContext";
-import { LimitedQuestionData } from "../../questions/types";
+import { PostData, VoteData, PostsByTag } from "../types";
 import { formatCountString } from "../../../services/utils";
+import { sortTabs } from "../../common/constants";
+import { sortTags } from "../../users/activity/constants";
 
 interface SummaryProps {
-  questions: LimitedQuestionData[];
+  questions: PostData[];
   answers: PostData[];
   id: number;
-  sortedItems: PostsByTag[];
+  postsByTag: PostsByTag[];
   votes: VoteData[];
 }
 
@@ -19,7 +19,7 @@ export const Summary: React.FC<SummaryProps> = ({
   questions,
   answers,
   id,
-  sortedItems,
+  postsByTag,
   votes,
 }) => {
   const upvotes = votes.filter((v) => v.value === 1).length;
@@ -28,12 +28,13 @@ export const Summary: React.FC<SummaryProps> = ({
 
   return (
     <div className="activity-list">
-      <TopItemsCard<LimitedQuestionData>
-        sortedItems={questions}
+      <TopItemsCard<PostData>
+        items={questions}
         name="question"
-        renderItem={(question: LimitedQuestionData) => (
+        sortOptions={sortTabs}
+        renderItem={(question: PostData) => (
           <PostItem
-            id={null}
+            id={question.id}
             question_id={question.id}
             title={question.title}
             votes={question.votes}
@@ -43,8 +44,9 @@ export const Summary: React.FC<SummaryProps> = ({
       />
 
       <TopItemsCard<PostData>
-        sortedItems={answers}
+        items={answers}
         name="answer"
+        sortOptions={sortTabs}
         renderItem={(answer: PostData) => (
           <PostItem
             id={answer.id}
@@ -57,8 +59,9 @@ export const Summary: React.FC<SummaryProps> = ({
       />
 
       <TopItemsCard<PostsByTag>
-        sortedItems={sortedItems}
+        items={postsByTag}
         name="tag"
+        sortOptions={sortTags}
         renderItem={(tagItem: PostsByTag) => (
           <TagItem
             tag={tagItem.tag}
@@ -73,7 +76,7 @@ export const Summary: React.FC<SummaryProps> = ({
           <div className="text-lg">Votes cast</div>
         </div>
         <div className="activity-card">
-          <div className="grid grid-cols-3 p-4 text-sm justify-between">
+          <div className="grid grid-cols-3 text-sm justify-between m-4">
             <div className="">
               <div>{upvotes}</div>
               <div className="text-xs text-appGray-100">

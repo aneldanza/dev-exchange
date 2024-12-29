@@ -73,7 +73,7 @@ export const UserProfile: React.FC = () => {
           </div>
         )}
       </div>
-      {activeTab === "profile" && <ProfileTab setActiveTab={setActiveTab} />}
+      {activeTab === "profile" && <ProfileTab setActiveTab={handleTabClick} />}
       {activityTabs.includes(activeTab) && <ActivityTab />}
       {activeTab === "settings" && (
         <SettingsTab data={data.fullUserData as FullUserData} />

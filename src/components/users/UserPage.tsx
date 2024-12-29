@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useShowFullUserInfoQuery } from "../../services/api";
 import { withLoading } from "../hoc/withLoading";
@@ -7,9 +7,6 @@ import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
 import { UserProfile } from "./UserProfile";
 import { UserContext } from "./UserContext";
-import { LimitedQuestionData } from "../questions/types";
-import { PostData } from "./types";
-import { TagData } from "../tags/types";
 import { options, activityTabs } from "./activity/constants";
 
 // First, wrap UserProfile with withError, then pass the resulting component to withLoading
@@ -53,40 +50,9 @@ export const UserPage: React.FC = () => {
     };
   }, [activeTab]);
 
-  const aggregateTags = useCallback(
-    (questions: LimitedQuestionData[], answers: PostData[]) => {
-      const tags: Record<
-        string,
-        { tag: TagData; posts: (LimitedQuestionData | PostData)[] }
-      > = {};
-
-      const posts = [...questions, ...answers];
-
-      posts.forEach((post) => {
-        post.tags.forEach((tag) => {
-          if (tags[tag.id]) {
-            (tags[tag.id].posts as (LimitedQuestionData | PostData)[]).push(
-              post
-            );
-          } else {
-            tags[tag.id] = {
-              tag,
-              posts: [post],
-            };
-          }
-        });
-      });
-
-      return tags;
-    },
-    []
-  );
-
-  const postsByTag = aggregateTags(data?.questions || [], data?.answers || []);
-
   return (
     <UserContext.Provider
-      value={{ fullUserData: data, postsByTag, activeTab, setActiveTab }}
+      value={{ fullUserData: data, activeTab, setActiveTab }}
     >
       <UserProfileWithErrorAndLoading error={error} isLoading={isLoading} />
     </UserContext.Provider>

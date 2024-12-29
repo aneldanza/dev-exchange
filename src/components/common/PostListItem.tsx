@@ -1,18 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import moment from "moment";
 import { TbMessageQuestion, TbMessageExclamation } from "react-icons/tb";
 import { QuestionTags } from "../questions/QuestionTags";
 import { PostData } from "../users/types";
 import { formatCountString } from "../../services/utils";
+import { PostTitle } from "./PostTitle";
+import { PostAuthor } from "./PostAuthor";
 
 interface PostListItemProps {
-  item: { post: PostData; type: "question" | "answer" };
+  post: PostData;
 }
 
-export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
-  const { post, type } = item;
+export const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
   return (
     <li className="flex flex-col sm:flex-row gap-4 py-3">
       <div className="flex flex-row sm:flex-col gap-4 text-xs sm:text-sm text-appGray-300">
@@ -25,7 +25,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
       <div className="flex flex-col gap-2 flex-grow">
         <div className="flex gap-4 items-center">
           <div>
-            {type === "question" ? (
+            {post.type === "Question" ? (
               <TbMessageQuestion size={22} color="blue-500" />
             ) : (
               <TbMessageExclamation
@@ -35,14 +35,11 @@ export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
               />
             )}
           </div>
-          <Link
-            to={`/questions/${post.question_id}${
-              post.id ? `?answerId=${post.id}` : ""
-            }`}
-            className="text-blue-500 text-sm"
-          >
-            {post.title}
-          </Link>
+          <PostTitle
+            title={post.title}
+            id={post.id}
+            question_id={post.question_id}
+          />
         </div>
 
         <div
@@ -59,13 +56,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({ item }) => {
         <QuestionTags tags={post.tags} />
 
         <div className="self-end text-xs">
-          <span className="hyperlink">
-            {post.user.id ? (
-              <Link to={`/users/${post.user.id}`}>{post.user.username}</Link>
-            ) : (
-              "deleted user"
-            )}
-          </span>{" "}
+          <PostAuthor userId={post.user.id} username={post.user.username} />{" "}
           <span className="text-gray-500">
             {moment(post.created_at).fromNow()}
           </span>

@@ -10,6 +10,15 @@ interface UsersListProps {
 
 const UsersList: React.FC<UsersListProps> = ({ users }) => {
   const navigate = useNavigate();
+
+  if (!users.length) {
+    return (
+      <div className="flex justify-center text-center text-lg py-6 m-auto">
+        No users found
+      </div>
+    );
+  }
+
   return (
     <div>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

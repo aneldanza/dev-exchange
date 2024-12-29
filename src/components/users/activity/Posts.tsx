@@ -10,15 +10,22 @@ export const Posts = <T,>({ posts, label, renderItem }: PostsProps<T>) => {
   return (
     <div className="flex flex-col">
       <div className="flex justify-between items-center mb-2">
-        <div className="text-lg">
-          {posts.length} {label}
-        </div>
+        {/* <div className="text-lg">
+          {formatCountString(posts.length, label, `${label}s`)}
+        </div> */}
+        {/* <div className="text-xs">
+          <SortTabs
+            setSelectedOption={setSortTab}
+            selectedOption={sortTab}
+            sortOptions={sortOptions}
+          />
+        </div> */}
       </div>
       <div className="activity-card px-4">
         {posts.length ? (
           posts.map((item, index) => <div key={index}>{renderItem(item)}</div>)
         ) : (
-          <div>{`No ${label.toLowerCase()} found`}</div>
+          <div className="activity-card-row text-appGray-100 text-sm">{`No ${label.toLowerCase()} found`}</div>
         )}
       </div>
     </div>

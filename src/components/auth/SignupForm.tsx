@@ -94,7 +94,7 @@ export const SignUpForm = () => {
               />
               <button
                 type="submit"
-                className="btn-primary disabled:opacity-50"
+                className="btn btn-primary disabled:opacity-50"
                 disabled={!(isValid && dirty)}
               >
                 Sign up

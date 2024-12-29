@@ -13,6 +13,7 @@ import EditQuestionPage from "../components/questions/EditQuestionPage";
 import TaggedQuestionPageContainer from "../components/questions/TaggedQuestionPageContainer";
 import EditAnswerPage from "../components/answers/EditAnswerPage";
 import UserPostsByTagPage from "../components/users/UserPostsByTagPage";
+import SearchPageContainer from "../components/search/SearchPage";
 
 export const browserRouter = createBrowserRouter([
   {
@@ -44,6 +45,7 @@ export const browserRouter = createBrowserRouter([
         element: <ProtectedRoute element={<EditAnswerPage />} />,
       },
       { path: "users/:userId/search", element: <UserPostsByTagPage /> },
+      { path: "/search", element: <SearchPageContainer /> },
     ],
   },
 ]);

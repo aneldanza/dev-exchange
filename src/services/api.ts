@@ -3,8 +3,16 @@ import { SignInInfo, SignUpInfo } from "./AuthContext";
 import { SignUpCredentials } from "../components/auth/SignupForm";
 import { SignInCredentials } from "../components/auth/SigninForm";
 import { TagData } from "../components/tags/types";
-import { QuestionData } from "../components/questions/types";
+import {
+  QuestionData,
+  QuestionPagePayload,
+  QuestionsPageResponse,
+} from "../components/questions/types";
 import { FullUserData } from "../components/users/types";
+import {
+  PostsSearchPayload,
+  PostsSearchResponse,
+} from "../components/search/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -93,8 +101,9 @@ export const api = createApi({
     getTagById: builder.query<TagData, string>({
       query: (id) => `/tags/${id}`,
     }),
-    getAllQuestions: builder.query({
-      query: () => "/questions",
+    getAllQuestions: builder.query<QuestionsPageResponse, QuestionPagePayload>({
+      query: (payload) =>
+        `/questions?page=${payload.page}&limit=${payload.limit}&sort=${payload.sort}`,
       providesTags: ["Questions"],
     }),
     createQuestion: builder.mutation({
@@ -185,6 +194,12 @@ export const api = createApi({
           query.sort ? `&sort=${query.sort}` : ""
         }`,
     }),
+    searchAllPosts: builder.query<PostsSearchResponse, PostsSearchPayload>({
+      query: (query) =>
+        `/search_posts/page/${query.page}?query=${query.value}${
+          query.sort ? `&sort=${query.sort}` : ""
+        }&limit=${query.limit}`,
+    }),
   }),
 });
 
@@ -215,4 +230,5 @@ export const {
   useUpdateCommentMutation,
   useCastVoteMutation,
   useSearchPostsByUserQuery,
+  useSearchAllPostsQuery,
 } = api;

@@ -104,11 +104,11 @@
   }
 
   .activity-card {
-    @apply card flex flex-col divide-y p-0 flex-grow align-middle;
+    @apply card flex flex-col divide-y flex-grow align-middle px-4 py-0;
   }
 
   .activity-card-row {
-    @apply p-4 text-sm flex justify-between gap-2 max-w-full;
+    @apply my-4 text-sm flex justify-between gap-2 max-w-full items-center;
   }
 
   .answer-meta {
@@ -124,6 +124,6 @@
   }
 
   .hyperlink {
-    @apply text-blue-400 visited:text-purple-500 hover:text-blue-500;
+    @apply text-blue-400 visited:text-purple-500 hover:text-blue-500 cursor-pointer;
   }
 }

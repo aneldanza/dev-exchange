@@ -8,3 +8,19 @@ export const customTheme: CustomFlowbiteTheme = {
     },
   },
 };
+
+export const paginationTheme = {
+  base: "text-xs",
+  pages: {
+    previous: {
+      base: "ml-0 rounded-l-lg border border-appGray-300 bg-white px-3 py-2 leading-tight text-gray-500 enabled:hover:bg-appGray-100 enabled:hover:text-appGray-700 dark:border-appGray-700 dark:bg-appGray-800 dark:text-appGray-400 enabled:dark:hover:bg-appGray-700 enabled:dark:hover:text-white",
+    },
+    next: {
+      base: "rounded-r-lg border border-appGray-300 bg-white px-3 py-2 leading-tight text-gray-500 enabled:hover:bg-appGray-100 enabled:hover:text-appGray-700 dark:border-appGray-700 dark:bg-appGray-800 dark:text-appGray-400 enabled:dark:hover:bg-appGray-700 enabled:dark:hover:text-white",
+    },
+    selector: {
+      base: "w-12 border border-appGray-300 bg-white py-2 leading-tight text-gray-500 enabled:hover:bg-appGray-100 enabled:hover:text-appGray-700 dark:border-appGray-700 dark:bg-appGray-800 dark:text-appGray-400 enabled:dark:hover:bg-appGray-700 enabled:dark:hover:text-white",
+      active: "bg-appGray-50 text-appGray-500",
+    },
+  },
+};

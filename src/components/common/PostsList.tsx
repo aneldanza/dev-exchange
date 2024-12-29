@@ -3,11 +3,11 @@ import { Posts } from "../users/types";
 import { PostListItem } from "./PostListItem";
 
 interface PostsListProps {
-  items: Posts;
+  items: Posts | undefined;
 }
 
 const PostsList: React.FC<PostsListProps> = ({ items }) => {
-  if (!items.length) {
+  if (!items || !items.length) {
     return (
       <div className="my-4">
         <div className="text-sm">There are no posts found</div>
@@ -18,11 +18,8 @@ const PostsList: React.FC<PostsListProps> = ({ items }) => {
   return (
     <div>
       <ul className="flex flex-col divide-y max-w-2xl">
-        {items.map((item) => (
-          <PostListItem
-            key={item.post.id || item.post.question_id}
-            item={item}
-          />
+        {items.map((post) => (
+          <PostListItem key={post.id} post={post} />
         ))}
       </ul>
     </div>

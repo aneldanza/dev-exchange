@@ -1,19 +1,19 @@
 import { useContext, useMemo } from "react";
 import { CustomDropdown } from "../../common/CustomDropdown";
-import { LimitedQuestionData } from "../../questions/types";
-import { PostsByTag, UserContext } from "../UserContext";
-import { FullUserData, PostData } from "../types";
+import { UserContext } from "../UserContext";
+import { FullUserData, PostData, PostsByTag } from "../types";
 import { TagItem } from "../TagItem";
 import { Summary } from "./Summary";
 import { Posts } from "./Posts";
 import { Post } from "./Post";
-import { activityTabs } from "./constants";
+import { activityTabs, sortTags } from "./constants";
+import { ItemsTab } from "./ItemsTab";
+import { sortTabs } from "../../common/constants";
 
 export const ActivityTab = () => {
   // Implement the logic for the ActivityTab component here
 
-  const { postsByTag, fullUserData, setActiveTab, activeTab } =
-    useContext(UserContext);
+  const { fullUserData, setActiveTab, activeTab } = useContext(UserContext);
   const { questions, id, answers, votes } = fullUserData as FullUserData;
 
   const handleTabSelect = (option: string) => {
@@ -23,10 +23,14 @@ export const ActivityTab = () => {
     setActiveTab(option);
   };
 
-  const sortedItems = useMemo(
+  const postsByTag = useMemo(
     () =>
-      Object.values(postsByTag).sort((a, b) => b.posts.length - a.posts.length),
-    [postsByTag]
+      fullUserData
+        ? Object.values(fullUserData.posts_by_tag).sort(
+            (a, b) => b.posts.length - a.posts.length
+          )
+        : [],
+    [fullUserData]
   );
 
   return (
@@ -59,35 +63,54 @@ export const ActivityTab = () => {
             questions={questions}
             answers={answers}
             id={id}
-            sortedItems={sortedItems}
+            postsByTag={postsByTag}
             votes={votes}
           />
         )}
         {activeTab === "questions" && (
-          <Posts<LimitedQuestionData>
-            posts={questions}
-            label="Questions"
-            renderItem={(question: LimitedQuestionData) => (
-              <Post post={{ ...question, question_id: question.id }} />
+          <ItemsTab<PostData>
+            sortOptions={sortTabs}
+            label="Question"
+            items={questions}
+            renderItem={({ items }: { items: PostData[] }) => (
+              <Posts<PostData>
+                posts={items}
+                label="Question"
+                renderItem={(question: PostData) => <Post post={question} />}
+              />
             )}
           />
         )}
         {activeTab === "answers" && (
-          <Posts<PostData>
-            posts={answers}
-            label="Answers"
-            renderItem={(answer: PostData) => <Post post={answer} />}
+          <ItemsTab<PostData>
+            sortOptions={sortTabs}
+            label="Answer"
+            items={answers}
+            renderItem={({ items }: { items: PostData[] }) => (
+              <Posts<PostData>
+                posts={items}
+                label="Answer"
+                renderItem={(answer: PostData) => <Post post={answer} />}
+              />
+            )}
           />
         )}
         {activeTab === "tags" && (
-          <Posts<PostsByTag>
-            posts={sortedItems}
-            label="Tags"
-            renderItem={(tagItem: PostsByTag) => (
-              <TagItem
-                tag={tagItem.tag}
-                userId={id}
-                postsCount={tagItem.posts.length}
+          <ItemsTab<PostsByTag>
+            sortOptions={sortTags}
+            label="Tag"
+            items={fullUserData?.posts_by_tag || []}
+            renderItem={({ items }: { items: PostsByTag[] }) => (
+              <Posts<PostsByTag>
+                posts={items}
+                label="Tag"
+                renderItem={(tagItem: PostsByTag) => (
+                  <TagItem
+                    tag={tagItem.tag}
+                    userId={id}
+                    postsCount={tagItem.posts.length}
+                  />
+                )}
               />
             )}
           />

@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import moment from "moment";
+
+import { PostAuthor } from "./PostAuthor";
 
 interface PostMetaProps {
   createdAt: string;
@@ -26,18 +27,7 @@ export const PostMeta: React.FC<PostMetaProps> = ({
             : moment(createdAt).fromNow()
         }`}
       </div>
-      <div className="post-meta-author">
-        {userId ? (
-          <Link
-            to={`/users/${userId}`}
-            className="text-blue-400 hover:text-blue-500"
-          >
-            {username}
-          </Link>
-        ) : (
-          <span className="text-appGray-300">deleted user</span>
-        )}
-      </div>
+      <PostAuthor userId={userId} username={username} />
     </div>
   );
 };

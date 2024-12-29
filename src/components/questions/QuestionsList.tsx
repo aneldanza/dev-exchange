@@ -3,11 +3,11 @@ import { LimitedQuestionData } from "./types";
 import { QuestionItem } from "./QuestionItem";
 
 interface QuestionsListProps {
-  questions: LimitedQuestionData[];
+  questions: LimitedQuestionData[] | undefined;
 }
 
 const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
-  if (!questions.length) {
+  if (!questions || questions.length === 0) {
     return (
       <div className="my-4">
         <div className="text-sm">There are no questions found</div>
