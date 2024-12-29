@@ -1,26 +1,32 @@
-import React, { useMemo, useContext, useState } from "react";
+import React, { useMemo, useContext, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { capitalize } from "../../services/utils";
+import { capitalize, sortItems } from "../../services/utils";
 import { UserContext } from "./UserContext";
 import { SortTabs } from "../common/SortTabs";
 
 interface TopTagsProps<T> {
-  sortedItems: T[];
+  items: T[];
   renderItem: (item: T) => React.ReactNode;
   name: string;
   sortOptions?: string[];
 }
 
 export const TopItemsCard = <T,>({
-  sortedItems,
+  items,
   renderItem,
   name,
   sortOptions = [],
 }: TopTagsProps<T>) => {
   const { userId } = useParams();
-  const topFiveItems = useMemo(() => sortedItems.slice(0, 5), [sortedItems]);
   const { setActiveTab } = useContext(UserContext);
   const [sortTab, setSortTab] = useState<string>(sortOptions[0]);
+  const [sortedItems, setSortedItems] = useState<T[]>(items);
+  const topFiveItems = useMemo(() => sortedItems.slice(0, 5), [sortedItems]);
+
+  useEffect(() => {
+    const sorted = sortItems(items, sortTab);
+    setSortedItems(sorted);
+  }, [sortTab, items]);
 
   return (
     <div>

@@ -29,7 +29,7 @@ export const Summary: React.FC<SummaryProps> = ({
   return (
     <div className="activity-list">
       <TopItemsCard<PostData>
-        sortedItems={questions}
+        items={questions}
         name="question"
         sortOptions={sortTabs}
         renderItem={(question: PostData) => (
@@ -44,7 +44,7 @@ export const Summary: React.FC<SummaryProps> = ({
       />
 
       <TopItemsCard<PostData>
-        sortedItems={answers}
+        items={answers}
         name="answer"
         sortOptions={sortTabs}
         renderItem={(answer: PostData) => (
@@ -59,7 +59,7 @@ export const Summary: React.FC<SummaryProps> = ({
       />
 
       <TopItemsCard<PostsByTag>
-        sortedItems={postsByTag}
+        items={postsByTag}
         name="tag"
         sortOptions={sortTags}
         renderItem={(tagItem: PostsByTag) => (
