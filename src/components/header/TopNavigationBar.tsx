@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Avatar from "react-avatar";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -71,7 +72,7 @@ export const TopNavigationBar: React.FC = () => {
                   to={`/users/${user.id}`}
                   className="font-semibold cursor-pointer"
                 >
-                  {user.username}
+                  <Avatar name={user.username} size="40px" round="7px" />
                 </Link>
 
                 <button className="btn btn-secondary" onClick={handleLogOut}>
