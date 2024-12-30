@@ -9,7 +9,6 @@ import { useSignOutMutation } from "../../services/api";
 import { useAuth } from "../../services/storeHooks";
 import SearchInput from "./SearchInput";
 import { Sidebar } from "./SideBar";
-import smallLogo from "../../assets/logo-small.svg";
 import longLogo from "../../assets/logo-long.svg";
 
 export const TopNavigationBar: React.FC = () => {
@@ -50,12 +49,7 @@ export const TopNavigationBar: React.FC = () => {
           </div>
 
           <div className="cursor-pointer" onClick={() => navigate("/")}>
-            <img src={smallLogo} alt="Logo" className="w-9 h-auto sm:hidden" />
-            <img
-              src={longLogo}
-              alt="Logo"
-              className="hidden sm:block h-12 w-auto"
-            />
+            <img src={longLogo} alt="Logo" className="block h-12 w-auto" />
           </div>
 
           <div className={`sm:hidden h-full`}>
