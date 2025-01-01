@@ -31,7 +31,7 @@ export const Sidebar: React.FC<{ isOpen: boolean; toggle: () => void }> = ({
   return (
     <div
       ref={sideBarRef}
-      className="absolute bg-white py-6 left-0 shadow-md w-64 border-t border-t-appGray-100"
+      className="absolute bg-white py-6 left-0 shadow-md w-64 border-t border-t-appGray-100 z-30"
     >
       <Menu handleOptionSelect={toggle} />
     </div>

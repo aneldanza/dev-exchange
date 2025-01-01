@@ -5,9 +5,13 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 interface SearchInputProps {
   handleSearch: (values: { search: string }) => void;
+  placeholder?: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ handleSearch }) => {
+const SearchInput: React.FC<SearchInputProps> = ({
+  handleSearch,
+  placeholder,
+}) => {
   const initialValues = {
     search: "",
   };
@@ -21,12 +25,13 @@ const SearchInput: React.FC<SearchInputProps> = ({ handleSearch }) => {
               {({ field }: { field: TextInputProps }) => (
                 <TextInput
                   {...field}
-                  placeholder="Search"
+                  placeholder={placeholder || "Search..."}
                   icon={MagnifyingGlassIcon}
                   color="gray"
                   sizing="sm"
                   theme={{
                     field: {
+                      // base: "relative z-10",
                       input: {
                         base: "flex flex-grow-1 w-full text-sm",
                         colors: {

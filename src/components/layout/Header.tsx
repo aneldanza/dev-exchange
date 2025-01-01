@@ -1,5 +1,9 @@
 import { TopNavigationBar } from "../header/TopNavigationBar";
 
 export const Header = () => {
-  return <TopNavigationBar />;
+  return (
+    <div className="relative z-50">
+      <TopNavigationBar />
+    </div>
+  );
 };
