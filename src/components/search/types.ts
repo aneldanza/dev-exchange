@@ -1,14 +1,11 @@
-import { Posts } from "../users/types";
-
-export type PostsSearchPayload = {
+export type SearchPayload = {
   page: number;
   value: string;
   sort?: string;
   limit?: number;
 };
 
-export type PostsSearchResponse = {
-  posts: Posts;
+export type SearchResponse = {
   total_pages: number;
   current_page: number;
   total_results: number;
