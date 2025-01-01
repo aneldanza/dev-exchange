@@ -63,7 +63,11 @@ export const TopNavigationBar: React.FC = () => {
             />
           </div>
           <div className="hidden sm:block w-2/3">
-            <SearchInput />
+            <SearchInput
+              handleSearch={(values: { search: string }) => {
+                navigate(`/search?q=${values.search}`);
+              }}
+            />
           </div>
           <nav className="flex shrink-0 space-x-2 items-center justify-between">
             {user ? (
@@ -97,7 +101,12 @@ export const TopNavigationBar: React.FC = () => {
         {showSearchBar && (
           <div className="sm:hidden absolute w-full left-0 bg-appGray-50 py-2 px-2 flex">
             <div className="w-full">
-              <SearchInput hideInput={() => setShowSearchBar(false)} />
+              <SearchInput
+                handleSearch={(values: { search: string }) => {
+                  navigate(`/search?q=${values.search}`);
+                  setShowSearchBar(false);
+                }}
+              />
             </div>
           </div>
         )}
