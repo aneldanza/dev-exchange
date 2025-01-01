@@ -11,7 +11,6 @@ import { useAuth } from "../../services/storeHooks";
 import SearchInput from "./SearchInput";
 import { Sidebar } from "./SideBar";
 import longLogo from "../../assets/logo-long.svg";
-// import { Dropdown } from "flowbite-react";
 
 export const TopNavigationBar: React.FC = () => {
   const [logOut] = useSignOutMutation();
@@ -35,31 +34,6 @@ export const TopNavigationBar: React.FC = () => {
       <div className="relative mx-auto">
         <div className="flex flex-row w-full items-center space-x-3 h-full border-b-1 text-xs justify-between py-2 pr-2">
           <div className="sm:hidden h-full flex items-center justify-center shrink-0 px-2">
-            {/* <Dropdown
-              label=""
-              renderTrigger={() => (
-                <div>
-                  {isSideBarOpen ? (
-                    <XMarkIcon
-                      className="size-6 cursor-pointer"
-                      onClick={toggleSideBar}
-                      aria-label="Close sidebar"
-                    />
-                  ) : (
-                    <Bars3Icon
-                      className="size-6 cursor-pointer"
-                      onClick={toggleSideBar}
-                      aria-label="Open sidebar"
-                    />
-                  )}
-                </div>
-              )}
-            >
-              <Dropdown.Item>Dashboard</Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
-              <Dropdown.Item>Earnings</Dropdown.Item>
-              <Dropdown.Item>Sign out</Dropdown.Item>
-            </Dropdown> */}
             {isSideBarOpen ? (
               <XMarkIcon
                 className="size-6 cursor-pointer"
