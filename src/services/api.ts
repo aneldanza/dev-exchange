@@ -8,11 +8,12 @@ import {
   QuestionPagePayload,
   QuestionsPageResponse,
 } from "../components/questions/types";
-import { FullUserData } from "../components/users/types";
 import {
-  PostsSearchPayload,
-  PostsSearchResponse,
-} from "../components/search/types";
+  FullUserData,
+  PostData,
+  UserInfoLimited,
+} from "../components/users/types";
+import { SearchPayload, SearchResponse } from "../components/search/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -79,10 +80,6 @@ export const api = createApi({
         body: { user: data.user },
       }),
       invalidatesTags: ["User"],
-    }),
-    getAllUsers: builder.query({
-      query: () => "/users",
-      providesTags: ["Users"],
     }),
     getTags: builder.query<TagData[], undefined>({
       query: () => "/tags",
@@ -194,11 +191,22 @@ export const api = createApi({
           query.sort ? `&sort=${query.sort}` : ""
         }`,
     }),
-    searchAllPosts: builder.query<PostsSearchResponse, PostsSearchPayload>({
+    searchAllPosts: builder.query<
+      SearchResponse & { posts: PostData[] },
+      SearchPayload
+    >({
       query: (query) =>
         `/search_posts/page/${query.page}?query=${query.value}${
           query.sort ? `&sort=${query.sort}` : ""
         }&limit=${query.limit}`,
+    }),
+    searchUsers: builder.query<
+      SearchResponse & { users: UserInfoLimited[] },
+      SearchPayload
+    >({
+      query: (query) =>
+        `/users/search_users?value=${query.value}&page=${query.page}&limit=${query.limit}`,
+      providesTags: ["Users"],
     }),
   }),
 });
@@ -211,7 +219,6 @@ export const {
   useShowFullUserInfoQuery,
   useDeleteAccountMutation,
   useUpdateUserMutation,
-  useGetAllUsersQuery,
   useGetTagsQuery,
   useSearchTagsQuery,
   useCreateTagMutation,
@@ -231,4 +238,5 @@ export const {
   useCastVoteMutation,
   useSearchPostsByUserQuery,
   useSearchAllPostsQuery,
+  useSearchUsersQuery,
 } = api;
