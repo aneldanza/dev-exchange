@@ -1,9 +1,15 @@
+import React from "react";
+
 import { TagsList } from "./TagsList";
 import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
-import { useGetTagsQuery } from "../../services/api";
+import { useSearchTagsQuery } from "../../services/api";
+import { defaultPageSize } from "../common/constants";
+import SearchInput from "../header/SearchInput";
+import { Pagination } from "flowbite-react";
+import { paginationTheme } from "../../flowbiteCustomTheme";
 
 const TagsListWithLoadingAndError = withLoading(
   withError(TagsList, CustomError),
@@ -11,9 +17,14 @@ const TagsListWithLoadingAndError = withLoading(
 );
 
 export const TagsPage: React.FC = () => {
-  const { data, error, isLoading } = useGetTagsQuery(undefined, {
-    refetchOnFocus: true,
-  });
+  const [query, setQuery] = React.useState<string>("");
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const { data, error, isLoading } = useSearchTagsQuery(
+    { value: query, page: currentPage, limit: defaultPageSize },
+    {
+      refetchOnFocus: true,
+    }
+  );
 
   return (
     <div className="flex flex-col space-y-4 ">
@@ -27,11 +38,30 @@ export const TagsPage: React.FC = () => {
         about or wish to learn more about, contributing to discussions and
         answering related questions.
       </div>
+
+      <div>
+        <SearchInput
+          handleSearch={(values: { search: string }) => setQuery(values.search)}
+          placeholder="Filter by tag name..."
+        />
+      </div>
       <TagsListWithLoadingAndError
-        tags={data}
+        tags={data && data.tags ? data.tags : []}
         error={error}
         isLoading={isLoading}
       />
+
+      {data && data.total_results > defaultPageSize && (
+        <div className="flex justify-center mt-6">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={data?.total_pages || 0}
+            onPageChange={(newPage) => setCurrentPage(newPage)}
+            color="gray"
+            theme={paginationTheme}
+          />
+        </div>
+      )}
     </div>
   );
 };
