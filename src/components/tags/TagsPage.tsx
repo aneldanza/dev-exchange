@@ -1,17 +1,20 @@
-import React from "react";
-
 import { TagsList } from "./TagsList";
-import { TagData } from "./types";
+import withError from "../hoc/withError";
+import withLoading from "../hoc/withLoading";
 import { CustomError } from "../common/CustomError";
+import { CustomLoading } from "../common/CustomLoading";
+import { useGetTagsQuery } from "../../services/api";
 
-interface TagsPageProps {
-  tags: TagData[] | undefined;
-}
+const TagsListWithLoadingAndError = withLoading(
+  withError(TagsList, CustomError),
+  CustomLoading
+);
 
-export const TagsPage: React.FC<TagsPageProps> = ({ tags }) => {
-  if (!tags) {
-    return <CustomError message="No tags found" />;
-  }
+export const TagsPage: React.FC = () => {
+  const { data, error, isLoading } = useGetTagsQuery(undefined, {
+    refetchOnFocus: true,
+  });
+
   return (
     <div className="flex flex-col space-y-4 ">
       <h1 className="text-2xl">Tags</h1>
@@ -24,9 +27,11 @@ export const TagsPage: React.FC<TagsPageProps> = ({ tags }) => {
         about or wish to learn more about, contributing to discussions and
         answering related questions.
       </div>
-      <TagsList tags={tags} />
+      <TagsListWithLoadingAndError
+        tags={data}
+        error={error}
+        isLoading={isLoading}
+      />
     </div>
   );
 };
-
-export default TagsPage;

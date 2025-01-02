@@ -3,12 +3,17 @@ import moment from "moment";
 import { Tag } from "./Tag";
 import { TagData } from "./types";
 import { formatCountString } from "../../services/utils";
+import { CustomError } from "../common/CustomError";
 
 interface TagsListProps {
-  tags: TagData[];
+  tags: TagData[] | undefined;
 }
 
 export const TagsList: React.FC<TagsListProps> = ({ tags }) => {
+  if (!tags || !tags.length) {
+    return <CustomError message="No tags found" />;
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
       {tags.map((tag) => (
