@@ -81,12 +81,13 @@ export const api = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    getTags: builder.query<TagData[], undefined>({
-      query: () => "/tags",
+    searchTags: builder.query<
+      SearchResponse & { tags: TagData[] },
+      SearchPayload
+    >({
+      query: (q) =>
+        `tags/search?name=${q.value}&page=${q.page}&limit=${q.limit}`,
       providesTags: ["Tag"],
-    }),
-    searchTags: builder.query<TagData[], string>({
-      query: (q) => `tags/search?name=${q}`,
     }),
     createTag: builder.mutation({
       query: (data) => ({
@@ -219,7 +220,6 @@ export const {
   useShowFullUserInfoQuery,
   useDeleteAccountMutation,
   useUpdateUserMutation,
-  useGetTagsQuery,
   useSearchTagsQuery,
   useCreateTagMutation,
   useGetAllQuestionsQuery,
