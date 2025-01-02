@@ -186,7 +186,10 @@ export const api = createApi({
       }),
       invalidatesTags: ["Question"],
     }),
-    searchPostsByUser: builder.query({
+    searchUserPosts: builder.query<
+      PostData[],
+      { id: string; tag: string; sort?: string }
+    >({
       query: (query) =>
         `/users/${query.id}/search_posts?tag_name=${query.tag}${
           query.sort ? `&sort=${query.sort}` : ""
@@ -236,7 +239,7 @@ export const {
   useDeleteCommentMutation,
   useUpdateCommentMutation,
   useCastVoteMutation,
-  useSearchPostsByUserQuery,
+  useSearchUserPostsQuery,
   useSearchAllPostsQuery,
   useSearchUsersQuery,
 } = api;
