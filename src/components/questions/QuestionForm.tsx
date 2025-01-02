@@ -10,7 +10,6 @@ import { MultiValue } from "react-select";
 import { Option, FormValues } from "./types";
 import { TagData } from "../tags/types";
 import { removeSelectElement } from "../../services/utils";
-// import { Alert } from "flowbite-react";
 
 import { QuillEditor } from "../common/QuillEditor";
 
@@ -23,6 +22,13 @@ const validationSchema = Yup.object({
     .required("Description is required"),
   tags: Yup.array().min(1, "Select at least one tag"),
 });
+
+const convertTagsToOptions = (tags: TagData[]): Option[] => {
+  return tags.map((tag) => ({
+    label: tag.name,
+    value: tag.id.toString(),
+  }));
+};
 
 interface QuestionFormProps {
   questionAction: (data: {
@@ -42,28 +48,26 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
   questionData = { title: "", body: "", tags: [] },
   submitText,
 }) => {
-  const initialOptions = questionData.tags.map((tag) => ({
-    label: tag.name,
-    value: tag.id.toString(),
-  }));
+  const initialTags = convertTagsToOptions(questionData.tags);
 
   const [query, setQuery] = useState<string>("");
   const [isFormReset, setResetForm] = useState<boolean>(false);
-  const [selectedOptions, setSelectedOptions] =
-    useState<Option[]>(initialOptions);
   const [formError, setFormError] = useState<string[]>([]);
   const formikRef = useRef<FormikProps<FormValues>>(null);
 
   const initialValues: FormValues = {
     title: questionData.title,
     body: questionData.body,
-    tags: initialOptions,
+    tags: initialTags,
   };
 
-  const { data: suggestions = [], isLoading } = useSearchTagsQuery(query, {
-    skip: !query,
-    refetchOnMountOrArgChange: true,
-  });
+  const { data, isLoading } = useSearchTagsQuery(
+    { value: query, page: 1, limit: 10 },
+    {
+      skip: !query,
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   const handleQuestion = async (data: FormValues) => {
     const formattedTags = data.tags.map((option) => ({
@@ -94,43 +98,38 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     handleQuestion({ ...values, body: modifiedBody });
   };
 
+  // creates a temporary tag when user types in a new tag
   const handleCreateTempTag = async (
     name: string,
     props: FormikProps<FormValues>
   ) => {
     try {
-      // const newTag = await createTag({ name: name }).unwrap();
       const tagCount = props.values.tags.length;
-      props.setFieldValue("tags", [
-        ...props.values["tags"],
-        { label: name, value: `tempId-${tagCount}` },
-      ]);
-      setSelectedOptions([
-        ...props.values["tags"],
-        { label: name, value: `tempId-${tagCount}` },
-      ]);
-      props.setFieldTouched("tags", true);
+      props.setFieldValue(
+        "tags",
+        [...props.values.tags, { label: name, value: `tempId-${tagCount}` }],
+        true
+      );
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e);
-
       e.data && e.data.errors && props.setErrors(e.data.errors);
     }
   };
 
+  // loads new options when user types in the search input
   const loadTags = (): Option[] => {
-    return suggestions.map((tag) => ({
-      label: tag.name,
-      value: tag.id.toString(),
-    }));
+    if (data === undefined || data.tags === undefined) {
+      return [];
+    }
+    return convertTagsToOptions(data.tags);
   };
 
+  // catches the change event when user selects new tag from options list
   const handleChange = (
     options: MultiValue<Option>,
     props: FormikProps<FormValues>
   ) => {
-    console.log("inside hand");
-    setSelectedOptions(options as Option[]);
     props.setFieldTouched("tags", true);
     props.setFieldValue("tags", options);
   };
@@ -160,7 +159,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
                 <CreatableSelect
                   id="tags"
                   name="tags"
-                  value={selectedOptions}
+                  value={props.values.tags}
                   onChange={(options) => handleChange(options, props)}
                   onInputChange={(inputValue) =>
                     setQuery(inputValue.toLowerCase())
@@ -197,7 +196,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
                   title="Cancel"
                   onClick={() => {
                     props.resetForm();
-                    setSelectedOptions(initialOptions);
+
                     setFormError([]);
                     setResetForm(true);
                   }}
