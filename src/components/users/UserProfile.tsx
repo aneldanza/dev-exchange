@@ -12,9 +12,9 @@ import { UserContext } from "./UserContext";
 import { activityTabs } from "./activity/constants";
 
 export const UserProfile: React.FC = () => {
-  const data = useContext(UserContext);
-  const { username, created_at, id } = data.fullUserData as FullUserData;
-  const { activeTab, setActiveTab } = data;
+  const { fullUserData, activeTab, setActiveTab } = useContext(UserContext);
+  const { username, created_at, id } = fullUserData as FullUserData;
+
   const { user } = useAuth();
 
   const handleTabClick = (tab: string) => {
@@ -73,10 +73,10 @@ export const UserProfile: React.FC = () => {
           </div>
         )}
       </div>
-      {activeTab === "profile" && <ProfileTab setActiveTab={handleTabClick} />}
+      {activeTab === "profile" && <ProfileTab />}
       {activityTabs.includes(activeTab) && <ActivityTab />}
       {activeTab === "settings" && (
-        <SettingsTab data={data.fullUserData as FullUserData} />
+        <SettingsTab data={fullUserData as FullUserData} />
       )}
     </div>
   );

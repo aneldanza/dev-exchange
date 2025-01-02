@@ -5,7 +5,7 @@ import { TagData } from "../tags/types";
 export const QuestionTags: React.FC<{ tags: TagData[] }> = ({ tags }) => (
   <div className="flex gap-2">
     {tags.map((tag, index) => (
-      <Tag key={index} tag={tag} />
+      <Tag key={index} id={tag.id} name={tag.name} />
     ))}
   </div>
 );
