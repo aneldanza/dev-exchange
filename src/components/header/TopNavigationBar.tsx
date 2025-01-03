@@ -49,7 +49,10 @@ export const TopNavigationBar: React.FC = () => {
             )}
           </div>
 
-          <div className="cursor-pointer" onClick={() => navigate("/")}>
+          <div
+            className="cursor-pointer shrink-0"
+            onClick={() => navigate("/")}
+          >
             <img src={longLogo} alt="Logo" className="block h-12 w-auto" />
           </div>
 
