@@ -2,8 +2,8 @@ import React from "react";
 import DOMPurify from "dompurify";
 import moment from "moment";
 import { TbMessageQuestion, TbMessageExclamation } from "react-icons/tb";
-import { QuestionTags } from "../questions/QuestionTags";
-import { PostData } from "../users/types";
+import { PostTags } from "./PostTags";
+import { PostData } from "./types";
 import { PostTitle } from "./PostTitle";
 import { PostAuthor } from "./PostAuthor";
 import { PostStats } from "./PostStats";
@@ -48,7 +48,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
           }}
         />
 
-        <QuestionTags tags={post.tags} />
+        <PostTags tags={post.tags} />
 
         <div className="self-end text-xs">
           <PostAuthor userId={post.user.id} username={post.user.username} />{" "}

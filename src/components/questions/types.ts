@@ -1,24 +1,25 @@
-import { TagData } from "../tags/types";
+import { RawTagData } from "../tags/types";
 import { AnswerData } from "../answers/types";
 import { CommentData } from "../comments/types";
+import { PostData } from "../posts/types";
 
-export type LimitedQuestionData = {
-  id: number;
-  title: string;
-  body: string;
-  created_at: string;
-  updated_at: string;
-  tags: TagData[];
-  user: {
-    id: number | null;
-    username: string | null;
-  };
-  answers: number;
-  votes: number;
-};
+// export type LimitedQuestionData = {
+//   id: number;
+//   title: string;
+//   body: string;
+//   created_at: string;
+//   updated_at: string;
+//   tags: TagData[];
+//   user: {
+//     id: number | null;
+//     username: string | null;
+//   };
+//   answers: number;
+//   votes: number;
+// };
 
 export type QuestionsPageResponse = {
-  questions: LimitedQuestionData[];
+  questions: PostData[];
   total_results: number;
   total_pages: number;
   current_page: number;
@@ -40,7 +41,7 @@ export type QuestionData = {
   body: string;
   created_at: string;
   updated_at: string;
-  tags: TagData[];
+  tags: RawTagData[];
   user: {
     id: number | null;
     username: string | null;

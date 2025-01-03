@@ -5,7 +5,7 @@ import { DeleteQuestionModal } from "./DeleteQuestionModal";
 import { useAuth } from "../../services/storeHooks";
 import { QuestionData } from "./types";
 import { PostMeta } from "../posts/PostMeta";
-import { QuestionTags } from "./QuestionTags";
+import { PostTags } from "../posts/PostTags";
 import { PostActions } from "../posts/PostActions";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { AnswersContainer } from "../answers/AnswersContainer";
@@ -63,7 +63,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
           <div className="flex flex-col gap-4 flex-grow">
             <RichContent body={question.body} />
 
-            <QuestionTags tags={question.tags} />
+            <PostTags tags={question.tags} />
 
             <div>
               {user && question.user.id === user.id && (

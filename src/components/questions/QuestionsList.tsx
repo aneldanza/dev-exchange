@@ -1,9 +1,9 @@
 import React from "react";
-import { LimitedQuestionData } from "./types";
-import { QuestionItem } from "./QuestionItem";
+import { PostData } from "../posts/types";
+import { PostListItem } from "../posts/PostListItem";
 
 interface QuestionsListProps {
-  questions: LimitedQuestionData[] | undefined;
+  questions: PostData[] | undefined;
 }
 
 const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
@@ -19,7 +19,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
     <div>
       <ul className="flex flex-col divide-y max-w-2xl">
         {questions.map((question) => (
-          <QuestionItem key={question.id} question={question} />
+          <PostListItem key={question.id} post={question} />
         ))}
       </ul>
     </div>

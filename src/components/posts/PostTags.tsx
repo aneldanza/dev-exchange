@@ -1,8 +1,8 @@
 import React from "react";
 import { Tag } from "../tags/Tag";
-import { TagData } from "../tags/types";
+import { RawTagData } from "../tags/types";
 
-export const QuestionTags: React.FC<{ tags: TagData[] }> = ({ tags }) => (
+export const PostTags: React.FC<{ tags: RawTagData[] }> = ({ tags }) => (
   <div className="flex gap-2">
     {tags.map((tag, index) => (
       <Tag key={index} id={tag.id} name={tag.name} />

@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { QuestionTags } from "../../questions/QuestionTags";
+import { PostTags } from "../../posts/PostTags";
 import moment from "moment";
-import { PostData } from "../types";
+import { PostData } from "../../posts/types";
 import { PostTitle } from "../../posts/PostTitle";
 import { PostAuthor } from "../../posts/PostAuthor";
 import { PostStats } from "../../posts/PostStats";
@@ -22,7 +22,7 @@ export const Post: FC<PostProps> = ({ post }) => {
           question_id={post.question_id}
         />
 
-        <QuestionTags tags={post.tags} />
+        <PostTags tags={post.tags} />
 
         <div className="self-end text-xs">
           <PostAuthor userId={post.user.id} username={post.user.username} />{" "}

@@ -1,6 +1,6 @@
 import React from "react";
 import { formatCountString } from "../../services/utils";
-import { PostData } from "../users/types";
+import { PostData } from "./types";
 
 interface PostStatsProps {
   post: PostData;

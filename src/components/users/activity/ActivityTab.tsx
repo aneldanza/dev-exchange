@@ -1,7 +1,8 @@
 import { useContext, useMemo } from "react";
 import { CustomDropdown } from "../../common/CustomDropdown";
 import { UserContext } from "../UserContext";
-import { FullUserData, PostData, PostsByTag } from "../types";
+import { FullUserData, PostsByTag } from "../types";
+import { PostData } from "../../posts/types";
 import { TagItem } from "../TagItem";
 import { Summary } from "./Summary";
 import { Posts } from "./Posts";

@@ -15,3 +15,10 @@ export type LimitedTagData = {
   created_at: string;
   questions: { id: number }[];
 };
+
+export type RawTagData = {
+  id: number;
+  name: string;
+  description: string | null;
+  created_at: string;
+};
