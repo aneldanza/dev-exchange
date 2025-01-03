@@ -10,26 +10,32 @@ import { PostStats } from "./PostStats";
 
 interface PostListItemProps {
   post: PostData;
+  showPostTypeIcon?: boolean;
 }
 
-export const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
+export const PostListItem: React.FC<PostListItemProps> = ({
+  post,
+  showPostTypeIcon,
+}) => {
   return (
     <li className="flex flex-col sm:flex-row gap-4 py-3">
       <PostStats post={post} />
 
       <div className="flex flex-col gap-2 flex-grow">
         <div className="flex gap-4 items-center">
-          <div>
-            {post.type === "Question" ? (
-              <TbMessageQuestion size={22} color="blue-500" />
-            ) : (
-              <TbMessageExclamation
-                style={{ transform: "scaleX(-1)" }}
-                color="green"
-                size={22}
-              />
-            )}
-          </div>
+          {showPostTypeIcon && (
+            <div>
+              {post.type === "Question" ? (
+                <TbMessageQuestion size={22} color="blue-500" />
+              ) : (
+                <TbMessageExclamation
+                  style={{ transform: "scaleX(-1)" }}
+                  color="green"
+                  size={22}
+                />
+              )}
+            </div>
+          )}
           <PostTitle
             title={post.title}
             id={post.id}
