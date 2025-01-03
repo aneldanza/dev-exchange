@@ -6,27 +6,61 @@ import { DeletePostModal } from "../common/DeletePostModal";
 import { useAuth } from "../../services/storeHooks";
 import { PostActions } from "../common/PostActions";
 import { RichContent } from "../common/RichContent";
-import { useDeleteAnswerMutation } from "../../services/api";
+import {
+  useDeleteAnswerMutation,
+  useUpdateAnswerMutation,
+} from "../../services/api";
 import { CommentsContainer } from "../comments/CommentsContainer";
 import { PostVoteSection } from "../common/PostVoteSection";
+import { FaCheck } from "react-icons/fa";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 interface AnswerProps {
   answer: AnswerData;
+  questionAuthorId: number | null;
 }
 
-export const Answer: FC<AnswerProps> = ({ answer }) => {
+export const Answer: FC<AnswerProps> = ({ answer, questionAuthorId }) => {
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [deleteAnswer, { isLoading }] = useDeleteAnswerMutation();
+  const [updateAnswer] = useUpdateAnswerMutation();
+
+  const handleAcceptAnswer = async () => {
+    try {
+      await updateAnswer({
+        id: answer.id,
+        accepted: !answer.accepted,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <>
       <div className="flex gap-4">
-        <PostVoteSection
-          postId={answer.id}
-          votes={answer.votes}
-          postType="Answer"
-        />
+        <div className="flex flex-col items-center">
+          <PostVoteSection
+            postId={answer.id}
+            votes={answer.votes}
+            postType="Answer"
+          />
+          {user && user.id === questionAuthorId && (
+            <div onClick={handleAcceptAnswer}>
+              <FaCheck
+                data-tooltip-id="accept-answer"
+                data-tooltip-content={
+                  answer.accepted ? "Accepted" : "Accept answer"
+                }
+                className={`${
+                  answer.accepted ? "text-green-500" : "text-appGray-100"
+                } text-2xl cursor-pointer`}
+              />
+              <ReactTooltip place="bottom" variant="dark" id="accept-answer" />
+            </div>
+          )}
+        </div>
         <div className="flex-grow">
           <RichContent body={answer.body} />
 

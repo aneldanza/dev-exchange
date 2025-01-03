@@ -6,9 +6,13 @@ import { formatCountString } from "../../services/utils";
 
 interface AnswersListProps {
   answers: AnswerData[];
+  questionAuthorId: number | null;
 }
 
-export const AnswersList: FC<AnswersListProps> = ({ answers }) => {
+export const AnswersList: FC<AnswersListProps> = ({
+  answers,
+  questionAuthorId,
+}) => {
   const answerRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const location = useLocation();
 
@@ -30,7 +34,7 @@ export const AnswersList: FC<AnswersListProps> = ({ answers }) => {
             key={answer.id}
             ref={(el) => (answerRefs.current[answer.id] = el)}
           >
-            <Answer answer={answer} />
+            <Answer answer={answer} questionAuthorId={questionAuthorId} />
           </div>
         ))}
       </div>
