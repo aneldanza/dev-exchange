@@ -4,9 +4,9 @@ import moment from "moment";
 import { TbMessageQuestion, TbMessageExclamation } from "react-icons/tb";
 import { QuestionTags } from "../questions/QuestionTags";
 import { PostData } from "../users/types";
-import { formatCountString } from "../../services/utils";
 import { PostTitle } from "./PostTitle";
 import { PostAuthor } from "./PostAuthor";
+import { PostStats } from "./PostStats";
 
 interface PostListItemProps {
   post: PostData;
@@ -15,12 +15,7 @@ interface PostListItemProps {
 export const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
   return (
     <li className="flex flex-col sm:flex-row gap-4 py-3">
-      <div className="flex flex-row sm:flex-col gap-4 text-xs sm:text-sm text-appGray-300">
-        <div>{formatCountString(post.votes, "vote", "votes")}</div>
-        {!!post.answers && (
-          <div>{formatCountString(post.answers, "answer", "answers")}</div>
-        )}
-      </div>
+      <PostStats post={post} />
 
       <div className="flex flex-col gap-2 flex-grow">
         <div className="flex gap-4 items-center">

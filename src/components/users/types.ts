@@ -50,11 +50,12 @@ export type PostData = {
   id: number;
   type: "Question" | "Answer";
   question_id: number | null;
+  accepted?: boolean;
   title: string;
-  body?: string;
+  body: string;
   tags: TagData[];
   votes: number;
-  answers: number | null;
+  answers?: { count: number; accepted: boolean };
   user: {
     username: string | null;
     id: number | null;
