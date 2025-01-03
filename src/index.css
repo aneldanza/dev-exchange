@@ -134,4 +134,8 @@
   .no-accepted-answer {
     @apply border border-green-500 text-green-500 rounded-sm px-1 py-0.5;
   }
+
+  .subheader-wrap {
+    @apply flex justify-between items-center flex-wrap gap-4;
+  }
 }

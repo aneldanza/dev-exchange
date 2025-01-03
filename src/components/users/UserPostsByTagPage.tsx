@@ -6,10 +6,10 @@ import { CustomLoading } from "../common/CustomLoading";
 import { useSearchUserPostsQuery } from "../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
 import PostsList from "../posts/PostsList";
-import { formatCountString, sortItems } from "../../services/utils";
+import { sortItems } from "../../services/utils";
 import Button from "../common/Button";
-import { SortTabs } from "../common/SortTabs";
 import { sortTabs } from "../common/constants";
+import { ListSubheader } from "../common/ListSubheader";
 
 const UserPostsByTagWithLoadingAndError = withLoading(
   withError(PostsList, CustomError),
@@ -57,21 +57,19 @@ const UserPostsByTagPage = () => {
           className="btn btn-primary"
         />
       </div>
+
       <div className="text-sm text-gray-500 mb-6">
         Results tagged with: <strong>{tag}</strong>
       </div>
-      <div className="mb-6 pb-6 border-b flex justify-between">
-        <div className="font-medium text-sm">
-          {formatCountString(posts ? posts.length : 0, "result", "results")}
-        </div>
-        <div className="flex text-xs">
-          <SortTabs
-            sortOptions={sortTabs}
-            selectedOption={selectedTab}
-            setSelectedOption={setSelectedTab}
-          />
-        </div>
-      </div>
+
+      <ListSubheader
+        count={posts ? posts.length : 0}
+        keyword="result"
+        sortTabs={sortTabs}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
+
       <UserPostsByTagWithLoadingAndError
         isLoading={isLoading}
         error={error}
