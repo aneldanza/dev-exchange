@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { PostTitle } from "../common/PostTitle";
+import { PostTitle } from "../posts/PostTitle";
 
 interface PostItemProps {
   votes: number;

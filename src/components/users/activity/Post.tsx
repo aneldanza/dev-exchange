@@ -2,9 +2,9 @@ import { FC } from "react";
 import { QuestionTags } from "../../questions/QuestionTags";
 import moment from "moment";
 import { PostData } from "../types";
-import { PostTitle } from "../../common/PostTitle";
-import { PostAuthor } from "../../common/PostAuthor";
-import { PostStats } from "../../common/PostStats";
+import { PostTitle } from "../../posts/PostTitle";
+import { PostAuthor } from "../../posts/PostAuthor";
+import { PostStats } from "../../posts/PostStats";
 
 interface PostProps {
   post: PostData;

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { PostVoteSection } from "../common/PostVoteSection";
+import { PostVoteSection } from "../posts/PostVoteSection";
 import { DeleteQuestionModal } from "./DeleteQuestionModal";
 import { useAuth } from "../../services/storeHooks";
 import { QuestionData } from "./types";
-import { PostMeta } from "../common/PostMeta";
+import { PostMeta } from "../posts/PostMeta";
 import { QuestionTags } from "./QuestionTags";
-import { PostActions } from "../common/PostActions";
+import { PostActions } from "../posts/PostActions";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { AnswersContainer } from "../answers/AnswersContainer";
 import { RichContent } from "../common/RichContent";

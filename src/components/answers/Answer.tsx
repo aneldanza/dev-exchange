@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { PostMeta } from "../common/PostMeta";
+import { PostMeta } from "../posts/PostMeta";
 import { AnswerData } from "./types";
 import { type FC } from "react";
 import { DeletePostModal } from "../common/DeletePostModal";
 import { useAuth } from "../../services/storeHooks";
-import { PostActions } from "../common/PostActions";
+import { PostActions } from "../posts/PostActions";
 import { RichContent } from "../common/RichContent";
 import {
   useDeleteAnswerMutation,
   useUpdateAnswerMutation,
 } from "../../services/api";
 import { CommentsContainer } from "../comments/CommentsContainer";
-import { PostVoteSection } from "../common/PostVoteSection";
+import { PostVoteSection } from "../posts/PostVoteSection";
 import { FaCheck } from "react-icons/fa";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 

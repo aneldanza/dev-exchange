@@ -5,7 +5,7 @@ import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
 import { useSearchUserPostsQuery } from "../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
-import PostsList from "../common/PostsList";
+import PostsList from "../posts/PostsList";
 import { formatCountString, sortItems } from "../../services/utils";
 import Button from "../common/Button";
 import { SortTabs } from "../common/SortTabs";
