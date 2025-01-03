@@ -18,7 +18,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({
   showPostTypeIcon,
 }) => {
   return (
-    <li className="flex flex-col sm:flex-row gap-4 py-3">
+    <li className="flex flex-col lg:flex-row gap-4 py-3">
       <PostStats post={post} />
 
       <div className="flex flex-col gap-2 flex-grow">
