@@ -6,7 +6,7 @@ import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
 import { UserInfoLimited } from "./types";
 import UsersList from "./UsersList";
-import SearchInput from "../header/SearchInput";
+import SearchInput from "../common/SearchInput";
 import { Pagination } from "flowbite-react";
 import { defaultPageSize } from "../common/constants";
 import { paginationTheme } from "../../flowbiteCustomTheme";

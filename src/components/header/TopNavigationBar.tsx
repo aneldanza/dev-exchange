@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useSignOutMutation } from "../../services/api";
 import { useAuth } from "../../services/storeHooks";
-import SearchInput from "./SearchInput";
+import SearchInput from "../common/SearchInput";
 import { Sidebar } from "./SideBar";
 import longLogo from "../../assets/logo-long.svg";
 

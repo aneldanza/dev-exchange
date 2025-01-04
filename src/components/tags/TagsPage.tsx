@@ -7,7 +7,7 @@ import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
 import { useSearchTagsQuery } from "../../services/api";
 import { defaultPageSize } from "../common/constants";
-import SearchInput from "../header/SearchInput";
+import SearchInput from "../common/SearchInput";
 import { Pagination } from "flowbite-react";
 import { paginationTheme } from "../../flowbiteCustomTheme";
 import { SortTabs } from "../common/SortTabs";
@@ -49,7 +49,7 @@ export const TagsPage: React.FC = () => {
       </div>
 
       <div className="subheader-wrap">
-        <div>
+        <div className="">
           <SearchInput
             handleSearch={(values: { search: string }) =>
               setQuery(values.search)
@@ -58,7 +58,7 @@ export const TagsPage: React.FC = () => {
           />
         </div>
 
-        <div className="text-xs">
+        <div className="text-sm">
           <SortTabs
             sortOptions={sortingOptions}
             selectedOption={sortOption}

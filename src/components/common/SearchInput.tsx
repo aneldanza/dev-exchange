@@ -33,7 +33,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
                     field: {
                       // base: "relative z-10",
                       input: {
-                        base: "flex flex-grow-1 w-full text-sm",
+                        base: "flex flex-grow-1 w-full text-sm sm:text-sm lg:text-sm",
                         colors: {
                           gray: "border-appGray-100 focus:border-blue-700 focus:ring-blue-700",
                         },
