@@ -10,17 +10,26 @@ import { defaultPageSize } from "../common/constants";
 import SearchInput from "../header/SearchInput";
 import { Pagination } from "flowbite-react";
 import { paginationTheme } from "../../flowbiteCustomTheme";
+import { SortTabs } from "../common/SortTabs";
 
 const TagsListWithLoadingAndError = withLoading(
   withError(TagsList, CustomError),
   CustomLoading
 );
 
+const sortingOptions = ["Popular", "Name", "New"];
+
 export const TagsPage: React.FC = () => {
   const [query, setQuery] = React.useState<string>("");
   const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [sortOption, setSortOption] = React.useState<string>(sortingOptions[0]);
   const { data, error, isLoading } = useSearchTagsQuery(
-    { value: query, page: currentPage, limit: defaultPageSize },
+    {
+      value: query,
+      page: currentPage,
+      limit: defaultPageSize,
+      sort: sortOption.toLowerCase(),
+    },
     {
       refetchOnFocus: true,
     }
@@ -39,11 +48,23 @@ export const TagsPage: React.FC = () => {
         answering related questions.
       </div>
 
-      <div>
-        <SearchInput
-          handleSearch={(values: { search: string }) => setQuery(values.search)}
-          placeholder="Filter by tag name..."
-        />
+      <div className="subheader-wrap">
+        <div>
+          <SearchInput
+            handleSearch={(values: { search: string }) =>
+              setQuery(values.search)
+            }
+            placeholder="Filter by tag name..."
+          />
+        </div>
+
+        <div className="text-xs">
+          <SortTabs
+            sortOptions={sortingOptions}
+            selectedOption={sortOption}
+            setSelectedOption={setSortOption}
+          />
+        </div>
       </div>
       <TagsListWithLoadingAndError
         tags={data && data.tags ? data.tags : []}

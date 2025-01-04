@@ -1,4 +1,6 @@
-import { PostData, PostsByTag } from "../components/users/types";
+import { PostsByTag } from "../components/users/types";
+import { PostData } from "../components/posts/types";
+import { LimitedTagData } from "../components/tags/types";
 
 export const formatCountString = (
   count: number,
@@ -26,7 +28,7 @@ export const capitalize = (str: string) => {
 
 export const sortItems = <T>(items: T[], tabName: string): T[] => {
   const sorted = [...items].sort((a, b) => {
-    if (tabName === "Newest") {
+    if (tabName === "Newest" || tabName === "New") {
       // sort PostData[] by created_at
       return sortByNewest(a as PostData, b as PostData);
     }
@@ -38,14 +40,33 @@ export const sortItems = <T>(items: T[], tabName: string): T[] => {
       return (b as PostData).votes - (a as PostData).votes;
     }
     if (tabName === "Name") {
-      // sort PostsByTag[] by tag name
-      return (a as PostsByTag).tag.name.localeCompare(
-        (b as PostsByTag).tag.name
-      );
+      // check if PostsByTag[] or LimitedTagData[]
+      if ((a as PostsByTag).tag) {
+        // sort PostsByTag[] by tag name
+        return (a as PostsByTag).tag.name.localeCompare(
+          (b as PostsByTag).tag.name
+        );
+      } else {
+        // sort LimitedTagData[] by tag name
+        return (a as LimitedTagData).name.localeCompare(
+          (b as LimitedTagData).name
+        );
+      }
+      // // sort PostsByTag[] by tag name
+      // return (a as PostsByTag).tag.name.localeCompare(
+      //   (b as PostsByTag).tag.name
+      // );
     }
     if (tabName === "Count") {
       // sort PostsByTag[] by number of posts
       return (b as PostsByTag).posts.length - (a as PostsByTag).posts.length;
+    }
+    if (tabName === "Popular") {
+      // sort LimitedTagData[] by number of questions
+      return (
+        (b as LimitedTagData).questions.length -
+        (a as LimitedTagData).questions.length
+      );
     }
     return 0;
   });

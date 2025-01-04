@@ -8,12 +8,9 @@ import {
   QuestionPagePayload,
   QuestionsPageResponse,
 } from "../components/questions/types";
-import {
-  FullUserData,
-  PostData,
-  UserInfoLimited,
-} from "../components/users/types";
+import { FullUserData, UserInfoLimited } from "../components/users/types";
 import { SearchPayload, SearchResponse } from "../components/search/types";
+import { PostData } from "../components/posts/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -86,7 +83,7 @@ export const api = createApi({
       SearchPayload
     >({
       query: (q) =>
-        `tags/search?name=${q.value}&page=${q.page}&limit=${q.limit}`,
+        `tags/search?name=${q.value}&page=${q.page}&limit=${q.limit}&sort=${q.sort}`,
       providesTags: ["Tag"],
     }),
     createTag: builder.mutation({

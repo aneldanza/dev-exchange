@@ -1,11 +1,11 @@
-import { LimitedQuestionData } from "../questions/types";
+import { PostData } from "../posts/types";
 
 export type TagData = {
   id: number;
   name: string;
   description: string | null;
   created_at: string;
-  questions: LimitedQuestionData[];
+  questions: PostData[];
 };
 
 export type LimitedTagData = {
