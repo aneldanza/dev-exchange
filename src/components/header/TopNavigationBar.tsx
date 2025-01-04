@@ -31,7 +31,7 @@ export const TopNavigationBar: React.FC = () => {
 
   return (
     <nav className="app-container">
-      <div className="relative mx-auto">
+      <div className="relative">
         <div className="flex flex-row w-full items-center space-x-3 h-full border-b-1 text-xs justify-between py-2 pr-2">
           <div className="sm:hidden h-full flex items-center justify-center shrink-0 px-2">
             {isSideBarOpen ? (

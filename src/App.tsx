@@ -9,7 +9,7 @@ export default function App() {
       <div className="flex flex-col min-h-screen font-sans text-appBlack">
         <Header />
 
-        <main className="flex flex-grow mt-16">
+        <main className="flex flex-grow mt-16 app-container">
           <div className="hidden sm:block min-w-40 max-w-64 flex-grow border border-appGray-100 border-y-0 border-l-0 py-6">
             <Menu />
           </div>
