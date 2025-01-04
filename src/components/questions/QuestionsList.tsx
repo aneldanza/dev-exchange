@@ -17,7 +17,7 @@ const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
 
   return (
     <div>
-      <ul className="flex flex-col divide-y max-w-2xl">
+      <ul className="flex flex-col divide-y">
         {questions.map((question) => (
           <PostListItem key={question.id} post={question} />
         ))}

@@ -32,7 +32,7 @@ const AllQuestionsPage: React.FC = () => {
   );
   return (
     <div>
-      <div className="">
+      <div className="flex flex-col">
         <div className="subheader-wrap mb-6">
           <h1 className="text-xl">All Questions</h1>
           <Button

@@ -15,7 +15,10 @@
     "start": "serve -s dist"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@heroicons/react": "^2.1.5",
+    "@mui/material": "^6.3.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@tailwindcss/typography": "^0.5.15",
     "dompurify": "^3.1.7",
