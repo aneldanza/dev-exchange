@@ -30,7 +30,7 @@ export const TopNavigationBar: React.FC = () => {
   }, []);
 
   return (
-    <nav className="border-b-appGray-100 border-x-0 border-t-2 border-t-appOrange border-b sticky">
+    <nav className="app-container">
       <div className="relative mx-auto">
         <div className="flex flex-row w-full items-center space-x-3 h-full border-b-1 text-xs justify-between py-2 pr-2">
           <div className="sm:hidden h-full flex items-center justify-center shrink-0 px-2">

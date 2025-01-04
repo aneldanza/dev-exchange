@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer components {
+  .app-container {
+    @apply mx-auto max-w-7xl;
+  }
   .btn {
     @apply p-2 rounded-md text-xs text-center justify-center;
   }
