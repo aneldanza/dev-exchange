@@ -27,6 +27,7 @@ export const Answer: FC<AnswerProps> = ({ answer, questionAuthorId }) => {
   const [updateAnswer] = useUpdateAnswerMutation();
 
   const handleAcceptAnswer = async () => {
+    if (user && user.id !== questionAuthorId) return;
     try {
       await updateAnswer({
         id: answer.id,
@@ -34,6 +35,22 @@ export const Answer: FC<AnswerProps> = ({ answer, questionAuthorId }) => {
       });
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const tooltipContent = () => {
+    if (answer.accepted) {
+      if (user && user.id === questionAuthorId) {
+        return "you accepted this answer";
+      } else {
+        return "accepted answer";
+      }
+    } else {
+      if (user && user.id === questionAuthorId) {
+        return "accept answer";
+      } else {
+        return "";
+      }
     }
   };
 
@@ -46,19 +63,25 @@ export const Answer: FC<AnswerProps> = ({ answer, questionAuthorId }) => {
             votes={answer.votes}
             postType="Answer"
           />
-          {user && user.id === questionAuthorId && (
-            <div onClick={handleAcceptAnswer}>
+          {((user && user.id === questionAuthorId) || answer.accepted) && (
+            <button
+              disabled={!!user && user.id != questionAuthorId}
+              onClick={handleAcceptAnswer}
+              className={
+                user && user.id === questionAuthorId
+                  ? "cursor-pointer"
+                  : "cursor-default"
+              }
+            >
               <FaCheck
                 data-tooltip-id="accept-answer"
-                data-tooltip-content={
-                  answer.accepted ? "Accepted" : "Accept answer"
-                }
+                data-tooltip-content={tooltipContent()}
                 className={`${
                   answer.accepted ? "text-green-500" : "text-appGray-100"
-                } text-2xl cursor-pointer`}
+                } text-2xl disabled:opacity-50 outline-none`}
               />
               <ReactTooltip place="bottom" variant="dark" id="accept-answer" />
-            </div>
+            </button>
           )}
         </div>
         <div className="flex-grow">
