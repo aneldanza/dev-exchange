@@ -34,7 +34,7 @@ const AllQuestionsPage: React.FC = () => {
     <div>
       <div className="flex flex-col">
         <div className="subheader-wrap mb-6">
-          <h1 className="text-xl">All Questions</h1>
+          <h1 className="page-header">All Questions</h1>
           <Button
             title="Ask a Question"
             onClick={() => navigate("/questions/new")}

@@ -27,9 +27,9 @@ export const AllUsersPage: React.FC = () => {
   );
 
   return (
-    <div>
-      <h1 className="text-2xl mb-6">Users</h1>
-      <div className="mb-6 w-2/3 text-xs relative z-10">
+    <div className="flex flex-col space-y-4">
+      <h1 className="page-header">Users</h1>
+      <div className="mb-6 w-2/3 text-xs relative z-10 max-w-[400px]">
         <SearchInput
           handleSearch={(values: { search: string }) => {
             setQuery(values.search);

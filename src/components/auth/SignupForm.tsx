@@ -70,9 +70,12 @@ export const SignUpForm = () => {
 
   return (
     <div className="flex flex-col items-center justify-center ">
-      <div className="w-4/5">
-        <div className="font-bold text-xl text-center mb-6">
-          Join DevExchange
+      <div className="w-4/5 max-w-[600px] mx-auto">
+        <div className="text-lg text-center mb-6">
+          Join{" "}
+          <span className="text-blue-500 font-semibold text-lg ">
+            <span className="text-blue-700">Dev</span>Exchange
+          </span>
         </div>
 
         <Formik
@@ -84,7 +87,7 @@ export const SignUpForm = () => {
           validateOnBlur={true}
         >
           {({ isValid, dirty }) => (
-            <Form className="space-y-6">
+            <Form className="space-y-6 ">
               <InputField name="username" label="Username" />
               <InputField name="email" label="email" />
               <InputField name="password" label="password" />

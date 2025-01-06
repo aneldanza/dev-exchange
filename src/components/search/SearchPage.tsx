@@ -42,7 +42,7 @@ const SearchPageContainer = () => {
   return (
     <div>
       <div className="flex justify-between mb-6 items-center">
-        <h1 className="text-xl">Search Results</h1>
+        <h1 className="page-header">Search Results</h1>
         <Button
           title="Ask a Question"
           onClick={() => navigate("/questions/new")}

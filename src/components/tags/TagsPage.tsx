@@ -37,7 +37,7 @@ export const TagsPage: React.FC = () => {
 
   return (
     <div className="flex flex-col space-y-4 ">
-      <h1 className="text-2xl">Tags</h1>
+      <h1 className="page-header">Tags</h1>
       <div className="text-sm">
         Tags are keywords or labels associated with questions that allow users
         to easily filter and search for content relevant to their interests or
