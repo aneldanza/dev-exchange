@@ -62,6 +62,10 @@
     @apply text-buttonGray px-2 py-1 text-sm hover:bg-gray-50;
   }
 
+  .menu-item.active {
+    @apply bg-appGray-50 font-semibold;
+  }
+
   .side-menu {
     @apply bg-white;
   }
