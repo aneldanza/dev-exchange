@@ -7,7 +7,7 @@ const FooterComponent = () => {
       container
       theme={{
         root: {
-          base: "rounded-none",
+          base: "rounded-none text-white",
           bgDark: "bg-appGray-900",
         },
         groupLink: {
@@ -21,6 +21,10 @@ const FooterComponent = () => {
       <Footer.Copyright href="/" by="DevExchange" year={2025} />
       <Footer.LinkGroup>
         <Footer.Link href="/">Home</Footer.Link>
+        <Footer.Link href="https://github.com/aneldanza">GitHub</Footer.Link>
+        <Footer.Link href="https://www.linkedin.com/in/anel-danza-a9591868/">
+          LinkedIn
+        </Footer.Link>
       </Footer.LinkGroup>
     </Footer>
   );
