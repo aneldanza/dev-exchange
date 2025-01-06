@@ -39,10 +39,11 @@ export const Menu: React.FC<MenuProps> = ({ handleOptionSelect }) => {
     <ul className="menu list space-y-2 text-sm shadow-sm">
       <li
         className={`menu-item ${currentMenuSection === "home" ? "active" : ""}`}
+        onClick={handleClick.bind(null, "/")}
       >
         <Button
           title="Home"
-          onClick={handleClick.bind(null, "/")}
+          onClick={() => {}}
           icon={<HomeIcon className="w-4" />}
         />
       </li>
@@ -50,19 +51,21 @@ export const Menu: React.FC<MenuProps> = ({ handleOptionSelect }) => {
         className={`menu-item ${
           currentMenuSection === "users" ? "active" : ""
         }`}
+        onClick={handleClick.bind(null, "/users")}
       >
         <Button
           title="Users"
-          onClick={handleClick.bind(null, "/users")}
+          onClick={() => {}}
           icon={<UsersIcon className="w-4" />}
         />
       </li>
       <li
         className={`menu-item ${currentMenuSection === "tags" ? "active" : ""}`}
+        onClick={handleClick.bind(null, "/tags")}
       >
         <Button
           title="Tags"
-          onClick={handleClick.bind(null, "/tags")}
+          onClick={() => {}}
           icon={<TagIcon className="w-4" />}
         />
       </li>

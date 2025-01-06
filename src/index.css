@@ -59,11 +59,11 @@
   }
 
   .menu-item {
-    @apply text-buttonGray px-2 py-1 text-sm hover:bg-gray-50;
+    @apply text-buttonGray px-2 py-1 text-sm hover:bg-gray-100 cursor-pointer;
   }
 
   .menu-item.active {
-    @apply bg-appGray-50 font-semibold;
+    @apply bg-gray-200 text-appGray-700 font-semibold;
   }
 
   .side-menu {
