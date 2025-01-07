@@ -8,11 +8,9 @@ import {
   QuestionPagePayload,
   QuestionsPageResponse,
 } from "../components/questions/types";
-import { FullUserData } from "../components/users/types";
-import {
-  PostsSearchPayload,
-  PostsSearchResponse,
-} from "../components/search/types";
+import { FullUserData, UserInfoLimited } from "../components/users/types";
+import { SearchPayload, SearchResponse } from "../components/search/types";
+import { PostData } from "../components/posts/types";
 
 export const api = createApi({
   reducerPath: "api",
@@ -80,16 +78,13 @@ export const api = createApi({
       }),
       invalidatesTags: ["User"],
     }),
-    getAllUsers: builder.query({
-      query: () => "/users",
-      providesTags: ["Users"],
-    }),
-    getTags: builder.query<TagData[], undefined>({
-      query: () => "/tags",
+    searchTags: builder.query<
+      SearchResponse & { tags: TagData[] },
+      SearchPayload
+    >({
+      query: (q) =>
+        `tags/search?name=${q.value}&page=${q.page}&limit=${q.limit}&sort=${q.sort}`,
       providesTags: ["Tag"],
-    }),
-    searchTags: builder.query<TagData[], string>({
-      query: (q) => `tags/search?name=${q}`,
     }),
     createTag: builder.mutation({
       query: (data) => ({
@@ -188,17 +183,31 @@ export const api = createApi({
       }),
       invalidatesTags: ["Question"],
     }),
-    searchPostsByUser: builder.query({
+    searchUserPosts: builder.query<
+      PostData[],
+      { id: string; tag: string; sort?: string }
+    >({
       query: (query) =>
         `/users/${query.id}/search_posts?tag_name=${query.tag}${
           query.sort ? `&sort=${query.sort}` : ""
         }`,
     }),
-    searchAllPosts: builder.query<PostsSearchResponse, PostsSearchPayload>({
+    searchAllPosts: builder.query<
+      SearchResponse & { posts: PostData[] },
+      SearchPayload
+    >({
       query: (query) =>
         `/search_posts/page/${query.page}?query=${query.value}${
           query.sort ? `&sort=${query.sort}` : ""
         }&limit=${query.limit}`,
+    }),
+    searchUsers: builder.query<
+      SearchResponse & { users: UserInfoLimited[] },
+      SearchPayload
+    >({
+      query: (query) =>
+        `/users/search_users?value=${query.value}&page=${query.page}&limit=${query.limit}`,
+      providesTags: ["Users"],
     }),
   }),
 });
@@ -211,8 +220,6 @@ export const {
   useShowFullUserInfoQuery,
   useDeleteAccountMutation,
   useUpdateUserMutation,
-  useGetAllUsersQuery,
-  useGetTagsQuery,
   useSearchTagsQuery,
   useCreateTagMutation,
   useGetAllQuestionsQuery,
@@ -229,6 +236,7 @@ export const {
   useDeleteCommentMutation,
   useUpdateCommentMutation,
   useCastVoteMutation,
-  useSearchPostsByUserQuery,
+  useSearchUserPostsQuery,
   useSearchAllPostsQuery,
+  useSearchUsersQuery,
 } = api;

@@ -2,39 +2,40 @@ import React from "react";
 import DOMPurify from "dompurify";
 import moment from "moment";
 import { TbMessageQuestion, TbMessageExclamation } from "react-icons/tb";
-import { QuestionTags } from "../questions/QuestionTags";
-import { PostData } from "../users/types";
-import { formatCountString } from "../../services/utils";
+import { PostTags } from "./PostTags";
+import { PostData } from "./types";
 import { PostTitle } from "./PostTitle";
 import { PostAuthor } from "./PostAuthor";
+import { PostStats } from "./PostStats";
 
 interface PostListItemProps {
   post: PostData;
+  showPostTypeIcon?: boolean;
 }
 
-export const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
+export const PostListItem: React.FC<PostListItemProps> = ({
+  post,
+  showPostTypeIcon,
+}) => {
   return (
-    <li className="flex flex-col sm:flex-row gap-4 py-3">
-      <div className="flex flex-row sm:flex-col gap-4 text-xs sm:text-sm text-appGray-300">
-        <div>{formatCountString(post.votes, "vote", "votes")}</div>
-        {!!post.answers && (
-          <div>{formatCountString(post.answers, "answer", "answers")}</div>
-        )}
-      </div>
+    <li className="flex flex-col lg:flex-row gap-4 py-3">
+      <PostStats post={post} />
 
       <div className="flex flex-col gap-2 flex-grow">
         <div className="flex gap-4 items-center">
-          <div>
-            {post.type === "Question" ? (
-              <TbMessageQuestion size={22} color="blue-500" />
-            ) : (
-              <TbMessageExclamation
-                style={{ transform: "scaleX(-1)" }}
-                color="green"
-                size={22}
-              />
-            )}
-          </div>
+          {showPostTypeIcon && (
+            <div>
+              {post.type === "Question" ? (
+                <TbMessageQuestion size={22} color="blue-500" />
+              ) : (
+                <TbMessageExclamation
+                  style={{ transform: "scaleX(-1)" }}
+                  color="green"
+                  size={22}
+                />
+              )}
+            </div>
+          )}
           <PostTitle
             title={post.title}
             id={post.id}
@@ -53,7 +54,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({ post }) => {
           }}
         />
 
-        <QuestionTags tags={post.tags} />
+        <PostTags tags={post.tags} />
 
         <div className="self-end text-xs">
           <PostAuthor userId={post.user.id} username={post.user.username} />{" "}

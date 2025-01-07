@@ -1,15 +1,11 @@
-import React, { useContext, useMemo } from "react";
-import { FullUserData } from "../types";
+import React, { useContext } from "react";
+import { FullUserData, PostsByTag } from "../types";
 import { formatCountString } from "../../../services/utils";
 import { RichContent } from "../../common/RichContent";
 import { TopItemsCard } from "../TopItemsCard";
 import { TagItem } from "../TagItem";
-import { UserContext, type PostsByTag } from "../UserContext";
+import { UserContext } from "../UserContext";
 import { useAuth } from "../../../services/storeHooks";
-
-interface ProfileTabProps {
-  setActiveTab: (tab: string) => void;
-}
 
 const Stats: React.FC<{ questionsCount: number; answersCount: number }> = ({
   questionsCount,
@@ -76,15 +72,10 @@ const About: React.FC<{
   );
 };
 
-export const ProfileTab: React.FC<ProfileTabProps> = ({ setActiveTab }) => {
-  const { postsByTag, fullUserData } = useContext(UserContext);
-  const { questions, answers, id, description } = fullUserData as FullUserData;
-
-  const sortedItems = useMemo(
-    () =>
-      Object.values(postsByTag).sort((a, b) => b.posts.length - a.posts.length),
-    [postsByTag]
-  );
+export const ProfileTab = () => {
+  const { fullUserData, setActiveTab } = useContext(UserContext);
+  const { questions, answers, id, description, posts_by_tag } =
+    fullUserData as FullUserData;
 
   return (
     <div className="flex flex-col space-y-6 sm:flex-row sm:space-x-6 sm:space-y-0">
@@ -105,7 +96,7 @@ export const ProfileTab: React.FC<ProfileTabProps> = ({ setActiveTab }) => {
         />
 
         <TopItemsCard<PostsByTag>
-          sortedItems={sortedItems}
+          items={posts_by_tag}
           name="tag"
           renderItem={(tagItem: PostsByTag) => (
             <TagItem

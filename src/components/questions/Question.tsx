@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { PostVoteSection } from "../common/PostVoteSection";
+import { PostVoteSection } from "../posts/PostVoteSection";
 import { DeleteQuestionModal } from "./DeleteQuestionModal";
 import { useAuth } from "../../services/storeHooks";
 import { QuestionData } from "./types";
-import { PostMeta } from "../common/PostMeta";
-import { QuestionTags } from "./QuestionTags";
-import { PostActions } from "../common/PostActions";
+import { PostMeta } from "../posts/PostMeta";
+import { PostTags } from "../posts/PostTags";
+import { PostActions } from "../posts/PostActions";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { AnswersContainer } from "../answers/AnswersContainer";
 import { RichContent } from "../common/RichContent";
@@ -63,7 +63,7 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
           <div className="flex flex-col gap-4 flex-grow">
             <RichContent body={question.body} />
 
-            <QuestionTags tags={question.tags} />
+            <PostTags tags={question.tags} />
 
             <div>
               {user && question.user.id === user.id && (
@@ -93,7 +93,11 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
           </div>
         </div>
 
-        <AnswersContainer questionId={question.id} answers={question.answers} />
+        <AnswersContainer
+          questionId={question.id}
+          answers={question.answers}
+          questionAuthorId={question.user.id}
+        />
       </div>
 
       <DeleteQuestionModal

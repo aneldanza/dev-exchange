@@ -9,12 +9,14 @@ import { useAuth } from "../../services/storeHooks";
 
 interface AnswersContainerProps {
   questionId: number;
+  questionAuthorId: number | null;
   answers: AnswerData[];
 }
 
 export const AnswersContainer: React.FC<AnswersContainerProps> = ({
   questionId,
   answers,
+  questionAuthorId,
 }) => {
   const [createAnswer] = useCreateAnswerMutation();
   const [showAnswerForm, setShowAnswerForm] = useState(false);
@@ -36,7 +38,9 @@ export const AnswersContainer: React.FC<AnswersContainerProps> = ({
 
   return (
     <div className="mt-8">
-      {answers.length > 0 && <AnswersList answers={answers} />}
+      {answers.length > 0 && (
+        <AnswersList answers={answers} questionAuthorId={questionAuthorId} />
+      )}
 
       {user ? (
         <div>

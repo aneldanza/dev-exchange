@@ -12,6 +12,7 @@ export type AnswerData = {
   question_id: number;
   comments: CommentData[];
   votes: number;
+  accepted: boolean;
 };
 
 export type FullAnswerData = AnswerData & {

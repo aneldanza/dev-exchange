@@ -4,7 +4,7 @@ import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
 import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
-import PostsList from "../common/PostsList";
+import PostsList from "../posts/PostsList";
 import { useSearchAllPostsQuery } from "../../services/api";
 import { Button } from "../common/Button";
 import { useNavigate } from "react-router-dom";
@@ -42,7 +42,7 @@ const SearchPageContainer = () => {
   return (
     <div>
       <div className="flex justify-between mb-6 items-center">
-        <h1 className="text-xl">Search Results</h1>
+        <h1 className="page-header">Search Results</h1>
         <Button
           title="Ask a Question"
           onClick={() => navigate("/questions/new")}

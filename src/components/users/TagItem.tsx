@@ -14,7 +14,8 @@ export const TagItem: FC<TagItemProps> = ({ tag, userId, postsCount }) => {
     <div className="activity-card-row items-center" key={tag.id}>
       <Tag
         key={tag.id}
-        tag={tag}
+        id={tag.id}
+        name={tag.name}
         url={`/users/${userId}/search?tag=${tag.name}`}
       />
       <div className="text-xs">

@@ -60,8 +60,8 @@ export const SignInForm = () => {
 
   return (
     <div className="flex items-center justify-center ">
-      <div className="w-4/5">
-        <div className="mb-6 text-center">Log in</div>
+      <div className="w-4/5 max-w-[400px]">
+        <div className="text-center question-title">Log in</div>
 
         <div className="mx-auto mb-6 p-6 border rounded-lg shadow-md text-sm bg-white">
           <Formik

@@ -1,5 +1,5 @@
 import React from "react";
-import { Posts } from "../users/types";
+import { Posts } from "../posts/types";
 import { PostListItem } from "./PostListItem";
 
 interface PostsListProps {
@@ -19,7 +19,7 @@ const PostsList: React.FC<PostsListProps> = ({ items }) => {
     <div>
       <ul className="flex flex-col divide-y max-w-2xl">
         {items.map((post) => (
-          <PostListItem key={post.id} post={post} />
+          <PostListItem key={post.id} post={post} showPostTypeIcon={true} />
         ))}
       </ul>
     </div>

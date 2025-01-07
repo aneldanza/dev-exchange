@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { QuestionTags } from "../../questions/QuestionTags";
+import { PostTags } from "../../posts/PostTags";
 import moment from "moment";
-import { formatCountString } from "../../../services/utils";
-import { PostData } from "../types";
-import { PostTitle } from "../../common/PostTitle";
-import { PostAuthor } from "../../common/PostAuthor";
+import { PostData } from "../../posts/types";
+import { PostTitle } from "../../posts/PostTitle";
+import { PostAuthor } from "../../posts/PostAuthor";
+import { PostStats } from "../../posts/PostStats";
 
 interface PostProps {
   post: PostData;
@@ -13,12 +13,7 @@ interface PostProps {
 export const Post: FC<PostProps> = ({ post }) => {
   return (
     <li className="flex flex-col sm:flex-row gap-4 py-3">
-      <div className="flex flex-row sm:flex-col gap-4 text-xs sm:text-sm text-appGray-300">
-        <div>{formatCountString(post.votes, "vote", "votes")}</div>
-        {post.answers !== null && (
-          <div>{formatCountString(post.answers, "answer", "answers")}</div>
-        )}
-      </div>
+      <PostStats post={post} />
 
       <div className="flex flex-col gap-2 flex-grow">
         <PostTitle
@@ -27,7 +22,7 @@ export const Post: FC<PostProps> = ({ post }) => {
           question_id={post.question_id}
         />
 
-        <QuestionTags tags={post.tags} />
+        <PostTags tags={post.tags} />
 
         <div className="self-end text-xs">
           <PostAuthor userId={post.user.id} username={post.user.username} />{" "}

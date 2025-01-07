@@ -1,32 +1,89 @@
 import { useState } from "react";
-import { PostMeta } from "../common/PostMeta";
+import { PostMeta } from "../posts/PostMeta";
 import { AnswerData } from "./types";
 import { type FC } from "react";
 import { DeletePostModal } from "../common/DeletePostModal";
 import { useAuth } from "../../services/storeHooks";
-import { PostActions } from "../common/PostActions";
+import { PostActions } from "../posts/PostActions";
 import { RichContent } from "../common/RichContent";
-import { useDeleteAnswerMutation } from "../../services/api";
+import {
+  useDeleteAnswerMutation,
+  useUpdateAnswerMutation,
+} from "../../services/api";
 import { CommentsContainer } from "../comments/CommentsContainer";
-import { PostVoteSection } from "../common/PostVoteSection";
+import { PostVoteSection } from "../posts/PostVoteSection";
+import { FaCheck } from "react-icons/fa";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 interface AnswerProps {
   answer: AnswerData;
+  questionAuthorId: number | null;
 }
 
-export const Answer: FC<AnswerProps> = ({ answer }) => {
+export const Answer: FC<AnswerProps> = ({ answer, questionAuthorId }) => {
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [deleteAnswer, { isLoading }] = useDeleteAnswerMutation();
+  const [updateAnswer] = useUpdateAnswerMutation();
+
+  const handleAcceptAnswer = async () => {
+    if (user && user.id !== questionAuthorId) return;
+    try {
+      await updateAnswer({
+        id: answer.id,
+        accepted: !answer.accepted,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const tooltipContent = () => {
+    if (answer.accepted) {
+      if (user && user.id === questionAuthorId) {
+        return "you accepted this answer";
+      } else {
+        return "accepted answer";
+      }
+    } else {
+      if (user && user.id === questionAuthorId) {
+        return "accept answer";
+      } else {
+        return "";
+      }
+    }
+  };
 
   return (
     <>
       <div className="flex gap-4">
-        <PostVoteSection
-          postId={answer.id}
-          votes={answer.votes}
-          postType="Answer"
-        />
+        <div className="flex flex-col items-center">
+          <PostVoteSection
+            postId={answer.id}
+            votes={answer.votes}
+            postType="Answer"
+          />
+          {((user && user.id === questionAuthorId) || answer.accepted) && (
+            <button
+              disabled={!!user && user.id != questionAuthorId}
+              onClick={handleAcceptAnswer}
+              className={
+                user && user.id === questionAuthorId
+                  ? "cursor-pointer"
+                  : "cursor-default"
+              }
+            >
+              <FaCheck
+                data-tooltip-id="accept-answer"
+                data-tooltip-content={tooltipContent()}
+                className={`${
+                  answer.accepted ? "text-green-500" : "text-appGray-100"
+                } text-2xl disabled:opacity-50 outline-none`}
+              />
+              <ReactTooltip place="bottom" variant="dark" id="accept-answer" />
+            </button>
+          )}
+        </div>
         <div className="flex-grow">
           <RichContent body={answer.body} />
 

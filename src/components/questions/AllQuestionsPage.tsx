@@ -7,12 +7,11 @@ import { CustomError } from "../common/CustomError";
 import { CustomLoading } from "../common/CustomLoading";
 import QuestionsList from "./QuestionsList";
 import Button from "../common/Button";
-import { SortTabs } from "../common/SortTabs";
 import { sortTabs } from "../common/constants";
-import { formatCountString } from "../../services/utils";
 import { Pagination } from "flowbite-react";
 import { defaultPageSize } from "../common/constants";
 import { paginationTheme } from "../../flowbiteCustomTheme";
+import { ListSubheader } from "../common/ListSubheader";
 
 const QuestionsListWithErrorAndLoading = withLoading(
   withError(QuestionsList, CustomError),
@@ -33,29 +32,23 @@ const AllQuestionsPage: React.FC = () => {
   );
   return (
     <div>
-      <div className=" mb-6 pb-6 border-b">
-        <div className="flex justify-between mb-4">
-          <h1 className="text-xl">All Questions</h1>
+      <div className="flex flex-col">
+        <div className="subheader-wrap mb-6">
+          <h1 className="page-header">All Questions</h1>
           <Button
             title="Ask a Question"
             onClick={() => navigate("/questions/new")}
             className="btn btn-primary"
           />
         </div>
-        <div className="font-medium text-sm mb-4">
-          {formatCountString(
-            data ? data.total_results : 0,
-            "result",
-            "results"
-          )}
-        </div>
-        <div className="flex justify-start text-xs">
-          <SortTabs
-            sortOptions={sortTabs}
-            selectedOption={selectedTab}
-            setSelectedOption={setSelectedTab}
-          />
-        </div>
+
+        <ListSubheader
+          count={data ? data.total_results : 0}
+          keyword="result"
+          sortTabs={sortTabs}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+        />
       </div>
       <QuestionsListWithErrorAndLoading
         questions={data ? data.questions : []}

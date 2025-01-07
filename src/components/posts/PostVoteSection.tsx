@@ -2,7 +2,7 @@ import { type FC, useState } from "react";
 import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 
 import { useCastVoteMutation } from "../../services/api";
-import Flash from "./Flash";
+import Flash from "../common/Flash";
 
 interface PostVoteSectionProps {
   postId: number;
