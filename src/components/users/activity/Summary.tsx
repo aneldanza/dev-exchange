@@ -2,10 +2,11 @@ import React from "react";
 import { TopItemsCard } from "../TopItemsCard";
 import { PostItem } from "../PostItem";
 import { TagItem } from "../TagItem";
-import { PostData, VoteData, PostsByTag } from "../types";
+import { VoteData, PostsByTag } from "../types";
 import { formatCountString } from "../../../services/utils";
 import { sortTabs } from "../../common/constants";
 import { sortTags } from "../../users/activity/constants";
+import { PostData } from "../../posts/types";
 
 interface SummaryProps {
   questions: PostData[];
