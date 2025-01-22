@@ -3,21 +3,6 @@ import { AnswerData } from "../answers/types";
 import { CommentData } from "../comments/types";
 import { PostData } from "../posts/types";
 
-// export type LimitedQuestionData = {
-//   id: number;
-//   title: string;
-//   body: string;
-//   created_at: string;
-//   updated_at: string;
-//   tags: TagData[];
-//   user: {
-//     id: number | null;
-//     username: string | null;
-//   };
-//   answers: number;
-//   votes: number;
-// };
-
 export type QuestionsPageResponse = {
   questions: PostData[];
   total_results: number;

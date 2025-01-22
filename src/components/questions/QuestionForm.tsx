@@ -8,7 +8,7 @@ import Flash from "../common/Flash";
 import { useSearchTagsQuery } from "../../services/api";
 import { MultiValue } from "react-select";
 import { Option, FormValues } from "./types";
-import { TagData } from "../tags/types";
+import { RawTagData } from "../tags/types";
 import { removeSelectElement } from "../../services/utils";
 
 import { QuillEditor } from "../common/QuillEditor";
@@ -23,7 +23,7 @@ const validationSchema = Yup.object({
   tags: Yup.array().min(1, "Select at least one tag"),
 });
 
-const convertTagsToOptions = (tags: TagData[]): Option[] => {
+const convertTagsToOptions = (tags: RawTagData[]): Option[] => {
   return tags.map((tag) => ({
     label: tag.name,
     value: tag.id.toString(),
@@ -39,7 +39,7 @@ interface QuestionFormProps {
       id: number;
     }[];
   }) => Promise<void>;
-  questionData?: { title: string; body: string; tags: TagData[] };
+  questionData?: { title: string; body: string; tags: RawTagData[] };
   submitText: string;
 }
 

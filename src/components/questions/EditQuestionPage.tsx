@@ -3,7 +3,6 @@ import {
   useUpdateQuestionMutation,
   useGetQuestionByIdQuery,
 } from "../../services/api";
-// import { useAuth } from "../../services/storeHooks";
 import { QuestionForm } from "./QuestionForm";
 
 import withError from "../hoc/withError";
@@ -17,7 +16,6 @@ const QuestionFormWithErrorAndLoading = withLoading(
 );
 
 const EditQuestionPage: React.FC = () => {
-  //   const { user } = useAuth();
   const navigate = useNavigate();
   const { questionId } = useParams<{ questionId: string }>();
 
