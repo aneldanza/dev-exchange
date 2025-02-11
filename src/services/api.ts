@@ -15,8 +15,8 @@ import { PostData } from "../components/posts/types";
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:3001",
-    // baseUrl: "https://dev-exchange-api-03aee4d88c26.herokuapp.com",
+    // baseUrl: "http://127.0.0.1:3001",
+    baseUrl: "https://dev-exchange-api-03aee4d88c26.herokuapp.com",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("jwt_token");
       if (token) {
