@@ -23,6 +23,7 @@ export const TopNavigationBar: React.FC = () => {
     await logOut("").unwrap();
 
     setUser(null);
+    localStorage.removeItem("jwt_token");
   }, [logOut, setUser]);
 
   const toggleSideBar = useCallback(() => {

@@ -52,7 +52,8 @@ export const SignUpForm = () => {
 
       if (result.message === "Signed up and logged in successfully") {
         navigate("/");
-        setUser(result.data);
+        setUser(result.data.user);
+        localStorage.setItem("jwt_token", result.data.token);
       }
       resetForm();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
