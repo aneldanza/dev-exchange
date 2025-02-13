@@ -37,7 +37,7 @@ export const SignUpForm = () => {
   const [signUp] = useSignUpMutation();
   const navigate = useNavigate();
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
-  const { setUser } = useAuth();
+  const { registerUser } = useAuth();
 
   const handleSignUp = async (
     credentials: SignUpCredentials,
@@ -51,9 +51,8 @@ export const SignUpForm = () => {
       }).unwrap();
 
       if (result.message === "Signed up and logged in successfully") {
+        registerUser(result.data.user, result.data.token);
         navigate("/");
-        setUser(result.data.user);
-        localStorage.setItem("jwt_token", result.data.token);
       }
       resetForm();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
