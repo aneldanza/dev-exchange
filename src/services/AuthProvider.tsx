@@ -20,6 +20,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     } else if (isError) {
       console.log(error);
       setUser(null);
+      localStorage.removeItem("jwt_token");
     } else if (isLoading) {
       console.log("loading user info from the server ...");
     }
