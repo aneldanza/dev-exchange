@@ -40,7 +40,8 @@ export const SignInForm = () => {
     try {
       const result = await signIn(credentials).unwrap();
       if (result.status === 200) {
-        setUser(result.data);
+        setUser(result.data.user);
+        localStorage.setItem("jwt_token", result.data.token);
         navigate("/");
       }
       resetForm();

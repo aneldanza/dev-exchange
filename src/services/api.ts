@@ -15,13 +15,17 @@ import { PostData } from "../components/posts/types";
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
+    // baseUrl: "http://127.0.0.1:3001",
     baseUrl: "https://dev-exchange-api-03aee4d88c26.herokuapp.com",
     prepareHeaders: (headers) => {
+      const token = localStorage.getItem("jwt_token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
       headers.set("Content-Type", "application/json");
 
       return headers;
     },
-    credentials: "include", // need this for cookies to be sent
   }),
   tagTypes: ["Users", "User", "Tag", "Questions", "Question"],
   endpoints: (builder) => ({
