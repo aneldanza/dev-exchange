@@ -23,12 +23,16 @@ export const CommentsContainer: FC<CommentsContainerProps> = ({
   const { user } = useAuth();
 
   const handleCreateComment = async (body: string) => {
-    await createComment({
-      body,
-      commentable_id: postId,
-      commentable_type: postType,
-      user_id: user?.id,
-    }).unwrap();
+    try {
+      await createComment({
+        body,
+        commentable_id: postId,
+        commentable_type: postType,
+        user_id: user?.id,
+      }).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
