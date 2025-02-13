@@ -12,21 +12,22 @@ import { FullUserData, UserInfoLimited } from "../components/users/types";
 import { SearchPayload, SearchResponse } from "../components/search/types";
 import { PostData } from "../components/posts/types";
 
+const baseQuery = fetchBaseQuery({
+  baseUrl: import.meta.env.VITE_API_URL as string,
+  prepareHeaders: (headers) => {
+    const token = localStorage.getItem("jwt_token");
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    headers.set("Content-Type", "application/json");
+
+    return headers;
+  },
+});
+
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:3001",
-    // baseUrl: "https://dev-exchange-api-03aee4d88c26.herokuapp.com",
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("jwt_token");
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      headers.set("Content-Type", "application/json");
-
-      return headers;
-    },
-  }),
+  baseQuery: baseQuery,
   tagTypes: ["Users", "User", "Tag", "Questions", "Question"],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpInfo, { user: SignUpCredentials }>({
