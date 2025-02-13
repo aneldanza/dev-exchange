@@ -3,13 +3,19 @@ import { UserInfoLimited } from "../components/users/types";
 
 export interface SignInInfo {
   message: string;
-  data: UserInfoLimited;
+  data: {
+    user: UserInfoLimited;
+    token: string;
+  };
   status: number;
 }
 
 export interface SignUpInfo {
   message: string;
-  data: UserInfoLimited;
+  data: {
+    user: UserInfoLimited;
+    token: string;
+  };
 }
 
 export interface AuthContextProps {

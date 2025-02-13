@@ -15,7 +15,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     console.log("fetching current user from the server! ");
     if (isSuccess) {
-      console.log(`got user info: ${data}`);
+      console.log(`got user info: ${JSON.stringify(data, null, 2)}`);
       setUser(data.user);
     } else if (isError) {
       console.log(error);
