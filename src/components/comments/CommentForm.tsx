@@ -1,6 +1,5 @@
-import { type FC, useState } from "react";
+import { type FC } from "react";
 import { Form, Formik, ErrorMessage, Field } from "formik";
-import Flash from "../common/Flash";
 
 interface CommentFormProps {
   body?: string;
@@ -14,25 +13,10 @@ export const CommentForm: FC<CommentFormProps> = ({
   setFormVisible,
   formAction,
 }) => {
-  const [formError, setFormError] = useState<string[]>([]);
-
   const handleSubmit = async (values: { body: string }) => {
-    try {
-      await formAction(values.body);
+    await formAction(values.body);
 
-      setFormVisible(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      if (e.data) {
-        if (e.data.errors) {
-          setFormError([...e.data.errors]);
-        } else {
-          setFormError([e.data.error]);
-        }
-      } else {
-        setFormError(["An error occurred. Please try again later."]);
-      }
-    }
+    setFormVisible(false);
   };
   return (
     <div>
@@ -56,18 +40,6 @@ export const CommentForm: FC<CommentFormProps> = ({
           </button>
         </Form>
       </Formik>
-
-      <Flash
-        style="failure"
-        display={!!formError.length}
-        resetDisplay={() => setFormError([])}
-      >
-        <ul className="list-item">
-          {formError.map((error, index) => (
-            <li key={index}>{`${error}`}</li>
-          ))}
-        </ul>
-      </Flash>
     </div>
   );
 };

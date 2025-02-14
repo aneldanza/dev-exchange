@@ -6,6 +6,7 @@ import { type FC, useState } from "react";
 import { useCreateCommentMutation } from "../../services/api";
 
 import { useAuth } from "../../services/storeHooks";
+import Flash from "../common/Flash";
 
 interface CommentsContainerProps {
   comments: CommentData[];
@@ -20,7 +21,8 @@ export const CommentsContainer: FC<CommentsContainerProps> = ({
 }) => {
   const [formVisible, setFormVisible] = useState<boolean>(false);
   const [createComment] = useCreateCommentMutation();
-  const { user } = useAuth();
+  const { user, clearUser } = useAuth();
+  const [formError, setFormError] = useState<string[]>([]);
 
   const handleCreateComment = async (body: string) => {
     try {
@@ -30,8 +32,20 @@ export const CommentsContainer: FC<CommentsContainerProps> = ({
         commentable_type: postType,
         user_id: user?.id,
       }).unwrap();
-    } catch (error) {
-      console.log(error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      if (e.data) {
+        if (e.data.errors) {
+          setFormError([...e.data.errors]);
+        } else {
+          setFormError([e.data.error ?? "An error occurred"]);
+        }
+      } else {
+        setFormError(["An error occurred. Please try again later."]);
+      }
+      if (e.status === 401) {
+        clearUser();
+      }
     }
   };
 
@@ -59,6 +73,17 @@ export const CommentsContainer: FC<CommentsContainerProps> = ({
           onClick={() => setFormVisible(true)}
         />
       </div>
+      <Flash
+        style="failure"
+        display={!!formError.length}
+        resetDisplay={() => setFormError([])}
+      >
+        <ul className="list-item">
+          {formError.map((error, index) => (
+            <li key={index}>{`${error}`}</li>
+          ))}
+        </ul>
+      </Flash>
     </div>
   );
 };

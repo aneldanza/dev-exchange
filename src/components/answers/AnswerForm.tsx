@@ -29,7 +29,7 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
 
   const [isFormReset, setResetForm] = useState<boolean>(false);
   const [formError, setFormError] = useState<string[]>([]);
-  const { user } = useAuth();
+  const { user, clearUser } = useAuth();
 
   const addAnswer = async (values: { body: string }) => {
     if (!user) {
@@ -42,6 +42,10 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
       await answerAction({ body: modifiedBody, user_id: user.id });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
+      if (e.status === 401) {
+        clearUser();
+      }
+
       if (e.data) {
         if (e.data.errors) {
           setFormError([...e.data.errors]);
