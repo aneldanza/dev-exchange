@@ -20,10 +20,12 @@ export interface SignUpInfo {
 
 export interface AuthContextProps {
   user: UserInfoLimited | null;
-  setUser: React.Dispatch<React.SetStateAction<UserInfoLimited | null>>;
+  clearUser: () => void;
+  registerUser: (user: UserInfoLimited, token: string) => void;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
   user: null,
-  setUser: () => {},
+  clearUser: () => {},
+  registerUser: () => {},
 });

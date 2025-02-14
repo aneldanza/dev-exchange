@@ -7,6 +7,7 @@ import { useDeleteAccountMutation } from "../../../services/api";
 import { useAuth } from "../../../services/storeHooks";
 import { UserContext } from "../UserContext";
 import EditSettings from "./EditSettings";
+import Flash from "../../common/Flash";
 
 interface SettingsTabProps {
   data: FullUserData;
@@ -17,9 +18,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
 
   const [deleteAccount] = useDeleteAccountMutation();
   const [selectedOption, setSelectedOption] = useState<string>(options[0]);
-  const { setUser, user } = useAuth();
+  const { clearUser, user } = useAuth();
   const { setActiveTab, fullUserData } = useContext(UserContext);
   const navigate = useNavigate();
+  const [formError, setFormError] = useState<string[]>([]);
 
   useEffect(() => {
     if (fullUserData?.id !== user?.id) {
@@ -31,15 +33,23 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
 
   const handleDeleteAccount = async () => {
     try {
-      const result = await deleteAccount(data.id).unwrap();
-      console.log(result);
-      setUser(null);
+      await deleteAccount(data.id).unwrap();
+
+      clearUser();
       navigate("/");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e);
+      if (e.data) {
+        if (e.data.errors) {
+          setFormError([...e.data.errors]);
+        } else {
+          setFormError([e.data.error]);
+        }
+      } else {
+        setFormError(["An error occurred. Please try again later."]);
+      }
       if (e.status === 401) {
-        console.log(e.data.message);
+        clearUser();
       }
     }
   };
@@ -85,6 +95,17 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
           )}
         </>
       </div>
+      <Flash
+        style="failure"
+        display={!!formError.length}
+        resetDisplay={() => setFormError([])}
+      >
+        <ul className="list-item">
+          {formError.map((error, index) => (
+            <li key={index}>{`${error}`}</li>
+          ))}
+        </ul>
+      </Flash>
     </div>
   );
 };

@@ -14,7 +14,7 @@ import longLogo from "../../assets/logo-long.svg";
 
 export const TopNavigationBar: React.FC = () => {
   const [logOut] = useSignOutMutation();
-  const { user, setUser } = useAuth();
+  const { user, clearUser } = useAuth();
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const navigate = useNavigate();
@@ -22,9 +22,8 @@ export const TopNavigationBar: React.FC = () => {
   const handleLogOut = useCallback(async () => {
     await logOut("").unwrap();
 
-    setUser(null);
-    localStorage.removeItem("jwt_token");
-  }, [logOut, setUser]);
+    clearUser();
+  }, [logOut, clearUser]);
 
   const toggleSideBar = useCallback(() => {
     setIsSideBarOpen((prev) => !prev);

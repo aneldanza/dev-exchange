@@ -24,7 +24,7 @@ export const SignInForm = () => {
   const navigate = useNavigate();
   const [signIn] = useSignInMutation();
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
-  const { setUser } = useAuth();
+  const { registerUser } = useAuth();
 
   const initialValues: SignInCredentials = {
     email: "",
@@ -40,8 +40,7 @@ export const SignInForm = () => {
     try {
       const result = await signIn(credentials).unwrap();
       if (result.status === 200) {
-        setUser(result.data.user);
-        localStorage.setItem("jwt_token", result.data.token);
+        registerUser(result.data.user, result.data.token);
         navigate("/");
       }
       resetForm();
