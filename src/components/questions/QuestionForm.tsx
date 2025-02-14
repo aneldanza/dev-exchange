@@ -12,6 +12,7 @@ import { RawTagData } from "../tags/types";
 import { removeSelectElement } from "../../services/utils";
 
 import { QuillEditor } from "../common/QuillEditor";
+import { useAuth } from "../../services/storeHooks";
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -54,6 +55,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
   const [isFormReset, setResetForm] = useState<boolean>(false);
   const [formError, setFormError] = useState<string[]>([]);
   const formikRef = useRef<FormikProps<FormValues>>(null);
+  const { clearUser } = useAuth();
 
   const initialValues: FormValues = {
     title: questionData.title,
@@ -87,6 +89,9 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
         }
       } else {
         setFormError(["An error occurred. Please try again later."]);
+      }
+      if (e.status === 401) {
+        clearUser();
       }
     }
   };

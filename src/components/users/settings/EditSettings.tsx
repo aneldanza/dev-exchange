@@ -7,6 +7,7 @@ import { QuillEditor } from "../../common/QuillEditor";
 import { FullUserData } from "../types";
 import { RichContent } from "../../common/RichContent";
 import Flash from "../../common/Flash";
+import { useAuth } from "../../../services/storeHooks";
 
 type FormValues = {
   about: string;
@@ -20,21 +21,13 @@ interface EditSettingsProps {
   data: FullUserData;
 }
 
-const messages: { [key: string]: { text: string; className: string } } = {
-  success: {
-    text: "User updated successfully",
-    className: "success",
-  },
-
-  error: {
-    text: "An error occurred while updating user",
-    className: "failure",
-  },
-};
-
 const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
   const [updateUser] = useUpdateUserMutation();
-  const [message, setMessage] = useState<string>("");
+  const [messageType, setMessageType] = useState<
+    "success" | "failure" | "info"
+  >("info");
+  const [formMessage, setFormMessage] = useState<string[]>([]);
+  const { clearUser } = useAuth();
 
   const initialValues: FormValues = {
     about: data.description,
@@ -46,10 +39,24 @@ const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
         user: { id: data.id, description: values.about },
       }).unwrap();
 
-      setMessage("success");
-    } catch (error) {
-      console.error(error);
-      setMessage("failure");
+      setMessageType("success");
+      setFormMessage(["Profile updated successfully"]);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      if (e.data) {
+        if (e.data.errors) {
+          setFormMessage([...e.data.errors]);
+        } else {
+          setFormMessage([e.data.error]);
+        }
+      } else {
+        setFormMessage(["An error occurred. Please try again later."]);
+      }
+      if (e.status === 401) {
+        clearUser();
+      }
+
+      setMessageType("failure");
     }
   };
 
@@ -99,11 +106,16 @@ const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
       </div>
 
       <Flash
-        style="success"
-        display={!!message}
-        resetDisplay={() => setMessage("")}
-        message={messages[message] ? messages[message].text : ""}
-      ></Flash>
+        style={messageType}
+        display={!!formMessage.length}
+        resetDisplay={() => setFormMessage([])}
+      >
+        <ul className="list-item">
+          {formMessage.map((error, index) => (
+            <li key={index}>{`${error}`}</li>
+          ))}
+        </ul>
+      </Flash>
     </div>
   );
 };
