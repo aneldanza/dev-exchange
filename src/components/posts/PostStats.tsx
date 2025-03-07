@@ -8,7 +8,7 @@ interface PostStatsProps {
 
 export const PostStats: React.FC<PostStatsProps> = ({ post }) => {
   return (
-    <div className="flex flex-row lg:flex-col gap-4 text-xs min-w-[108px] sm:text-sm text-appGray-300 items-center lg:sitems-end ">
+    <div className="flex flex-row lg:flex-col gap-4 text-xs min-w-[108px] sm:text-sm text-appGray-300 items-center lg:items-end ">
       <div>{formatCountString(post.votes, "vote", "votes")}</div>
       {post.answers ? (
         <div
