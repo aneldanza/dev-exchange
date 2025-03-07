@@ -139,11 +139,11 @@
   }
 
   .accepted-answer {
-    @apply bg-green-500 border-green-500 text-white border rounded-sm px-1;
+    @apply bg-green-500 border-green-500 text-white border rounded-md px-1;
   }
 
   .no-accepted-answer {
-    @apply border border-green-500 text-green-500 rounded-sm px-1 py-0.5;
+    @apply border border-green-500 text-green-500 rounded-md px-1 py-0.5;
   }
 
   .subheader-wrap {

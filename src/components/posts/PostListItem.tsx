@@ -44,7 +44,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({
         </div>
 
         <div
-          className="text-xs"
+          className="text-sm"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(
               post.body && post.body.length > 100
