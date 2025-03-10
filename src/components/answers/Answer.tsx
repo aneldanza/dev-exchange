@@ -5,7 +5,7 @@ import { type FC } from "react";
 import { DeletePostModal } from "../common/DeletePostModal";
 import { useAuth } from "../../services/storeHooks";
 import { PostActions } from "../posts/PostActions";
-import { RichContent } from "../common/RichContent";
+// import { RichContent } from "../common/RichContent";
 import {
   useDeleteAnswerMutation,
   useUpdateAnswerMutation,
@@ -14,6 +14,8 @@ import { CommentsContainer } from "../comments/CommentsContainer";
 import { PostVoteSection } from "../posts/PostVoteSection";
 import { FaCheck } from "react-icons/fa";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+// import MDEditor from "@uiw/react-md-editor";
+import MarkdownViewer from "../common/MarkDownViewer";
 
 interface AnswerProps {
   answer: AnswerData;
@@ -56,8 +58,8 @@ export const Answer: FC<AnswerProps> = ({ answer, questionAuthorId }) => {
 
   return (
     <>
-      <div className="flex gap-4">
-        <div className="flex flex-col items-center">
+      <div id="container" className="flex gap-4">
+        <div id="stats" className="flex flex-col items-center flex-none">
           <PostVoteSection
             postId={answer.id}
             votes={answer.votes}
@@ -84,10 +86,12 @@ export const Answer: FC<AnswerProps> = ({ answer, questionAuthorId }) => {
             </button>
           )}
         </div>
-        <div className="flex-grow">
-          <RichContent body={answer.body} />
+        <div id="post" className="flex-grow overflow-hidden">
+          {/* <RichContent body={answer.body} /> */}
 
-          <div>
+          <MarkdownViewer content={answer.body} />
+
+          <div className="mt-4">
             {user && answer.user.id === user.id && (
               <PostActions
                 postId={answer.id}

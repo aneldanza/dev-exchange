@@ -1,10 +1,12 @@
-import { QuillEditor } from "../common/QuillEditor";
+// import { QuillEditor } from "../common/QuillEditor";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { removeSelectElement } from "../../services/utils";
 import React, { useState } from "react";
 import Flash from "../common/Flash";
 import { useAuth } from "../../services/storeHooks";
+// import TestQuillEditor from "../common/TestQuillEditor";
+import MarkdownEditor from "../common/MarkdownEditor";
 
 const validationsSchema = Yup.object().shape({
   body: Yup.string().required("Content is required").min(10),
@@ -71,14 +73,25 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
         setShowAnswerForm && setShowAnswerForm(false);
       }}
     >
-      {({ isSubmitting, isValid, touched }) => (
+      {({ isSubmitting, isValid, touched, values, setFieldValue, errors }) => (
         <Form className="flex flex-col gap-4 my-4">
-          <QuillEditor
+          {/* <QuillEditor
             name="body"
             label="Your Answer"
             placeholder=""
             isFormReset={isFormReset}
-          />
+          /> */}
+
+          <div className="mb-4">
+            <MarkdownEditor
+              value={values.body}
+              onChange={(value) => setFieldValue("body", value)}
+            />
+            {touched.body && errors.body && (
+              <div className="text-red-500 text-sm">{errors.body}</div>
+            )}
+          </div>
+
           <button
             type="submit"
             className="btn btn-primary"
