@@ -1,5 +1,4 @@
 import React from "react";
-import DOMPurify from "dompurify";
 import moment from "moment";
 import { TbMessageQuestion, TbMessageExclamation } from "react-icons/tb";
 import { PostTags } from "./PostTags";
@@ -7,6 +6,7 @@ import { PostData } from "./types";
 import { PostTitle } from "./PostTitle";
 import { PostAuthor } from "./PostAuthor";
 import { PostStats } from "./PostStats";
+import { RichContent } from "../common/RichContent";
 
 interface PostListItemProps {
   post: PostData;
@@ -43,16 +43,9 @@ export const PostListItem: React.FC<PostListItemProps> = ({
           />
         </div>
 
-        <div
-          className="text-sm"
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(
-              post.body && post.body.length > 100
-                ? `${post.body.substring(0, 100)}...`
-                : post.body || ""
-            ),
-          }}
-        />
+        <div className="line-clamp-2">
+          <RichContent body={post.body} />
+        </div>
 
         <PostTags tags={post.tags} />
 
