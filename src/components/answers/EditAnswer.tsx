@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { CustomError } from "../common/CustomError";
 import { FullAnswerData } from "./types";
 import { type FC, useState } from "react";
-import DOMPurify from "dompurify";
 import { Formik, Form } from "formik";
 import { QuillEditor } from "../common/QuillEditor";
 import * as Yup from "yup";
@@ -10,6 +9,7 @@ import { UnsavedChangesModal } from "../common/UnsavedChangesModal";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { useUpdateAnswerMutation } from "../../services/api";
 import { RichContent } from "../common/RichContent";
+import { removeSelectElement } from "../../services/utils";
 
 interface EditAnswerProps {
   answer: FullAnswerData | undefined;
@@ -40,10 +40,11 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
   };
 
   const handleSubmit = async (values: EditFormValues) => {
+    const modifiedBody = removeSelectElement(values.body);
     try {
       await updateAnswer({
         id: answer.id,
-        body: values.body,
+        body: modifiedBody,
       }).unwrap();
       navigate(`/questions/${answer.question_id}`);
     } catch (error) {
@@ -65,13 +66,7 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
         <Link to={`/questions/${answer.question_id}`} className="hyperlink">
           {answer.question.title}
         </Link>
-        <div className="prose prose-sm max-w-full">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(answer.question.body),
-            }}
-          />
-        </div>
+        <RichContent body={removeSelectElement(answer.question.body)} />
       </div>
 
       <div>
@@ -88,7 +83,7 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
                 <div className="list mb-6">
                   <div>
                     <QuillEditor name="body" placeholder="" label="" />
-                    <RichContent body={values.body} />
+                    <RichContent body={removeSelectElement(values.body)} />
                   </div>
                 </div>
                 <div className="flex flex-col gap-4 ">
