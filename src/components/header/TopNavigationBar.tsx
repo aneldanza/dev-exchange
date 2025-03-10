@@ -10,7 +10,7 @@ import { useSignOutMutation } from "../../services/api";
 import { useAuth } from "../../services/storeHooks";
 import SearchInput from "../common/SearchInput";
 import { Sidebar } from "./SideBar";
-import longLogo from "../../assets/logo-long.svg";
+import landscapeLogo from "../../assets/dev exchange logo - landscape.svg";
 
 export const TopNavigationBar: React.FC = () => {
   const [logOut] = useSignOutMutation();
@@ -32,8 +32,8 @@ export const TopNavigationBar: React.FC = () => {
   return (
     <nav className="app-container">
       <div className="relative">
-        <div className="flex flex-row w-full items-center space-x-3 h-full border-b-1 text-xs justify-between py-2 pr-2">
-          <div className="sm:hidden h-full flex items-center justify-center shrink-0 px-2">
+        <div className="flex flex-row w-full items-center gap-3 h-full border-b-1 text-xs justify-between py-2 pr-4 lg:pr-6">
+          <div className="sm:hidden h-full flex items-center justify-center shrink-0">
             {isSideBarOpen ? (
               <XMarkIcon
                 className="size-6 cursor-pointer"
@@ -53,7 +53,7 @@ export const TopNavigationBar: React.FC = () => {
             className="cursor-pointer shrink-0"
             onClick={() => navigate("/")}
           >
-            <img src={longLogo} alt="Logo" className="block h-12 w-auto" />
+            <img src={landscapeLogo} alt="Logo" className="block h-12 w-auto" />
           </div>
 
           <div className={`sm:hidden h-full`}>
