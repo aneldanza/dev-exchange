@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer components {
+  .prose pre code {
+    @apply text-appGray-700;
+  }
+  .w-md-editor-toolbar {
+    @apply text-lg;
+  }
+
   .app-container {
     @apply mx-auto w-full lg:w-5/6 xl:w-3/4;
   }
