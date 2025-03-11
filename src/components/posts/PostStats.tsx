@@ -12,14 +12,14 @@ export const PostStats: React.FC<PostStatsProps> = ({ post }) => {
       <div>{formatCountString(post.votes, "vote", "votes")}</div>
       {post.answers ? (
         <div
-          className={
+          className={`stats-item-answer ${
             post.answers.accepted ? "accepted-answer" : "no-accepted-answer"
-          }
+          }`}
         >
           {formatCountString(post.answers.count, "answer", "answers")}
         </div>
       ) : post.accepted ? (
-        <div className="accepted-answer">Accepted</div>
+        <div className="stats-item-answer accepted-answer">Accepted</div>
       ) : null}
     </div>
   );

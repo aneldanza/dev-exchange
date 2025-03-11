@@ -145,12 +145,16 @@
     @apply text-blue-400 visited:text-purple-500 hover:text-blue-500 cursor-pointer;
   }
 
+  .stats-item-answer {
+    @apply border rounded px-1 py-0.5;
+  }
+
   .accepted-answer {
-    @apply bg-green-500 border-green-500 text-white border rounded-md px-1;
+    @apply bg-green-500 border-green-500 text-white;
   }
 
   .no-accepted-answer {
-    @apply border border-green-500 text-green-500 rounded-md px-1 py-0.5;
+    @apply border-green-500 text-green-500;
   }
 
   .subheader-wrap {
