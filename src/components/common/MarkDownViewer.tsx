@@ -7,10 +7,10 @@ interface MarkdownViewerProps {
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
   return (
-    <div className="w-full" data-color-mode="github-light">
+    <div className="w-full text-appBlack" data-color-mode="github-light">
       <MDEditor.Markdown
         source={content}
-        className="break-words whitespace-pre-wrap"
+        className="break-words whitespace-pre-wrap prose max-w-full"
       />
     </div>
   );
