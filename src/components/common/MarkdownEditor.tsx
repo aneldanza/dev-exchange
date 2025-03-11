@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import MDEditor, { PreviewType } from "@uiw/react-md-editor";
+import React from "react";
+import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
 import "@uiw/react-md-editor/markdown-editor.css";
@@ -9,50 +9,42 @@ import { customCommands } from "./commands";
 interface MarkdownEditorProps {
   value: string;
   onChange: (value: string) => void;
+  placeholder?: string;
 }
 
-const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ value, onChange }) => {
-  const [preview, setPreview] = useState<PreviewType>("edit");
+const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
+  value,
+  onChange,
+  placeholder,
+}) => {
+  const handleChange = (value?: string) => {
+    onChange(value || "");
+  };
 
   return (
     <div
       className="border border-gray-300 rounded-md mb-4"
       data-color-mode="github-light"
     >
-      <div className="flex border-b">
-        <button
-          className={`px-4 py-2 ${
-            preview === "edit" ? "bg-gray-200" : "bg-white"
-          } border-r`}
-          onClick={() => setPreview("edit")}
-        >
-          Write
-        </button>
-
-        <button
-          className={`px-4 py-2 ${
-            preview === "live" ? "bg-gray-200" : "bg-white"
-          }`}
-          onClick={() => setPreview("live")}
-        >
-          Live Preview
-        </button>
-      </div>
       <MDEditor
         value={value}
-        onChange={(val) => onChange(val || "")}
-        height={400}
-        visibleDragbar={false}
+        onChange={handleChange}
+        // height={400}
+        visibleDragbar={true}
         hideToolbar={false}
         fullscreen={false}
         enableScroll
         highlightEnable
-        preview={preview}
+        preview={"edit"}
         previewOptions={{
           rehypePlugins: [[rehypeSanitize]],
           remarkPlugins: [remarkGfm],
         }}
         commands={customCommands}
+        textareaProps={{
+          placeholder,
+        }}
+        className="text-lg leading-relaxed max-h-screen"
       />
     </div>
   );
