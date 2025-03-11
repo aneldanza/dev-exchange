@@ -32,11 +32,11 @@ export const TopNavigationBar: React.FC = () => {
   return (
     <nav className="app-container">
       <div className="relative">
-        <div className="flex flex-row w-full items-center gap-3 h-full border-b-1 text-xs justify-between py-2 pr-4 lg:pr-6">
+        <div className="flex flex-row w-full items-center gap-3 h-full border-b-1 text-xs justify-between py-2 pr-4 pl-2 lg:pr-6">
           <div className="sm:hidden h-full flex items-center justify-center shrink-0">
             {isSideBarOpen ? (
               <XMarkIcon
-                className="size-6 cursor-pointer"
+                className="size-6 cursor-pointer "
                 onClick={toggleSideBar}
                 aria-label="Close sidebar"
               />
@@ -49,10 +49,7 @@ export const TopNavigationBar: React.FC = () => {
             )}
           </div>
 
-          <div
-            className="cursor-pointer shrink-0"
-            onClick={() => navigate("/")}
-          >
+          <div className="cursor-pointer shrink" onClick={() => navigate("/")}>
             <img src={landscapeLogo} alt="Logo" className="block h-12 w-auto" />
           </div>
 
