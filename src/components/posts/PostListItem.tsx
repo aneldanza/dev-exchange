@@ -6,7 +6,8 @@ import { PostData } from "./types";
 import { PostTitle } from "./PostTitle";
 import { PostAuthor } from "./PostAuthor";
 import { PostStats } from "./PostStats";
-import { RichContent } from "../common/RichContent";
+import MarkdownViewer from "../common/MarkDownViewer";
+// import { RichContent } from "../common/RichContent";
 
 interface PostListItemProps {
   post: PostData;
@@ -44,7 +45,8 @@ export const PostListItem: React.FC<PostListItemProps> = ({
         </div>
 
         <div className="line-clamp-2">
-          <RichContent body={post.body} />
+          {/* <RichContent body={post.body} /> */}
+          <MarkdownViewer content={post.body} />
         </div>
 
         <PostTags tags={post.tags} />
