@@ -14,4 +14,6 @@ export const customCommands: ICommand[] = [
   commands.title, // Native title command for headers
   commands.divider,
   commands.codeBlock, // Native code block command
+  commands.divider,
+  commands.help,
 ];
