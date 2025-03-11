@@ -44,7 +44,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
         textareaProps={{
           placeholder,
         }}
-        className="text-lg leading-relaxed max-h-screen"
+        className="text-lg leading-relaxed max-h-dvh"
       />
     </div>
   );
