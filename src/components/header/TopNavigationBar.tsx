@@ -38,13 +38,13 @@ export const TopNavigationBar: React.FC = () => {
             <div className=" h-full flex items-center justify-center shrink-0">
               {isSideBarOpen ? (
                 <XMarkIcon
-                  className="size-6 cursor-pointer "
+                  className="icon "
                   onClick={toggleSideBar}
                   aria-label="Close sidebar"
                 />
               ) : (
                 <Bars3Icon
-                  className="size-6 cursor-pointer"
+                  className="icon"
                   onClick={toggleSideBar}
                   aria-label="Open sidebar"
                 />
@@ -78,9 +78,7 @@ export const TopNavigationBar: React.FC = () => {
           <nav className="flex shrink-0 gap-4 items-center justify-between">
             <div className={`sm:hidden h-full`}>
               <MagnifyingGlassIcon
-                className={`size-6 cursor-pointer ${
-                  showSearchBar && "text-blue-500"
-                }`}
+                className={`icon ${showSearchBar && "text-blue-500"}`}
                 onClick={() => setShowSearchBar((prev) => !prev)}
                 aria-label="Toggle search bar"
               />
