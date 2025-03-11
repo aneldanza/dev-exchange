@@ -11,6 +11,7 @@ import { useAuth } from "../../services/storeHooks";
 import SearchInput from "../common/SearchInput";
 import { Sidebar } from "./SideBar";
 import landscapeLogo from "../../assets/dev exchange logo - landscape.svg";
+import smallLogo from "../../assets/logo-small.svg";
 
 export const TopNavigationBar: React.FC = () => {
   const [logOut] = useSignOutMutation();
@@ -32,36 +33,40 @@ export const TopNavigationBar: React.FC = () => {
   return (
     <nav className="app-container">
       <div className="relative">
-        <div className="flex flex-row w-full items-center gap-3 h-full border-b-1 text-xs justify-between py-2 pr-4 pl-2 lg:pr-6">
-          <div className="sm:hidden h-full flex items-center justify-center shrink-0">
-            {isSideBarOpen ? (
-              <XMarkIcon
-                className="size-6 cursor-pointer "
-                onClick={toggleSideBar}
-                aria-label="Close sidebar"
-              />
-            ) : (
-              <Bars3Icon
-                className="size-6 cursor-pointer"
-                onClick={toggleSideBar}
-                aria-label="Open sidebar"
-              />
-            )}
+        <div className="flex flex-row w-full items-center gap-4 h-full border-b-1 text-xs justify-between py-2 pr-4 pl-2 lg:pr-6">
+          <div className="flex gap-4 items-center sm:hidden">
+            <div className=" h-full flex items-center justify-center shrink-0">
+              {isSideBarOpen ? (
+                <XMarkIcon
+                  className="size-6 cursor-pointer "
+                  onClick={toggleSideBar}
+                  aria-label="Close sidebar"
+                />
+              ) : (
+                <Bars3Icon
+                  className="size-6 cursor-pointer"
+                  onClick={toggleSideBar}
+                  aria-label="Open sidebar"
+                />
+              )}
+            </div>
+
+            <div
+              className="cursor-pointer shrink-0"
+              onClick={() => navigate("/")}
+            >
+              <img src={smallLogo} alt="Logo" className="block h-11 w-auto" />
+            </div>
           </div>
 
-          <div className="cursor-pointer shrink" onClick={() => navigate("/")}>
-            <img src={landscapeLogo} alt="Logo" className="block h-12 w-auto" />
-          </div>
-
-          <div className={`sm:hidden h-full`}>
-            <MagnifyingGlassIcon
-              className={`size-6 cursor-pointer ${
-                showSearchBar && "text-blue-500"
-              }`}
-              onClick={() => setShowSearchBar((prev) => !prev)}
-              aria-label="Toggle search bar"
+          <div className="cursor-pointer shrink " onClick={() => navigate("/")}>
+            <img
+              src={landscapeLogo}
+              alt="Logo"
+              className="hidden sm:block h-11 w-auto"
             />
           </div>
+
           <div className="hidden sm:block w-2/3">
             <SearchInput
               handleSearch={(values: { search: string }) => {
@@ -69,14 +74,25 @@ export const TopNavigationBar: React.FC = () => {
               }}
             />
           </div>
-          <nav className="flex shrink-0 space-x-2 items-center justify-between">
+
+          <nav className="flex shrink-0 gap-4 items-center justify-between">
+            <div className={`sm:hidden h-full`}>
+              <MagnifyingGlassIcon
+                className={`size-6 cursor-pointer ${
+                  showSearchBar && "text-blue-500"
+                }`}
+                onClick={() => setShowSearchBar((prev) => !prev)}
+                aria-label="Toggle search bar"
+              />
+            </div>
+
             {user ? (
               <>
                 <Link
                   to={`/users/${user.id}`}
                   className="font-semibold cursor-pointer"
                 >
-                  <Avatar name={user.username} size="40px" round="7px" />
+                  <Avatar name={user.username} size="36px" round="7px" />
                 </Link>
 
                 <button className="btn btn-secondary" onClick={handleLogOut}>

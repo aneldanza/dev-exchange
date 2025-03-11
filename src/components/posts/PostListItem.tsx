@@ -44,7 +44,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({
           />
         </div>
 
-        <div className="line-clamp-2">
+        <div className="line-clamp-2 ">
           {/* <RichContent body={post.body} /> */}
           <MarkdownViewer content={post.body} />
         </div>
