@@ -38,7 +38,7 @@ export const TopItemsCard = <T,>({
             className="text-xs text-appGray-100"
             onClick={() => setActiveTab("activity")}
           >{`View all ${name}s`}</Link>
-        ) : (
+        ) : sortedItems.length > 1 ? (
           <div className="text-xs">
             <SortTabs
               setSelectedOption={setSortTab}
@@ -46,7 +46,7 @@ export const TopItemsCard = <T,>({
               sortOptions={sortOptions}
             />
           </div>
-        )}
+        ) : null}
       </div>
       <div className="activity-card">
         {topFiveItems.length ? (

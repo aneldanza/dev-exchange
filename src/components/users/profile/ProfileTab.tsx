@@ -1,11 +1,13 @@
 import React, { useContext } from "react";
 import { FullUserData, PostsByTag } from "../types";
 import { formatCountString } from "../../../services/utils";
-import { RichContent } from "../../common/RichContent";
+// import { RichContent } from "../../common/RichContent";
 import { TopItemsCard } from "../TopItemsCard";
 import { TagItem } from "../TagItem";
 import { UserContext } from "../UserContext";
 import { useAuth } from "../../../services/storeHooks";
+import MarkdownViewer from "../../common/MarkDownViewer";
+import { sortTags } from "../../users/activity/constants";
 
 const Stats: React.FC<{ questionsCount: number; answersCount: number }> = ({
   questionsCount,
@@ -45,9 +47,12 @@ const About: React.FC<{
 
   return (
     <div>
-      <div className="text-lg">About</div>
+      <div className="text-lg mb-2">About</div>
       {description ? (
-        <RichContent body={description} />
+        // <RichContent body={description} />
+        <div className="card">
+          <MarkdownViewer content={description} />
+        </div>
       ) : (
         <div className="card">
           {user && user.id === userId ? (
@@ -98,6 +103,7 @@ export const ProfileTab = () => {
         <TopItemsCard<PostsByTag>
           items={posts_by_tag}
           name="tag"
+          sortOptions={sortTags}
           renderItem={(tagItem: PostsByTag) => (
             <TagItem
               tag={tagItem.tag}

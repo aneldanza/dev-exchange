@@ -11,8 +11,9 @@ import { Option, FormValues } from "./types";
 import { RawTagData } from "../tags/types";
 import { removeSelectElement } from "../../services/utils";
 
-import { QuillEditor } from "../common/QuillEditor";
+// import { QuillEditor } from "../common/QuillEditor";
 import { useAuth } from "../../services/storeHooks";
+import MarkdownEditor from "../common/MarkdownEditor";
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -52,7 +53,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
   const initialTags = convertTagsToOptions(questionData.tags);
 
   const [query, setQuery] = useState<string>("");
-  const [isFormReset, setResetForm] = useState<boolean>(false);
+  // const [isFormReset, setResetForm] = useState<boolean>(false);
   const [formError, setFormError] = useState<string[]>([]);
   const formikRef = useRef<FormikProps<FormValues>>(null);
   const { clearUser } = useAuth();
@@ -152,12 +153,27 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
             <Form className="space-y-6 w-full max-w-[800px]">
               <InputField name="title" label="Title" />
 
-              <QuillEditor
+              {/* <QuillEditor
                 name="body"
                 label="Description"
                 placeholder="Add content of your question here..."
                 isFormReset={isFormReset}
-              />
+              /> */}
+
+              <div className="mb-4">
+                <MarkdownEditor
+                  value={props.values.body}
+                  onChange={(value) => {
+                    props.setFieldValue("body", value);
+                    props.setFieldTouched("body", true);
+                  }}
+                />
+                {props.touched.body && props.errors.body && (
+                  <div className="text-red-500 text-sm">
+                    {props.errors.body}
+                  </div>
+                )}
+              </div>
 
               <div>
                 <div className="field-label">Tags</div>
@@ -203,7 +219,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
                     props.resetForm();
 
                     setFormError([]);
-                    setResetForm(true);
+                    // setResetForm(true);
                   }}
                   type="reset"
                 />

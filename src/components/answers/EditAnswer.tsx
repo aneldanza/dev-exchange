@@ -2,14 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { CustomError } from "../common/CustomError";
 import { FullAnswerData } from "./types";
 import { type FC, useState } from "react";
-import DOMPurify from "dompurify";
 import { Formik, Form } from "formik";
-import { QuillEditor } from "../common/QuillEditor";
+// import { QuillEditor } from "../common/QuillEditor";
 import * as Yup from "yup";
 import { UnsavedChangesModal } from "../common/UnsavedChangesModal";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { useUpdateAnswerMutation } from "../../services/api";
-import { RichContent } from "../common/RichContent";
+// import { RichContent } from "../common/RichContent";
+// import { removeSelectElement } from "../../services/utils";
+import MarkdownEditor from "../common/MarkdownEditor";
+import MarkdownViewer from "../common/MarkDownViewer";
 
 interface EditAnswerProps {
   answer: FullAnswerData | undefined;
@@ -40,6 +42,7 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
   };
 
   const handleSubmit = async (values: EditFormValues) => {
+    // const modifiedBody = removeSelectElement(values.body);
     try {
       await updateAnswer({
         id: answer.id,
@@ -65,13 +68,8 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
         <Link to={`/questions/${answer.question_id}`} className="hyperlink">
           {answer.question.title}
         </Link>
-        <div className="prose prose-sm max-w-full">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(answer.question.body),
-            }}
-          />
-        </div>
+        {/* <RichContent body={removeSelectElement(answer.question.body)} /> */}
+        <MarkdownViewer content={answer.question.body} />
       </div>
 
       <div>
@@ -82,13 +80,33 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
           validationSchema={validationsSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, isValid, values, touched }) => {
+          {({
+            isSubmitting,
+            isValid,
+            values,
+            touched,
+            setFieldValue,
+            setFieldTouched,
+            errors,
+          }) => {
             return (
               <Form>
                 <div className="list mb-6">
                   <div>
-                    <QuillEditor name="body" placeholder="" label="" />
-                    <RichContent body={values.body} />
+                    <MarkdownEditor
+                      value={values.body}
+                      onChange={(value) => {
+                        setFieldValue("body", value);
+                        setFieldTouched("body", true);
+                      }}
+                    />
+                    {touched.body && errors.body && (
+                      <div className="text-red-500 text-sm">{errors.body}</div>
+                    )}
+
+                    <MarkdownViewer content={values.body} />
+                    {/* <QuillEditor name="body" placeholder="" label="" />
+                    <RichContent body={removeSelectElement(values.body)} /> */}
                   </div>
                 </div>
                 <div className="flex flex-col gap-4 ">

@@ -1,10 +1,12 @@
-import { QuillEditor } from "../common/QuillEditor";
+// import { QuillEditor } from "../common/QuillEditor";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { removeSelectElement } from "../../services/utils";
+// import { removeSelectElement } from "../../services/utils";
 import React, { useState } from "react";
 import Flash from "../common/Flash";
 import { useAuth } from "../../services/storeHooks";
+// import TestQuillEditor from "../common/TestQuillEditor";
+import MarkdownEditor from "../common/MarkdownEditor";
 
 const validationsSchema = Yup.object().shape({
   body: Yup.string().required("Content is required").min(10),
@@ -27,7 +29,7 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
     body: initialBody,
   };
 
-  const [isFormReset, setResetForm] = useState<boolean>(false);
+  // const [isFormReset, setResetForm] = useState<boolean>(false);
   const [formError, setFormError] = useState<string[]>([]);
   const { user, clearUser } = useAuth();
 
@@ -37,9 +39,9 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
       return;
     }
 
-    const modifiedBody = removeSelectElement(values.body);
+    // const modifiedBody = removeSelectElement(values.body);
     try {
-      await answerAction({ body: modifiedBody, user_id: user.id });
+      await answerAction({ body: values.body, user_id: user.id });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.status === 401) {
@@ -67,18 +69,40 @@ export const AnswerForm: React.FC<AnswerFormProps> = ({
         addAnswer(values);
         actions.setSubmitting(false);
         actions.resetForm();
-        setResetForm(true);
+        // setResetForm(true);
         setShowAnswerForm && setShowAnswerForm(false);
       }}
     >
-      {({ isSubmitting, isValid, touched }) => (
+      {({
+        isSubmitting,
+        isValid,
+        touched,
+        values,
+        setFieldValue,
+        errors,
+        setFieldTouched,
+      }) => (
         <Form className="flex flex-col gap-4 my-4">
-          <QuillEditor
+          {/* <QuillEditor
             name="body"
             label="Your Answer"
             placeholder=""
             isFormReset={isFormReset}
-          />
+          /> */}
+
+          <div className="mb-4">
+            <MarkdownEditor
+              value={values.body}
+              onChange={(value) => {
+                setFieldValue("body", value);
+                setFieldTouched("body", true);
+              }}
+            />
+            {touched.body && errors.body && (
+              <div className="text-red-500 text-sm">{errors.body}</div>
+            )}
+          </div>
+
           <button
             type="submit"
             className="btn btn-primary"

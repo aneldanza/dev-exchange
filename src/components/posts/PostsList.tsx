@@ -17,7 +17,7 @@ const PostsList: React.FC<PostsListProps> = ({ items }) => {
 
   return (
     <div>
-      <ul className="flex flex-col divide-y max-w-2xl">
+      <ul className="flex flex-col divide-y w-full">
         {items.map((post) => (
           <PostListItem key={post.id} post={post} showPostTypeIcon={true} />
         ))}

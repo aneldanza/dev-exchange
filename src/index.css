@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer components {
+  .prose pre code {
+    @apply text-appGray-700;
+  }
+  .w-md-editor-toolbar {
+    @apply text-lg;
+  }
+
   .app-container {
     @apply mx-auto w-full lg:w-5/6 xl:w-3/4;
   }
@@ -63,7 +70,7 @@
   }
 
   .menu-item.active {
-    @apply bg-gray-200 text-appGray-700 font-semibold;
+    @apply bg-appGray-50/55 text-appGray-700 font-semibold rounded;
   }
 
   .side-menu {
@@ -138,15 +145,23 @@
     @apply text-blue-400 visited:text-purple-500 hover:text-blue-500 cursor-pointer;
   }
 
+  .stats-item-answer {
+    @apply border rounded px-1 py-0.5;
+  }
+
   .accepted-answer {
-    @apply bg-green-500 border-green-500 text-white border rounded-sm px-1;
+    @apply bg-green-500 border-green-500 text-white;
   }
 
   .no-accepted-answer {
-    @apply border border-green-500 text-green-500 rounded-sm px-1 py-0.5;
+    @apply border-green-500 text-green-500;
   }
 
   .subheader-wrap {
     @apply flex justify-between items-center flex-wrap gap-4;
+  }
+
+  .icon {
+    @apply size-7 cursor-pointer text-appGray-300;
   }
 }

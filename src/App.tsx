@@ -13,7 +13,7 @@ export default function App() {
           <div className="hidden sm:block min-w-40 max-w-64 flex-grow border border-appGray-100 border-y-0 border-l-0 py-6">
             <Menu />
           </div>
-          <div className="px-4 py-6 w-full h-full overflow-auto">
+          <div className="px-4 lg:px-6 py-6 w-full h-full overflow-auto">
             <Outlet />
           </div>
         </main>

@@ -29,13 +29,15 @@ export const ItemsTab = <T,>({
         <div className="text-lg">
           {formatCountString(items.length, label, `${label}s`)}
         </div>
-        <div className="text-xs">
-          <SortTabs
-            setSelectedOption={setSortTab}
-            selectedOption={sortTab}
-            sortOptions={sortOptions}
-          />
-        </div>
+        {items.length > 1 ? (
+          <div className="text-xs">
+            <SortTabs
+              setSelectedOption={setSortTab}
+              selectedOption={sortTab}
+              sortOptions={sortOptions}
+            />
+          </div>
+        ) : null}
       </div>
       {renderItem({ items: sortedItems })}
     </div>
