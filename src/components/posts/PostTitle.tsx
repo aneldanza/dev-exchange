@@ -14,7 +14,7 @@ export const PostTitle = ({ title, id, question_id }: PostTitleProps) => {
           ? `/questions/${question_id}?answerId=${id}`
           : `/questions/${id}`
       }
-      className="text-blue-500 text-base"
+      className="hyperlink"
     >
       {title}
     </Link>

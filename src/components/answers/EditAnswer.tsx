@@ -1,17 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CustomError } from "../common/CustomError";
 import { FullAnswerData } from "./types";
 import { type FC, useState } from "react";
 import { Formik, Form } from "formik";
-// import { QuillEditor } from "../common/QuillEditor";
 import * as Yup from "yup";
 import { UnsavedChangesModal } from "../common/UnsavedChangesModal";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { useUpdateAnswerMutation } from "../../services/api";
-// import { RichContent } from "../common/RichContent";
-// import { removeSelectElement } from "../../services/utils";
 import MarkdownEditor from "../common/MarkdownEditor";
 import MarkdownViewer from "../common/MarkDownViewer";
+import { PostTitle } from "../posts/PostTitle";
 
 interface EditAnswerProps {
   answer: FullAnswerData | undefined;
@@ -65,10 +63,12 @@ export const EditAnswer: FC<EditAnswerProps> = ({ answer }) => {
   return (
     <div className="flex flex-col gap-6 text-base">
       <div>
-        <Link to={`/questions/${answer.question_id}`} className="hyperlink">
-          {answer.question.title}
-        </Link>
-        {/* <RichContent body={removeSelectElement(answer.question.body)} /> */}
+        <PostTitle
+          title={answer.question.title}
+          id={answer.question_id}
+          question_id={null}
+        />
+
         <MarkdownViewer content={answer.question.body} />
       </div>
 
