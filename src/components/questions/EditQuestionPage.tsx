@@ -8,11 +8,12 @@ import { QuestionForm } from "./QuestionForm";
 import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import { CustomError } from "../common/CustomError";
-import { CustomLoading } from "../common/CustomLoading";
+import PostTitleSkeleton from "../posts/PostTitleSkeleton";
+import QuestionFormSkeleton from "./QuestionFormSkeleton";
 
 const QuestionFormWithErrorAndLoading = withLoading(
   withError(QuestionForm, CustomError),
-  CustomLoading
+  QuestionFormSkeleton
 );
 
 const EditQuestionPage: React.FC = () => {
@@ -43,7 +44,9 @@ const EditQuestionPage: React.FC = () => {
 
   return (
     <div>
-      <h1 className="font-bold text-xl mb-4 flex">Edit Question</h1>
+      <h1 className="font-bold text-xl mb-4 flex">
+        {isLoading ? <PostTitleSkeleton /> : "Edit Question"}
+      </h1>
       <QuestionFormWithErrorAndLoading
         questionData={{
           title: data?.title || "",
