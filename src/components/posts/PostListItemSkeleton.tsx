@@ -1,12 +1,10 @@
 import Skeleton from "react-loading-skeleton";
+import PostStatsSkeleton from "./PostStatsSkeleton";
 
 const PostListItemSkeleton = () => {
   return (
     <li className="flex flex-col lg:flex-row gap-4 py-3">
-      <div className="flex flex-row lg:flex-col gap-4 min-w-[108px] sm:text-smitems-center lg:items-end ">
-        <Skeleton width={50} height={20} />
-        <Skeleton width={50} height={20} />
-      </div>
+      <PostStatsSkeleton />
 
       <div className="flex flex-col gap-2 flex-grow">
         <div className="flex gap-4 items-center">
