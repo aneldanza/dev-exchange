@@ -73,14 +73,6 @@ const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
           {(props) => (
             <Form>
               <div className="list mb-6">
-                {/* <div> */}
-                {/* <QuillEditor
-                    name="about"
-                    placeholder="Tell us about yourself"
-                    label="About me"
-                  />
-                  <RichContent body={props.values.about} /> */}
-                {/* </div> */}
                 <div>
                   <MarkdownEditor
                     value={props.values.about}
@@ -96,8 +88,6 @@ const EditSettings: React.FC<EditSettingsProps> = ({ data }) => {
                   )}
 
                   <MarkdownViewer content={props.values.about} />
-                  {/* <QuillEditor name="body" placeholder="" label="" />
-                    <RichContent body={removeSelectElement(values.body)} /> */}
                 </div>
               </div>
               <div className="flex flex-col gap-4">
