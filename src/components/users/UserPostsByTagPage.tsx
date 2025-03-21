@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import { CustomError } from "../common/CustomError";
-import { CustomLoading } from "../common/CustomLoading";
 import { useSearchUserPostsQuery } from "../../services/api";
 import { useParams, useNavigate } from "react-router-dom";
 import PostsList from "../posts/PostsList";
@@ -10,10 +9,11 @@ import { sortItems } from "../../services/utils";
 import Button from "../common/Button";
 import { sortTabs } from "../common/constants";
 import { ListSubheader } from "../common/ListSubheader";
+import QuestionsListSkeleton from "../common/QuestionsListSkeleton";
 
 const UserPostsByTagWithLoadingAndError = withLoading(
   withError(PostsList, CustomError),
-  CustomLoading
+  QuestionsListSkeleton
 );
 
 const UserPostsByTagPage = () => {

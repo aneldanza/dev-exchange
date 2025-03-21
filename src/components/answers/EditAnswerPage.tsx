@@ -1,15 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useGetAnswerByIdQuery } from "../../services/api";
 import { CustomError } from "../common/CustomError";
-
-import { CustomLoading } from "../common/CustomLoading";
+import EditAnswerSkeleton from "./EditAnswerSkeleton";
 import withLoading from "../hoc/withLoading";
 import withError from "../hoc/withError";
 import { EditAnswer } from "./EditAnswer";
 
 const EditAnswerWithErrorAndLoading = withLoading(
   withError(EditAnswer, CustomError),
-  CustomLoading
+  EditAnswerSkeleton
 );
 
 const EditAnswerPage = () => {

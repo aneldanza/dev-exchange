@@ -2,12 +2,12 @@ import moment from "moment";
 import React, { useContext } from "react";
 import { PencilIcon } from "@heroicons/react/20/solid";
 import { Button } from "../common/Button";
-import { ActivityTab } from "./activity/ActivityTab";
-import { ProfileTab } from "./profile/ProfileTab";
+// import { ActivityTab } from "./activity/ActivityTab";
+// import { ProfileTab } from "./profile/ProfileTab";
 import { FullUserData } from "./types";
 import { CakeIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "../../services/storeHooks";
-import { SettingsTab } from "./settings/SettingsTab";
+// import { SettingsTab } from "./settings/SettingsTab";
 import { UserContext } from "./UserContext";
 import { activityTabs } from "./activity/constants";
 
@@ -73,11 +73,11 @@ export const UserProfile: React.FC = () => {
           </div>
         )}
       </div>
-      {activeTab === "profile" && <ProfileTab />}
+      {/* {activeTab === "profile" && <ProfileTab />}
       {activityTabs.includes(activeTab) && <ActivityTab />}
       {activeTab === "settings" && (
         <SettingsTab data={fullUserData as FullUserData} />
-      )}
+      )} */}
     </div>
   );
 };

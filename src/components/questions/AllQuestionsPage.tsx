@@ -4,7 +4,7 @@ import { useGetAllQuestionsQuery } from "../../services/api";
 import { withLoading } from "../hoc/withLoading";
 import { withError } from "../hoc/withError";
 import { CustomError } from "../common/CustomError";
-import { CustomLoading } from "../common/CustomLoading";
+import QuestionsListSkeleton from "../common/QuestionsListSkeleton";
 import QuestionsList from "./QuestionsList";
 import Button from "../common/Button";
 import { sortTabs } from "../common/constants";
@@ -15,7 +15,7 @@ import { ListSubheader } from "../common/ListSubheader";
 
 const QuestionsListWithErrorAndLoading = withLoading(
   withError(QuestionsList, CustomError),
-  CustomLoading
+  QuestionsListSkeleton
 );
 
 const AllQuestionsPage: React.FC = () => {

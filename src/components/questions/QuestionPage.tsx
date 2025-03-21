@@ -3,14 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useGetQuestionByIdQuery } from "../../services/api";
 import { Question } from "./Question";
 import { CustomError } from "../common/CustomError";
-import { CustomLoading } from "../common/CustomLoading";
 import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import Button from "../common/Button";
+import QuestionSkeleton from "./QuestionSkeleton";
 
 const QuestionWithLoadingAndError = withLoading(
   withError(Question, CustomError),
-  CustomLoading
+  QuestionSkeleton
 );
 
 const QuestionPage: React.FC = () => {

@@ -3,17 +3,17 @@ import { useSearchUsersQuery } from "../../services/api";
 import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import { CustomError } from "../common/CustomError";
-import { CustomLoading } from "../common/CustomLoading";
 import { UserInfoLimited } from "./types";
 import UsersList from "./UsersList";
 import SearchInput from "../common/SearchInput";
 import { Pagination } from "flowbite-react";
 import { defaultPageSize } from "../common/constants";
 import { paginationTheme } from "../../flowbiteCustomTheme";
+import UsersListSkeleton from "./UsersListSkeleton";
 
 const UsersListWithErrorAndLoading = withLoading(
   withError<{ users: UserInfoLimited[] }>(UsersList, CustomError),
-  CustomLoading
+  UsersListSkeleton
 );
 
 export const AllUsersPage: React.FC = () => {

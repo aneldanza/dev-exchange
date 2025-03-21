@@ -153,13 +153,6 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
             <Form className="space-y-6 w-full max-w-[800px]">
               <InputField name="title" label="Title" />
 
-              {/* <QuillEditor
-                name="body"
-                label="Description"
-                placeholder="Add content of your question here..."
-                isFormReset={isFormReset}
-              /> */}
-
               <div className="mb-4">
                 <MarkdownEditor
                   value={props.values.body}

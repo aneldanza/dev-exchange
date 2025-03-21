@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FullUserData } from "../types";
 import { CustomDropdown } from "../../common/CustomDropdown";
 import { Button } from "../../common/Button";
 import { useDeleteAccountMutation } from "../../../services/api";
@@ -9,11 +8,7 @@ import { UserContext } from "../UserContext";
 import EditSettings from "./EditSettings";
 import Flash from "../../common/Flash";
 
-interface SettingsTabProps {
-  data: FullUserData;
-}
-
-export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
+export const SettingsTab = () => {
   const options = ["Edit", "Delete"];
 
   const [deleteAccount] = useDeleteAccountMutation();
@@ -33,7 +28,8 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
 
   const handleDeleteAccount = async () => {
     try {
-      await deleteAccount(data.id).unwrap();
+      if (!fullUserData) return;
+      await deleteAccount(fullUserData.id).unwrap();
 
       clearUser();
       navigate("/");
@@ -83,7 +79,9 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ data }) => {
           <div className="text-xl font-bold border-b border-b-appGray-50 mb-6 pb-6">
             {`${selectedOption} Profile`}
           </div>
-          {selectedOption === "Edit" && <EditSettings data={data} />}
+          {selectedOption === "Edit" && fullUserData && (
+            <EditSettings data={fullUserData} />
+          )}
           {selectedOption === "Delete" && (
             <div className="w-full">
               <Button
