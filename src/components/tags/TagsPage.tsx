@@ -4,17 +4,17 @@ import { TagsList } from "./TagsList";
 import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import { CustomError } from "../common/CustomError";
-import { CustomLoading } from "../common/CustomLoading";
 import { useSearchTagsQuery } from "../../services/api";
 import { defaultPageSize } from "../common/constants";
 import SearchInput from "../common/SearchInput";
 import { Pagination } from "flowbite-react";
 import { paginationTheme } from "../../flowbiteCustomTheme";
 import { SortTabs } from "../common/SortTabs";
+import TagsListSkeleton from "./TagsListSkeleton";
 
 const TagsListWithLoadingAndError = withLoading(
   withError(TagsList, CustomError),
-  CustomLoading
+  TagsListSkeleton
 );
 
 const sortingOptions = ["Popular", "Name", "New"];
