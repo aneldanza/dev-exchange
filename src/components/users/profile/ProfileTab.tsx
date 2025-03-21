@@ -49,7 +49,6 @@ const About: React.FC<{
     <div>
       <div className="text-lg mb-2">About</div>
       {description ? (
-        // <RichContent body={description} />
         <div className="card">
           <MarkdownViewer content={description} />
         </div>

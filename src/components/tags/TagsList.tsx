@@ -22,7 +22,7 @@ export const TagsList: React.FC<TagsListProps> = ({ tags }) => {
             <Tag id={tag.id} name={tag.name} key={tag.id} />
           </div>
           {tag.description && <div className="text-xs">{tag.description}</div>}
-          <div className="text-xs text-appGray-200 flex justify-between">
+          <div className="text-xs text-appGray-200 flex justify-between flex-shrink gap-3">
             <div className="">
               {formatCountString(tag.questions.length, "question", "questions")}
             </div>

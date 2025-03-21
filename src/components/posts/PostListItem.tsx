@@ -7,7 +7,6 @@ import { PostTitle } from "./PostTitle";
 import { PostAuthor } from "./PostAuthor";
 import { PostStats } from "./PostStats";
 import MarkdownViewer from "../common/MarkDownViewer";
-// import { RichContent } from "../common/RichContent";
 
 interface PostListItemProps {
   post: PostData;
@@ -22,16 +21,16 @@ export const PostListItem: React.FC<PostListItemProps> = ({
     <li className="flex flex-col lg:flex-row gap-4 py-3">
       <PostStats post={post} />
 
-      <div className="flex flex-col gap-2 flex-grow">
+      <div className="flex flex-col gap-2 flex-grow max-w-[calc(100%-124px)]">
         <div className="flex gap-4 items-center">
           {showPostTypeIcon && (
             <div>
               {post.type === "Question" ? (
-                <TbMessageQuestion size={22} color="blue-500" />
+                <TbMessageQuestion size={22} color="text-blue-500" />
               ) : (
                 <TbMessageExclamation
                   style={{ transform: "scaleX(-1)" }}
-                  color="green"
+                  color="text-green-500"
                   size={22}
                 />
               )}
@@ -44,8 +43,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({
           />
         </div>
 
-        <div className="line-clamp-2 ">
-          {/* <RichContent body={post.body} /> */}
+        <div className="line-clamp-2">
           <MarkdownViewer content={post.body} />
         </div>
 

@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./services/store.ts";
 import { RouterProvider } from "react-router-dom";
 import { browserRouter } from "./services/BrowserRouter.tsx";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import "./index.css";
 import { AuthProvider } from "./services/AuthProvider.tsx";
