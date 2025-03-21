@@ -1,21 +1,20 @@
 import { useState } from "react";
 import { Pagination } from "flowbite-react";
 import { CustomError } from "../common/CustomError";
-import { CustomLoading } from "../common/CustomLoading";
 import withError from "../hoc/withError";
 import withLoading from "../hoc/withLoading";
 import PostsList from "../posts/PostsList";
 import { useSearchAllPostsQuery } from "../../services/api";
 import { Button } from "../common/Button";
 import { useNavigate } from "react-router-dom";
-import { formatCountString } from "../../services/utils";
-import { SortTabs } from "../common/SortTabs";
 import { sortTabs, defaultPageSize } from "../common/constants";
 import { paginationTheme } from "../../flowbiteCustomTheme";
+import QuestionsListSkeleton from "../common/QuestionsListSkeleton";
+import { ListSubheader } from "../common/ListSubheader";
 
 const PostsWithLoadingAndError = withLoading(
   withError(PostsList, CustomError),
-  CustomLoading
+  QuestionsListSkeleton
 );
 
 const SearchPageContainer = () => {
@@ -53,22 +52,13 @@ const SearchPageContainer = () => {
         Results for: <strong>{q}</strong>
       </div>
       <div>
-        <div className="flex justify-between border-b p-2 pb-6 items-center mb-6">
-          <div className="font-bold text-sm">
-            {formatCountString(
-              data ? data.total_results : 0,
-              "result",
-              "results"
-            )}
-          </div>
-          <div className="text-xs">
-            <SortTabs
-              sortOptions={sortTabs}
-              selectedOption={selectedTab}
-              setSelectedOption={setSelectedTab}
-            />
-          </div>
-        </div>
+        <ListSubheader
+          keyword="result"
+          sortTabs={sortTabs}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          count={data?.total_results || 0}
+        />
         <PostsWithLoadingAndError
           items={data ? data.posts : undefined}
           error={error}
