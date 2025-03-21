@@ -1,5 +1,4 @@
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import RichTextEditorSkeleton from "../common/RichTextEditorSkeleton";
 import ButtonSkeleton from "../common/ButtonSkeleton";
 

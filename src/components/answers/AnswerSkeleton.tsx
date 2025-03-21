@@ -1,4 +1,3 @@
-import "react-loading-skeleton/dist/skeleton.css";
 import PostVoteSectionSkeleton from "../posts/PostVoteSectionSkeleton";
 import PostBodySkeleton from "../posts/PostBodySkeleton";
 import PostMetaSkeleton from "../posts/PostMetaSkeleton";

@@ -1,5 +1,4 @@
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import PostTitleSkeleton from "../posts/PostTitleSkeleton";
 import PostVoteSectionSkeleton from "../posts/PostVoteSectionSkeleton";
 import PostTagsSkeleton from "../posts/PostTagsSkeleton";

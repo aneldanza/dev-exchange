@@ -1,4 +1,3 @@
-import "react-loading-skeleton/dist/skeleton.css";
 import PostListItemSkeleton from "../posts/PostListItemSkeleton";
 
 const QuestionsListSkeleton = () => {
