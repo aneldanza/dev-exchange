@@ -9,7 +9,6 @@ import { PostTags } from "../posts/PostTags";
 import { PostActions } from "../posts/PostActions";
 import { useHighlightCodeBlocks } from "../hooks/useHighlightCodeBlocks";
 import { AnswersContainer } from "../answers/AnswersContainer";
-// import { RichContent } from "../common/RichContent";
 import { CommentsContainer } from "../comments/CommentsContainer";
 import MarkdownViewer from "../common/MarkDownViewer";
 
@@ -62,7 +61,6 @@ export const Question: React.FC<QuestionProps> = ({ question }) => {
             />
           </div>
           <div className="flex flex-col gap-4 flex-grow">
-            {/* <RichContent body={question.body} /> */}
             <MarkdownViewer content={question.body} />
 
             <PostTags tags={question.tags} />

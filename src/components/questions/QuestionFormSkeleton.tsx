@@ -14,6 +14,7 @@ const QuestionFormSkeleton = () => {
       <div className="mb-4">
         <RichTextEditorSkeleton />
       </div>
+      <Skeleton width={100} height={20} className="mb-2" />
       <PostTagsSkeleton />
       <ButtonSkeleton />
     </div>
