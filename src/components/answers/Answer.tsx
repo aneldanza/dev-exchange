@@ -5,7 +5,6 @@ import { type FC } from "react";
 import { DeletePostModal } from "../common/DeletePostModal";
 import { useAuth } from "../../services/storeHooks";
 import { PostActions } from "../posts/PostActions";
-// import { RichContent } from "../common/RichContent";
 import {
   useDeleteAnswerMutation,
   useUpdateAnswerMutation,
@@ -14,7 +13,6 @@ import { CommentsContainer } from "../comments/CommentsContainer";
 import { PostVoteSection } from "../posts/PostVoteSection";
 import { FaCheck } from "react-icons/fa";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-// import MDEditor from "@uiw/react-md-editor";
 import MarkdownViewer from "../common/MarkDownViewer";
 
 interface AnswerProps {
@@ -87,8 +85,6 @@ export const Answer: FC<AnswerProps> = ({ answer, questionAuthorId }) => {
           )}
         </div>
         <div id="post" className="flex-grow overflow-hidden">
-          {/* <RichContent body={answer.body} /> */}
-
           <MarkdownViewer content={answer.body} />
 
           <div className="mt-4">
