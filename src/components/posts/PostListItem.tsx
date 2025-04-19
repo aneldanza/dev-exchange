@@ -21,7 +21,7 @@ export const PostListItem: React.FC<PostListItemProps> = ({
     <li className="flex flex-col lg:flex-row gap-4 py-3">
       <PostStats post={post} />
 
-      <div className="flex flex-col gap-2 flex-grow max-w-[calc(100%-124px)]">
+      <div className="flex flex-col gap-2 flex-grow lg:max-w-[calc(100%-124px)]">
         <div className="flex gap-4 items-center">
           {showPostTypeIcon && (
             <div>
